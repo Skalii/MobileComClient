@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.fxapp.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="700.0">
             <menus>
@@ -36,37 +35,29 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane layoutY="27.0" prefHeight="575.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Главная">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="545.0" prefWidth="700.0" />
-                    </content>
-                </Tab>
-                <Tab text="Тарифы">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="545.0" prefWidth="700.0">
-                            <children>
-                                <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="426.0">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                                    </content>
-                                </ScrollPane>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Телефоны">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="700.0" />
-                    </content>
-                </Tab>
-                <Tab text="Корзина">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
+      <JFXTabPane depthTest="DISABLE" layoutY="27.0" prefHeight="575.0" prefWidth="700.0">
+         <tabs>
+            <Tab text="Главная">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Тарифы">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Телефоны">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Корзина">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
     </children>
 </AnchorPane>
