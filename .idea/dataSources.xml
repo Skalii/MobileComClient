@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="d81947dprpqjnd@ec2-79-125-13-42.eu-west-1.compute.amazonaws.com" uuid="bf8325e5-feeb-4508-bdb2-405eb2fdcd83">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-79-125-13-42.eu-west-1.compute.amazonaws.com:5432/d81947dprpqjnd</jdbc-url>
+      <driver-properties>
+        <property name="ApplicationName" value="DataGrip" />
+        <property name="sslmode" value="require" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="mobile_com@localhost" uuid="a4fd2b12-fce9-41be-ab92-197afeed191e">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/mobile_com</jdbc-url>
+      <driver-properties>
+        <property name="ApplicationName" value="DataGrip" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>

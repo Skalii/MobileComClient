@@ -1,0 +1,21 @@
+.text {
+    -fx-font-family: 'Bell MT';
+}
+
+.tab {
+    -fx-pref-width: 170;
+    -fx-pref-height: 30;
+}
+.tab:top .tab-container .tab-label {
+    -fx-pref-width: 155;
+    -fx-text-alignment: center;
+    -fx-font-size: large;
+}
+
+.menu-bar {
+    -fx-alignment: center;
+}
+
+.anchor-pane-content {
+    -fx-border-color: #5f5f5f;
+}
