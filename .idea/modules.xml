@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MobileCom.iml" filepath="$PROJECT_DIR$/MobileCom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MobileComClient.iml" filepath="$PROJECT_DIR$/MobileComClient.iml" />
     </modules>
   </component>
 </project>

@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="MobileCom" />
+        <module name="MobileComClient" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MobileCom" target="1.8" />
+      <module name="MobileComClient" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
