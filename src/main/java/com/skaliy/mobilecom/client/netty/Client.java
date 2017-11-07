@@ -15,7 +15,6 @@ public class Client implements Runnable {
     private final int port;
     private BufferedReader reader;
     private Channel channel;
-    private String sql;
 
     public Client(String host, int port) {
         this.host = host;
@@ -33,12 +32,7 @@ public class Client implements Runnable {
             channel = bootstrap.connect(host, port).sync().channel();
             reader = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
-                //setQuery(reader.readLine() + "\r\n");
-                sql = reader.readLine() + "\r\n";
-
-                channel.write(sql);
-
-                //channel.write(reader.readLine() + "\r\n");
+                channel.write(reader.readLine() + "\r\n");
             }
         } catch (InterruptedException | IOException ignored) {
         } finally {
@@ -47,7 +41,6 @@ public class Client implements Runnable {
     }
 
     public void setQuery(String sql) {
-        this.sql = sql;
-        channel.write(this.sql);
+        channel.write(sql);
     }
 }
