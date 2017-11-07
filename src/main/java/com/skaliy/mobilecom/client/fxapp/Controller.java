@@ -34,7 +34,6 @@ public class Controller {
 
         buttonTest.setOnAction(event -> {
             client.setQuery(textTest.getText() + "\r\n");
-            //System.out.print(textTest.getText());
         });
 
     }
