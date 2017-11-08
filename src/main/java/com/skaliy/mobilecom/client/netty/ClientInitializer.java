@@ -10,12 +10,20 @@ import io.netty.handler.codec.string.StringEncoder;
 
 public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 
+    private final int port;
+
+    public ClientInitializer(int port) {
+        this.port = port;
+    }
+
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();
-        pipeline.addLast("framer", new DelimiterBasedFrameDecoder(2556, Delimiters.lineDelimiter()));
+
+        pipeline.addLast("framer", new DelimiterBasedFrameDecoder(port, Delimiters.lineDelimiter()));
         pipeline.addLast("decoder", new StringDecoder());
         pipeline.addLast("encoder", new StringEncoder());
+
         pipeline.addLast("handler", new ClientHandler());
     }
 }
