@@ -11,6 +11,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.skaliy:com.skaliy.nc:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.0.0.CR3" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.22.0-GA" level="project" />
     <orderEntry type="library" name="Maven: com.zenjava:javafx-maven-plugin:8.8.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-api:3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.0" level="project" />
@@ -44,7 +47,5 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:1.10.0" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-all:4.0.0.CR3" level="project" />
-    <orderEntry type="library" name="Maven: org.javassist:javassist:3.22.0-GA" level="project" />
   </component>
 </module>

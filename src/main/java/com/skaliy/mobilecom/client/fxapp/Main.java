@@ -14,6 +14,10 @@ public class Main extends Application {
         primaryStage.setTitle("Салон мобильной связи");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
     }
 
 
