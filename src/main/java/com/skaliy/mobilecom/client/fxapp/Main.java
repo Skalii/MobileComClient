@@ -8,12 +8,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    protected static Stage stage;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
-
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
         primaryStage.setTitle("Салон мобильной связи");
         primaryStage.setScene(new Scene(root));
