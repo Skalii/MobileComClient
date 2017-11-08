@@ -29,8 +29,7 @@ public class Controller {
     public void initialize() {
 
         Client client = new Client("localhost", 7777);
-        Thread thread = new Thread(client);
-        thread.start();
+        client.run();
 
         buttonTest.setOnAction(event -> {
             client.setQuery(textTest.getText() + "\r\n");

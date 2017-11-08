@@ -10,10 +10,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Client implements Runnable {
+public class Client {
+
     private final String host;
     private final int port;
-    private BufferedReader reader;
     private Channel channel;
 
     public Client(String host, int port) {
@@ -21,22 +21,27 @@ public class Client implements Runnable {
         this.port = port;
     }
 
-    @Override
     public void run() {
-        EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+        EventLoopGroup group = new NioEventLoopGroup();
+
         try {
             Bootstrap bootstrap = new Bootstrap()
-                    .group(eventLoopGroup)
+                    .group(group)
                     .channel(NioSocketChannel.class)
                     .handler(new ClientInitializer());
+
             channel = bootstrap.connect(host, port).sync().channel();
-            reader = new BufferedReader(new InputStreamReader(System.in));
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
             while (true) {
-                channel.write(reader.readLine() + "\r\n");
+                channel.write(in.readLine() + "\r\n");
             }
-        } catch (InterruptedException | IOException ignored) {
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
         } finally {
-            eventLoopGroup.shutdownGracefully();
+            group.shutdownGracefully();
         }
     }
 
