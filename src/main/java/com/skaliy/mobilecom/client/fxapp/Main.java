@@ -18,6 +18,7 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(event -> {
             System.exit(0);
         });
+
     }
 
 

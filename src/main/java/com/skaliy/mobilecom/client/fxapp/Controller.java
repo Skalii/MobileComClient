@@ -3,12 +3,12 @@ package com.skaliy.mobilecom.client.fxapp;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-
 import com.skaliy.nc.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -35,6 +35,18 @@ public class Controller {
 
         buttonTest.setOnAction(event -> {
             client.setQuery(textTest.getText() + "\r\n");
+
+            ArrayList<String[]> arrayList = client.getResult();
+
+            for (String[] anArrayList : arrayList) {
+                for (String anAnArrayList : anArrayList) {
+                    textAreaTest.setText(textAreaTest.getText() + anAnArrayList + " ");
+                    System.out.print(anAnArrayList + " ");
+                }
+                textAreaTest.setText(textAreaTest.getText() + "\n");
+                System.out.println();
+            }
+
         });
 
     }
