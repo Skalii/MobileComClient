@@ -12,69 +12,83 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.client.fxapp.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.client.fxapp.Controller">
     <children>
         <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="700.0">
             <menus>
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
-                        <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Создать резервную копию" visible="false" />
-                        <MenuItem fx:id="menuRestoreBackup" mnemonicParsing="false" text="Восстановить резервную копию" visible="false" />
-                        <SeparatorMenuItem fx:id="separatorMenuBackup" mnemonicParsing="false" visible="false" />
-                        <MenuItem fx:id="menuHideTray" mnemonicParsing="false" text="Свернуть в трей" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Выход" />
+                        <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Создать резервную копию"
+                                  visible="false"/>
+                        <MenuItem fx:id="menuRestoreBackup" mnemonicParsing="false" text="Восстановить резервную копию"
+                                  visible="false"/>
+                        <SeparatorMenuItem fx:id="separatorMenuBackup" mnemonicParsing="false" visible="false"/>
+                        <MenuItem fx:id="menuHideTray" mnemonicParsing="false" text="Свернуть в трей"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Выход"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Авторизация">
                     <items>
-                        <MenuItem fx:id="menuLogin" mnemonicParsing="false" text="Вход" />
-                        <MenuItem fx:id="menuProfile" mnemonicParsing="false" text="Профиль" />
+                        <MenuItem fx:id="menuLogin" mnemonicParsing="false" text="Вход"/>
+                        <MenuItem fx:id="menuProfile" mnemonicParsing="false" text="Профиль"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Помощь">
                     <items>
-                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе" />
+                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе"/>
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-      <JFXTabPane depthTest="DISABLE" layoutY="27.0" prefHeight="575.0" prefWidth="700.0">
-         <tabs>
-            <Tab text="Главная">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <JFXTextField fx:id="textTest" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="107.0" prefWidth="678.0">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXButton fx:id="buttonTest" layoutX="120.0" layoutY="131.0" text="Выполнить">
-                           <font>
-                              <Font size="72.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXTextArea fx:id="textAreaTest" layoutX="11.0" layoutY="270.0" prefHeight="243.0" prefWidth="675.0" />
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Тарифы">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Телефоны">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Корзина">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-         </tabs>
-      </JFXTabPane>
+        <JFXTabPane depthTest="DISABLE" layoutY="27.0" prefHeight="575.0" prefWidth="700.0">
+            <tabs>
+                <Tab text="Главная">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <JFXTextField fx:id="textTest" alignment="CENTER" layoutX="14.0" layoutY="14.0"
+                                              prefHeight="107.0" prefWidth="678.0">
+                                    <font>
+                                        <Font size="24.0"/>
+                                    </font>
+                                </JFXTextField>
+                                <JFXButton fx:id="buttonTestSelect" layoutX="14.0" layoutY="135.0" prefHeight="123.0"
+                                           prefWidth="290.0" text="Вывести">
+                                    <font>
+                                        <Font size="48.0"/>
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="buttonTestUpdate" layoutX="396.0" layoutY="135.0" prefHeight="123.0"
+                                           prefWidth="290.0" text="Обновить">
+                                    <font>
+                                        <Font size="48.0"/>
+                                    </font>
+                                </JFXButton>
+                                <JFXTextArea fx:id="textAreaTest" layoutX="11.0" layoutY="270.0" prefHeight="243.0"
+                                             prefWidth="675.0"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Тарифы">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                    </content>
+                </Tab>
+                <Tab text="Телефоны">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                    </content>
+                </Tab>
+                <Tab text="Корзина">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                    </content>
+                </Tab>
+            </tabs>
+        </JFXTabPane>
     </children>
 </AnchorPane>

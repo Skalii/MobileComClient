@@ -26,15 +26,15 @@ public class Controller {
     private JFXTextArea textAreaTest;
 
     @FXML
-    private JFXButton buttonTest;
+    private JFXButton buttonTestSelect, buttonTestUpdate;
 
     public void initialize() {
         Client client = new Client("localhost", 7777);
         Thread thread = new Thread(client);
         thread.start();
 
-        buttonTest.setOnAction(event -> {
-            ArrayList<String[]> queryResult = client.query(false, textTest.getText());
+        buttonTestSelect.setOnAction(event -> {
+            ArrayList<String[]> queryResult = client.query(textTest.getText());
 
             textAreaTest.appendText("[CLIENT] - read result:\n");
             for (String[] anArrayList : queryResult) {
@@ -44,6 +44,13 @@ public class Controller {
                 textAreaTest.appendText("\n");
             }
 
+        });
+
+        buttonTestUpdate.setOnAction(event -> {
+            boolean queryResult = client.query(false, textTest.getText());
+
+            textAreaTest.appendText("[CLIENT] - query state: ");
+            textAreaTest.appendText(String.valueOf(queryResult) + "\n");
         });
 
     }
