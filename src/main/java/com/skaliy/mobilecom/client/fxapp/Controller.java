@@ -34,17 +34,14 @@ public class Controller {
         thread.start();
 
         buttonTest.setOnAction(event -> {
-            client.setQuery(textTest.getText() + "\r\n");
+            ArrayList<String[]> queryResult = client.query(false, textTest.getText());
 
-            ArrayList<String[]> arrayList = client.getResult();
-
-            for (String[] anArrayList : arrayList) {
+            textAreaTest.appendText("[CLIENT] - read result:\n");
+            for (String[] anArrayList : queryResult) {
                 for (String anAnArrayList : anArrayList) {
-                    textAreaTest.setText(textAreaTest.getText() + anAnArrayList + " ");
-                    System.out.print(anAnArrayList + " ");
+                    textAreaTest.appendText(anAnArrayList + "; ");
                 }
-                textAreaTest.setText(textAreaTest.getText() + "\n");
-                System.out.println();
+                textAreaTest.appendText("\n");
             }
 
         });
