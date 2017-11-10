@@ -3,7 +3,7 @@ package com.skaliy.mobilecom.client.fxapp;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.skaliy.nc.Client;
+import com.skaliy.netty.nc.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
