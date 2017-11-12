@@ -53,7 +53,7 @@ public class PaneTariff extends AnchorPane {
 
         getStyleClass().add("anchor-pane-content");
         setPrefWidth(430);
-        setPrefHeight(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 20);
+        setPrefHeight(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
         setLayoutX(10);
         setLayoutY(layoutY);
 
@@ -62,21 +62,6 @@ public class PaneTariff extends AnchorPane {
 
     private Label setLabelDescription() {
         Label labelContent = new Label();
-
-        String[] lines = description.split(" ");
-
-        int indexWord = 0;
-        for (int i = 0; i < description.length(); i++) {
-            if (Objects.equals(description.charAt(i), ' '))
-                indexWord++;
-            for (int j = 55; j < description.length(); j += 55) {
-                if (i == j)
-                    lines[indexWord] = lines[indexWord].concat("\n");
-            }
-        }
-
-        description = "";
-        for (String line : lines) description = description.concat(line.contains("\n") ? line : line.concat(" "));
 
         int countLines = 1;
         for (int i = 0; i < description.length(); i++) {

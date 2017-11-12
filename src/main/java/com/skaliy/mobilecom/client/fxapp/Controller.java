@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Controller {
 
     @FXML
-    public AnchorPane anchorPaneParentMain, anchorPaneParentTariffs;
+    private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs;
 
     @FXML
     private MenuItem menuCreateBackup, menuRestoreBackup, menuHideTray, menuExit,
@@ -39,12 +39,13 @@ public class Controller {
                 if (client.isOpen())
                     break;
             } catch (NullPointerException e) {
-                Thread.sleep(50);
+                Thread.sleep(100);
             }
         }
 
         setPaneMains();
         setPaneTariffs();
+
     }
 
     private void setPaneMains() {

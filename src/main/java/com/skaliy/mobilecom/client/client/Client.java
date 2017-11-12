@@ -37,9 +37,6 @@ public class Client implements Runnable {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
             while (true) {
-                /*Boolean bool = Boolean.valueOf(in.readLine());
-                String message = in.readLine();
-                query(bool, message);*/
                 query(in.readLine() + "\r\n");
             }
 
@@ -75,8 +72,6 @@ public class Client implements Runnable {
             ClientHandler.queryResult.removeAll(ClientHandler.queryResult);
             ClientHandler.resultSize = 0;
             ClientHandler.isFullResult = false;
-            ClientHandler.toggleB = false;
-            ClientHandler.toggleS = "";
 
             return result;
 

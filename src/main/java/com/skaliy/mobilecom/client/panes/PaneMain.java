@@ -46,23 +46,8 @@ public class PaneMain extends AnchorPane {
         layoutY += getPrefHeight() + 10;
     }
 
-    public Label setLabelContent() {
+    private Label setLabelContent() {
         Label labelContent = new Label();
-
-        String[] lines = content.split(" ");
-
-        int indexWord = 0;
-        for (int i = 0; i < content.length(); i++) {
-            if (Objects.equals(content.charAt(i), ' '))
-                indexWord++;
-            for (int j = 90; j < content.length(); j += 90) {
-                if (i == j)
-                    lines[indexWord] = lines[indexWord].concat("\n");
-            }
-        }
-
-        content = "";
-        for (String line : lines) content = content.concat(line.contains("\n") ? line : line.concat(" "));
 
         int countLines = 1;
         for (int i = 0; i < content.length(); i++) {
