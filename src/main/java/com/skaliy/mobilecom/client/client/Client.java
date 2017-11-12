@@ -75,6 +75,8 @@ public class Client implements Runnable {
             ClientHandler.queryResult.removeAll(ClientHandler.queryResult);
             ClientHandler.resultSize = 0;
             ClientHandler.isFullResult = false;
+            ClientHandler.toggleB = false;
+            ClientHandler.toggleS = "";
 
             return result;
 

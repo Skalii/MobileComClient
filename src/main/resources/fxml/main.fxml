@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141"
@@ -49,33 +46,28 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <JFXTextField fx:id="textTest" alignment="CENTER" layoutX="14.0" layoutY="14.0"
-                                              prefHeight="107.0" prefWidth="678.0">
-                                    <font>
-                                        <Font size="24.0"/>
-                                    </font>
-                                </JFXTextField>
-                                <JFXButton fx:id="buttonTestSelect" layoutX="14.0" layoutY="135.0" prefHeight="123.0"
-                                           prefWidth="290.0" text="Вывести">
-                                    <font>
-                                        <Font size="48.0"/>
-                                    </font>
-                                </JFXButton>
-                                <JFXButton fx:id="buttonTestUpdate" layoutX="396.0" layoutY="135.0" prefHeight="123.0"
-                                           prefWidth="290.0" text="Обновить">
-                                    <font>
-                                        <Font size="48.0"/>
-                                    </font>
-                                </JFXButton>
-                                <JFXTextArea fx:id="textAreaTest" layoutX="11.0" layoutY="270.0" prefHeight="243.0"
-                                             prefWidth="675.0"/>
+                                <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="680.0">
+                                    <content>
+                                        <AnchorPane fx:id="anchorPaneParentMain" minHeight="0.0" minWidth="0.0"
+                                                    prefHeight="0.0" prefWidth="665.0"/>
+                                    </content>
+                                </ScrollPane>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Тарифы">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="465.0">
+                                    <content>
+                                        <AnchorPane fx:id="anchorPaneParentTariffs" minHeight="0.0" minWidth="0.0"
+                                                    prefHeight="0.0" prefWidth="450.0"/>
+                                    </content>
+                                </ScrollPane>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Телефоны">
