@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +18,8 @@ public class PaneParent extends AnchorPane {
     public final static int
             PANE_MAIN = 1,
             PANE_TARIFF = 2,
-            PANE_OFFER = 3;
+            PANE_OFFER = 3,
+            PANE_PHONE = 4;
 
     private String title, general, availableOffers;
     private double price;
@@ -40,10 +42,9 @@ public class PaneParent extends AnchorPane {
                 general = values[3];
                 availableOffers = values[4];
             } else {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 try {
-                    dateStart = simpleDateFormat.parse(values[3]);
-                    dateEnd = simpleDateFormat.parse(values[4]);
+                    dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(values[3]);
+                    dateEnd = new SimpleDateFormat("yyyy-MM-dd").parse(values[4]);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -101,12 +102,11 @@ public class PaneParent extends AnchorPane {
                     Separator separatorPrice = new Separator(Orientation.HORIZONTAL);
                     separatorPrice.setPrefWidth(prefWidth);
                     separatorPrice.setLayoutX(10);
-                    separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 20);
+                    separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
 
-                    Label labelAvailable1Offers = new Label(
-                            "Доступные услуги:\n\n"
-                                    + availableOffers);
+                    Label labelAvailable1Offers = new Label("Доступные услуги:\n\n" + availableOffers);
                     labelAvailable1Offers.setFont(new Font("Calibri", 14));
+                    labelAvailable1Offers.setTextAlignment(TextAlignment.CENTER);
                     labelAvailable1Offers.setAlignment(Pos.CENTER);
                     labelAvailable1Offers.setPrefWidth(prefWidth);
                     labelAvailable1Offers.setPrefHeight(20 * getCountLines(labelAvailable1Offers.getText()));
@@ -126,10 +126,13 @@ public class PaneParent extends AnchorPane {
                 separatorPrice.setLayoutX(10);
                 separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
 
-                Label labelDate = new Label(dateStart.toString() + " - " + dateEnd.toString());
+                Label labelDate = new Label("Срок действия: " +
+                        dateStart.toLocaleString().substring(0, 10) + " - " + dateEnd.toLocaleString().substring(0, 10));
                 labelDate.setFont(new Font("Calibri", 14));
+                labelDate.setTextAlignment(TextAlignment.CENTER);
                 labelDate.setAlignment(Pos.CENTER);
                 labelDate.setPrefWidth(prefWidth);
+//                labelDate.setPrefHeight(20 * getCountLines(labelDate.getText()) - 1);
                 labelDate.setLayoutX(10);
                 labelDate.setLayoutY(separatorPrice.getLayoutY() + 13);
 

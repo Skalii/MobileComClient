@@ -8,11 +8,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.ArrayList;
-
-import static com.skaliy.mobilecom.client.panes.PaneParent.PANE_MAIN;
-import static com.skaliy.mobilecom.client.panes.PaneParent.PANE_OFFER;
-import static com.skaliy.mobilecom.client.panes.PaneParent.PANE_TARIFF;
+import static com.skaliy.mobilecom.client.panes.PaneParent.*;
 
 public class Controller {
 
@@ -20,7 +16,7 @@ public class Controller {
     public Button buttonGetTariffs, buttonGetOffers;
 
     @FXML
-    private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs;
+    private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs, anchorPaneParentPhones;
 
     @FXML
     private MenuItem menuCreateBackup, menuRestoreBackup, menuHideTray, menuExit,
@@ -47,6 +43,7 @@ public class Controller {
 
         setPaneParent(anchorPaneParentMain, "get_news", PANE_MAIN, false);
         setPaneParent(anchorPaneParentTariffs, "get_tariff_", PANE_TARIFF, true);
+        setPaneParent(anchorPaneParentPhones, "get_phones", PANE_PHONE, false);
 
         buttonGetTariffs.setOnAction(event -> {
             setPaneParent(anchorPaneParentTariffs, "get_tariff_", PANE_TARIFF, true);
@@ -66,9 +63,8 @@ public class Controller {
 
         } else {
 
-            int size = Integer.parseInt(
-                    client.query(query
-                            .substring(0, query.length() - 1)
+            int size = Integer.parseInt(client.query(
+                    query.substring(0, query.length() - 1)
                             .concat("s_count")).get(0)[0]);
 
             for (int i = 1; i <= size; i++)

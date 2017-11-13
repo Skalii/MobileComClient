@@ -10,33 +10,29 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.client.fxapp.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.client.fxapp.Controller">
     <children>
         <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="700.0">
             <menus>
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
-                        <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Создать резервную копию"
-                                  visible="false"/>
-                        <MenuItem fx:id="menuRestoreBackup" mnemonicParsing="false" text="Восстановить резервную копию"
-                                  visible="false"/>
-                        <SeparatorMenuItem fx:id="separatorMenuBackup" mnemonicParsing="false" visible="false"/>
-                        <MenuItem fx:id="menuHideTray" mnemonicParsing="false" text="Свернуть в трей"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Выход"/>
+                        <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Создать резервную копию" visible="false" />
+                        <MenuItem fx:id="menuRestoreBackup" mnemonicParsing="false" text="Восстановить резервную копию" visible="false" />
+                        <SeparatorMenuItem fx:id="separatorMenuBackup" mnemonicParsing="false" visible="false" />
+                        <MenuItem fx:id="menuHideTray" mnemonicParsing="false" text="Свернуть в трей" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Выход" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Авторизация">
                     <items>
-                        <MenuItem fx:id="menuLogin" mnemonicParsing="false" text="Вход"/>
-                        <MenuItem fx:id="menuProfile" mnemonicParsing="false" text="Профиль"/>
+                        <MenuItem fx:id="menuLogin" mnemonicParsing="false" text="Вход" />
+                        <MenuItem fx:id="menuProfile" mnemonicParsing="false" text="Профиль" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Помощь">
                     <items>
-                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе"/>
+                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе" />
                     </items>
                 </Menu>
             </menus>
@@ -49,8 +45,7 @@
                             <children>
                                 <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="680.0">
                                     <content>
-                                        <AnchorPane fx:id="anchorPaneParentMain" minHeight="0.0" minWidth="0.0"
-                                                    prefHeight="0.0" prefWidth="665.0"/>
+                                        <AnchorPane fx:id="anchorPaneParentMain" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="665.0" />
                                     </content>
                                 </ScrollPane>
                             </children>
@@ -63,31 +58,38 @@
                             <children>
                                 <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="465.0">
                                     <content>
-                                        <AnchorPane fx:id="anchorPaneParentTariffs" minHeight="0.0" minWidth="0.0"
-                                                    prefHeight="0.0" prefWidth="450.0"/>
+                                        <AnchorPane fx:id="anchorPaneParentTariffs" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="450.0" />
                                     </content>
                                 </ScrollPane>
                                 <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="200.0" prefWidth="205.0">
                                     <children>
-                                        <Button fx:id="buttonGetTariffs" layoutX="30.0" layoutY="10.0"
-                                                mnemonicParsing="false" text="Тарифы"/>
-                                        <Button fx:id="buttonGetOffers" layoutX="120.0" layoutY="10.0"
-                                                mnemonicParsing="false" text="Услуги"/>
+                                        <Button fx:id="buttonGetTariffs" layoutX="30.0" layoutY="10.0" mnemonicParsing="false" text="Тарифы" />
+                                        <Button fx:id="buttonGetOffers" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" text="Услуги" />
                                     </children>
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Телефоны"/>
+                <Tab text="Телефоны">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="465.0">
+                          <content>
+                            <AnchorPane fx:id="anchorPaneParentPhones" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="450.0" />
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
                 <Tab text="Корзина">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
             </tabs>
         </JFXTabPane>
-        <AnchorPane layoutX="472.0" layoutY="-140.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                    prefWidth="200.0"/>
+        <AnchorPane layoutX="472.0" layoutY="-140.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
     </children>
 </AnchorPane>
