@@ -95,25 +95,31 @@ public class PaneParent extends AnchorPane {
             getChildren().addAll(separatorGeneral, labelPrice);
 
             if (THIS_PANE == PANE_TARIFF) {
-                Separator separatorPrice = new Separator(Orientation.HORIZONTAL);
-                separatorPrice.setPrefWidth(prefWidth);
-                separatorPrice.setLayoutX(10);
-                separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
 
-                Label labelAvailable1Offers = new Label(
-                        "Доступные услуги:\n"
-                                + availableOffers
-                                .replaceAll(",", "\n"));
-                labelAvailable1Offers.setFont(new Font("Calibri", 14));
-                labelAvailable1Offers.setAlignment(Pos.CENTER);
-                labelAvailable1Offers.setPrefWidth(prefWidth);
-                labelAvailable1Offers.setPrefHeight(20 * getCountLines(labelAvailable1Offers.getText()));
-                labelAvailable1Offers.setLayoutX(10);
-                labelAvailable1Offers.setLayoutY(separatorPrice.getLayoutY() + 13);
+                if (availableOffers.length() > 2) {
 
-                getChildren().addAll(separatorPrice, labelAvailable1Offers);
+                    Separator separatorPrice = new Separator(Orientation.HORIZONTAL);
+                    separatorPrice.setPrefWidth(prefWidth);
+                    separatorPrice.setLayoutX(10);
+                    separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 20);
 
-                prefHeight = labelAvailable1Offers.getLayoutY() + labelAvailable1Offers.getPrefHeight() + 30;
+                    Label labelAvailable1Offers = new Label(
+                            "Доступные услуги:\n\n"
+                                    + availableOffers);
+                    labelAvailable1Offers.setFont(new Font("Calibri", 14));
+                    labelAvailable1Offers.setAlignment(Pos.CENTER);
+                    labelAvailable1Offers.setPrefWidth(prefWidth);
+                    labelAvailable1Offers.setPrefHeight(20 * getCountLines(labelAvailable1Offers.getText()));
+                    labelAvailable1Offers.setLayoutX(10);
+                    labelAvailable1Offers.setLayoutY(separatorPrice.getLayoutY() + 13);
+
+                    getChildren().addAll(separatorPrice, labelAvailable1Offers);
+
+                    prefHeight = labelAvailable1Offers.getLayoutY() + labelAvailable1Offers.getPrefHeight() + 20;
+                } else {
+                    prefHeight = labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30;
+                }
+
             } else {
                 Separator separatorPrice = new Separator(Orientation.HORIZONTAL);
                 separatorPrice.setPrefWidth(prefWidth);

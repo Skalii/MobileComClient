@@ -40,8 +40,9 @@ public class ClientHandler extends ChannelInboundMessageHandlerAdapter<String> {
 
             if (record[i].contains("_bo_"))
                 record[i] = record[i]
-                        .replaceAll("_bo_", "")
-                        .replaceAll("_bc_", "");
+                        .replaceAll("_bo_", "⚬ ")
+                        .replaceAll("_bc_", "")
+                        .replaceAll(",", "\n⚬ ");
         }
 
         queryResult.add(record);
