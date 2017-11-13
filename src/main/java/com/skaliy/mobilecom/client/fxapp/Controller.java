@@ -1,18 +1,21 @@
 package com.skaliy.mobilecom.client.fxapp;
 
 import com.skaliy.mobilecom.client.client.Client;
-import com.skaliy.mobilecom.client.panes.PaneMain;
-import com.skaliy.mobilecom.client.panes.PaneTariff;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.skaliy.mobilecom.client.panes.PaneParent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.ArrayList;
+import static com.skaliy.mobilecom.client.panes.PaneParent.PANE_MAIN;
+import static com.skaliy.mobilecom.client.panes.PaneParent.PANE_OFFER;
+import static com.skaliy.mobilecom.client.panes.PaneParent.PANE_TARIFF;
 
 public class Controller {
+
+    @FXML
+    public Button buttonGetTariffs, buttonGetOffers;
 
     @FXML
     private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs;
@@ -23,9 +26,6 @@ public class Controller {
 
     @FXML
     private SeparatorMenuItem separatorMenuBackup;
-
-    private ObservableList<PaneMain> paneMains;
-    private ObservableList<PaneTariff> paneTariffs;
 
     private Client client;
 
@@ -43,33 +43,24 @@ public class Controller {
             }
         }
 
-        setPaneMains();
-        setPaneTariffs();
+        setPaneParent(anchorPaneParentMain, "get_news", PANE_MAIN);
+        setPaneParent(anchorPaneParentTariffs, "get_tariffs", PANE_TARIFF);
 
+        buttonGetTariffs.setOnAction(event -> {
+            setPaneParent(anchorPaneParentTariffs, "get_tariffs", PANE_TARIFF);
+        });
+        buttonGetOffers.setOnAction(event -> {
+            setPaneParent(anchorPaneParentTariffs, "get_offers", PANE_OFFER);
+        });
     }
 
-    private void setPaneMains() {
-        ArrayList<String[]> records = client.query("get_news");
+    private void setPaneParent(AnchorPane paneParent, String query, int PANE) {
+        paneParent.getChildren().clear();
 
-        paneMains = FXCollections.observableArrayList();
+        for (String[] record : client.query(query))
+            paneParent.getChildren().add(new PaneParent(PANE, record));
 
-        for (String[] record : records)
-            paneMains.add(new PaneMain(record[1], record[2]));
-
-        anchorPaneParentMain.getChildren().addAll(paneMains);
-        anchorPaneParentMain.setPrefHeight(PaneMain.getHeightPaneMain());
-    }
-
-    private void setPaneTariffs() {
-        ArrayList<String[]> records = client.query("get_tariffs");
-
-        paneTariffs = FXCollections.observableArrayList();
-
-        for (String[] record : records)
-            paneTariffs.add(new PaneTariff(record[1], Double.parseDouble(record[2].substring(1)), record[3]));
-
-        anchorPaneParentTariffs.getChildren().addAll(paneTariffs);
-        anchorPaneParentTariffs.setPrefHeight(PaneTariff.getHeightPaneTariff());
+        paneParent.setPrefHeight(PaneParent.getAndReplaceHeight());
     }
 
 }
