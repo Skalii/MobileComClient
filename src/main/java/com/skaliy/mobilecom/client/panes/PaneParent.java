@@ -100,14 +100,16 @@ public class PaneParent extends AnchorPane {
                 separatorPrice.setLayoutX(10);
                 separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
 
-                Label labelAvailable1Offers = new Label("Доступные услуги:");
+                Label labelAvailable1Offers = new Label(
+                        "Доступные услуги:\n"
+                                + availableOffers
+                                .replaceAll(",", "\n"));
                 labelAvailable1Offers.setFont(new Font("Calibri", 14));
                 labelAvailable1Offers.setAlignment(Pos.CENTER);
                 labelAvailable1Offers.setPrefWidth(prefWidth);
+                labelAvailable1Offers.setPrefHeight(20 * getCountLines(labelAvailable1Offers.getText()));
                 labelAvailable1Offers.setLayoutX(10);
                 labelAvailable1Offers.setLayoutY(separatorPrice.getLayoutY() + 13);
-
-// TODO: 13.11.2017 Услуги по тарифу
 
                 getChildren().addAll(separatorPrice, labelAvailable1Offers);
 
@@ -143,22 +145,25 @@ public class PaneParent extends AnchorPane {
     private Label setLabelGeneral(int prefWidth) {
         Label labelContent = new Label();
 
-        int countLines = 1;
-        for (int i = 0; i < general.length(); i++) {
-            if (Objects.equals(String.valueOf(general.charAt(i)), "\n")) {
-                countLines++;
-            }
-        }
-
         labelContent.setText(general);
         labelContent.setFont(new Font("Calibri", 14));
         labelContent.setPrefWidth(prefWidth);
-        labelContent.setPrefHeight(20 * countLines);
+        labelContent.setPrefHeight(20 * getCountLines(general));
         labelContent.setLayoutX(10);
         labelContent.setLayoutY(58);
         labelContent.setWrapText(true);
 
         return labelContent;
+    }
+
+    private int getCountLines(String search) {
+        int countLines = 1;
+        for (int i = 0; i < search.length(); i++) {
+            if (Objects.equals(String.valueOf(search.charAt(i)), "\n")) {
+                countLines++;
+            }
+        }
+        return countLines;
     }
 
     public static int getAndReplaceHeight() {

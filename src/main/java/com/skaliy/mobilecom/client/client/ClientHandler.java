@@ -37,11 +37,18 @@ public class ClientHandler extends ChannelInboundMessageHandlerAdapter<String> {
 
         for (int i = 0; i < record.length; i++) {
             record[i] = record[i].replaceAll("_c_", ", ");
+
+            if (record[i].contains("_bo_"))
+                record[i] = record[i]
+                        .replaceAll("_bo_", "")
+                        .replaceAll("_bc_", "");
         }
 
         queryResult.add(record);
 
-        if (queryResult.size() == resultSize) {
+        if (queryResult.size() == resultSize)
+
+        {
             isFullResult = true;
         }
     }
