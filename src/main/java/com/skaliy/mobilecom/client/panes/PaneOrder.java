@@ -5,6 +5,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -49,20 +50,29 @@ public class PaneOrder extends AnchorPane {
     private void createPane() {
 
         Label labelTitleOrder = newLabel("Товар в корзине: " + unitOrder,
-                20, 1, 10);
+                20, 1, 10, 10);
 
         Separator separatorTitleOrder = newSeparator(
                 labelTitleOrder.getLayoutY() + labelTitleOrder.getPrefHeight() + 10);
 
         Label labelPrice = newLabel("Сумма: " + (price * units),
-                14, 1, separatorTitleOrder.getLayoutY() + 13);
+                14, 1, 10, separatorTitleOrder.getLayoutY() + 13);
         Label labelUnits = newLabel("Количество: " + units,
-                14, 3, separatorTitleOrder.getLayoutY() + 13);
+                14, 3,
+                labelPrice.getLayoutX() + labelPrice.getPrefWidth(),
+                separatorTitleOrder.getLayoutY() + 13);
 
-        getChildren().addAll(labelTitleOrder, separatorTitleOrder, labelPrice, labelUnits);
+        ImageView imageCancel = new ImageView();
+        imageCancel.getStyleClass().add("image-cancel");
+        imageCancel.setFitWidth(20);
+        imageCancel.setFitHeight(20);
+        imageCancel.setLayoutX(625);
+        imageCancel.setLayoutY(separatorTitleOrder.getLayoutY() + 13);
+
+        getChildren().addAll(labelTitleOrder, separatorTitleOrder, labelPrice, labelUnits, imageCancel);
 
         getStyleClass().add("anchor-pane-content");
-        setPrefWidth(645);
+        setPrefWidth(625);
         setPrefHeight(labelUnits.getLayoutY() + labelUnits.getPrefHeight() + 10);
         setLayoutX(10);
         setLayoutY(layoutY);
@@ -70,13 +80,13 @@ public class PaneOrder extends AnchorPane {
         layoutY += getPrefHeight() + 10;
     }
 
-    private Label newLabel(String text, int textSize, int alignment, double layoutY) {
+    private Label newLabel(String text, int textSize, int alignment, double layoutX, double layoutY) {
         Label label = new Label();
 
         label.setText(text);
         label.setFont(new Font("Calibri", textSize));
         label.setPrefSize(625, Math.round(textSize * 1.5) * getCountLines(text));
-        label.setLayoutX(10);
+        label.setLayoutX(layoutX);
         label.setLayoutY(layoutY);
 
         label.setAlignment(

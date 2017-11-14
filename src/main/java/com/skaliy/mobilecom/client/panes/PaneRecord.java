@@ -200,6 +200,7 @@ public class PaneRecord extends AnchorPane {
             Label labelAvailability = newLabel(
                     units > 1 ? "Есть на складе" : "Нет на складе",
                     14, 2, separatorParameters.getLayoutY() + 13);
+            labelOrder = new Label();
             labelOrder = newLabel(
                     "Добавить в корзину",
                     14, 3, separatorParameters.getLayoutY() + 13);
@@ -270,10 +271,6 @@ public class PaneRecord extends AnchorPane {
 
     public int getTHIS_PANE() {
         return THIS_PANE;
-    }
-
-    public Label getLabelOrder() {
-        return labelOrder;
     }
 
     public String getTitle() {

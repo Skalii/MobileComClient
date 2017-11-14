@@ -94,7 +94,7 @@ public class Controller {
     private void addOrder(ObservableList<PaneRecord> paneRecords) {
         for (int i = 0; i < paneRecords.size(); i++) {
             int finalI = i;
-            paneRecords.get(i).getLabelOrder().setOnMouseClicked(event -> {
+            paneRecords.get(i).getChildren().get(paneRecords.get(i).getChildren().size() - 1).setOnMouseClicked(event -> {
                 anchorPaneParentOrder.getChildren().add(new PaneOrder(paneRecords.get(finalI).getRecord(), paneRecords));
             });
         }
