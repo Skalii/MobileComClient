@@ -13,7 +13,6 @@ public class ClientHandler extends ChannelInboundMessageHandlerAdapter<String> {
 
     @Override
     public void messageReceived(ChannelHandlerContext channelHandlerContext, String message) throws Exception {
-
         message = message.replaceAll("_p_", "\n");
 
         if (message.startsWith("[SERVER] - accepted the query: ")) {
@@ -38,18 +37,17 @@ public class ClientHandler extends ChannelInboundMessageHandlerAdapter<String> {
         for (int i = 0; i < record.length; i++) {
             record[i] = record[i].replaceAll("_c_", ", ");
 
-            if (record[i].contains("_bo_"))
+            if (record[i].contains("_bo_")) {
                 record[i] = record[i]
                         .replaceAll("_bo_", "⚬ ")
                         .replaceAll("_bc_", "")
                         .replaceAll(",", "\n⚬ ");
+            }
         }
 
         queryResult.add(record);
 
-        if (queryResult.size() == resultSize)
-
-        {
+        if (queryResult.size() == resultSize) {
             isFullResult = true;
         }
     }

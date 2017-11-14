@@ -87,7 +87,11 @@ public class Client implements Runnable {
     }
 
     public boolean isOpen() {
-        return channel.isOpen();
+        try {
+            return channel.isOpen();
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
 }

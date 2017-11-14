@@ -20,13 +20,16 @@ public class PaneParent extends AnchorPane {
             PANE_TARIFF = 2,
             PANE_OFFER = 3,
             PANE_PHONE = 4;
-
-    private String title, general, availableOffers;
-    private double price;
-    private Date dateStart, dateEnd;
-    private int THIS_PANE;
+    private final int THIS_PANE;
 
     private static int layoutY = 10;
+
+    private String title, general, availableOffers,
+            manufacturer, model, os, processor, resolution, color;
+    private double price, diagonal, cameraMain, cameraMainTwo, cameraFront;
+    private boolean memoryCard = false;
+    private Date dateStart, dateEnd;
+    private int ram, rom, simcardQuant, batary, units;
 
     public PaneParent(int PANE, String[] values) {
         THIS_PANE = PANE;
@@ -50,104 +53,127 @@ public class PaneParent extends AnchorPane {
                 }
                 general = values[5];
             }
+        } else if (THIS_PANE == PANE_PHONE) {
+            manufacturer = values[1];
+            model = values[3];
+            os = values[4];
+            ram = Integer.parseInt(values[5]);
+            rom = Integer.parseInt(values[6]);
+            memoryCard = Boolean.parseBoolean(values[7]);
+            simcardQuant = Integer.parseInt(values[8]);
+            processor = values[9];
+            batary = Integer.parseInt(values[10]);
+            diagonal = Double.parseDouble(values[11]);
+            resolution = values[12];
+            cameraMain = Double.parseDouble(values[13]);
+            try {
+                cameraMainTwo = Double.parseDouble(values[14]);
+            } catch (NumberFormatException e) {
+                cameraMainTwo = 0.00;
+            }
+            cameraFront = Double.parseDouble(values[15]);
+            color = values[16];
+            price = Double.parseDouble(values[17].substring(1));
+            units = Integer.parseInt(values[18]);
         }
-
         createPane();
     }
 
     private void createPane() {
-        int prefWidth = (THIS_PANE == PANE_MAIN) ? 625
-                : ((THIS_PANE == PANE_TARIFF) || THIS_PANE == PANE_OFFER) ? 410 : 0;
+        int prefWidth =
+                (THIS_PANE == PANE_MAIN) ? 625
+                        : (THIS_PANE == PANE_TARIFF
+                        || THIS_PANE == PANE_OFFER
+                        || THIS_PANE == PANE_PHONE) ? 410 : 0;
 
-        Label labelTitle = new Label(title);
-        labelTitle.setFont(new Font("Calibri", 25));
-        labelTitle.setAlignment(Pos.CENTER);
-        labelTitle.setLayoutX(10);
-        labelTitle.setLayoutY(10);
-        labelTitle.setPrefWidth(prefWidth);
+        if (THIS_PANE != PANE_PHONE) {
 
-        Separator separatorTitle = new Separator(Orientation.HORIZONTAL);
-        separatorTitle.setPrefWidth(prefWidth);
-        separatorTitle.setLayoutX(10);
-        separatorTitle.setLayoutY(45);
+            Label labelTitle = new Label(title);
+            labelTitle.setFont(new Font("Calibri", 25));
+            labelTitle.setAlignment(Pos.CENTER);
+            labelTitle.setLayoutX(10);
+            labelTitle.setLayoutY(10);
+            labelTitle.setPrefWidth(prefWidth);
 
-        Label labelGeneral = setLabelGeneral(prefWidth);
+            Separator separatorTitle = new Separator(Orientation.HORIZONTAL);
+            separatorTitle.setPrefWidth(prefWidth);
+            separatorTitle.setLayoutX(10);
+            separatorTitle.setLayoutY(45);
 
-        getChildren().addAll(labelTitle, separatorTitle, labelGeneral);
+            Label labelGeneral = setLabelGeneral(prefWidth);
 
-        double prefHeight = 0;
+            getChildren().addAll(labelTitle, separatorTitle, labelGeneral);
 
-        if (THIS_PANE == PANE_MAIN) {
-            prefHeight = labelGeneral.getLayoutY() + labelGeneral.getPrefHeight() + 10;
+            double prefHeight = 0;
 
-        } else if ((THIS_PANE == PANE_TARIFF) || THIS_PANE == PANE_OFFER) {
-            Separator separatorGeneral = new Separator(Orientation.HORIZONTAL);
-            separatorGeneral.setPrefWidth(prefWidth);
-            separatorGeneral.setLayoutX(10);
-            separatorGeneral.setLayoutY(labelGeneral.getLayoutY() + labelGeneral.getPrefHeight() + 10);
+            if (THIS_PANE == PANE_MAIN) {
+                prefHeight = labelGeneral.getLayoutY() + labelGeneral.getPrefHeight() + 10;
 
-            Label labelPrice = new Label("Стоимость: " + price + " грн/м");
-            labelPrice.setFont(new Font("Calibri", 14));
-            labelPrice.setAlignment(Pos.CENTER);
-            labelPrice.setPrefWidth(prefWidth);
-            labelPrice.setLayoutX(10);
-            labelPrice.setLayoutY(separatorGeneral.getLayoutY() + 13);
+            } else if ((THIS_PANE == PANE_TARIFF) || THIS_PANE == PANE_OFFER) {
+                Separator separatorGeneral = new Separator(Orientation.HORIZONTAL);
+                separatorGeneral.setPrefWidth(prefWidth);
+                separatorGeneral.setLayoutX(10);
+                separatorGeneral.setLayoutY(labelGeneral.getLayoutY() + labelGeneral.getPrefHeight() + 10);
 
-            getChildren().addAll(separatorGeneral, labelPrice);
+                Label labelPrice = new Label("Стоимость: " + price + " грн/м");
+                labelPrice.setFont(new Font("Calibri", 14));
+                labelPrice.setAlignment(Pos.CENTER);
+                labelPrice.setPrefWidth(prefWidth);
+                labelPrice.setLayoutX(10);
+                labelPrice.setLayoutY(separatorGeneral.getLayoutY() + 13);
 
-            if (THIS_PANE == PANE_TARIFF) {
+                getChildren().addAll(separatorGeneral, labelPrice);
 
-                if (availableOffers.length() > 2) {
+                if (THIS_PANE == PANE_TARIFF) {
+                    if (availableOffers.length() > 2) {
 
+                        Separator separatorPrice = new Separator(Orientation.HORIZONTAL);
+                        separatorPrice.setPrefWidth(prefWidth);
+                        separatorPrice.setLayoutX(10);
+                        separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
+
+                        Label labelAvailable1Offers = new Label("Доступные услуги:\n\n" + availableOffers);
+                        labelAvailable1Offers.setFont(new Font("Calibri", 14));
+                        labelAvailable1Offers.setTextAlignment(TextAlignment.CENTER);
+                        labelAvailable1Offers.setAlignment(Pos.CENTER);
+                        labelAvailable1Offers.setPrefWidth(prefWidth);
+                        labelAvailable1Offers.setPrefHeight(20 * getCountLines(labelAvailable1Offers.getText()));
+                        labelAvailable1Offers.setLayoutX(10);
+                        labelAvailable1Offers.setLayoutY(separatorPrice.getLayoutY() + 13);
+
+                        getChildren().addAll(separatorPrice, labelAvailable1Offers);
+
+                        prefHeight = labelAvailable1Offers.getLayoutY() + labelAvailable1Offers.getPrefHeight() + 20;
+                    } else {
+                        prefHeight = labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30;
+                    }
+                } else {
                     Separator separatorPrice = new Separator(Orientation.HORIZONTAL);
                     separatorPrice.setPrefWidth(prefWidth);
                     separatorPrice.setLayoutX(10);
                     separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
 
-                    Label labelAvailable1Offers = new Label("Доступные услуги:\n\n" + availableOffers);
-                    labelAvailable1Offers.setFont(new Font("Calibri", 14));
-                    labelAvailable1Offers.setTextAlignment(TextAlignment.CENTER);
-                    labelAvailable1Offers.setAlignment(Pos.CENTER);
-                    labelAvailable1Offers.setPrefWidth(prefWidth);
-                    labelAvailable1Offers.setPrefHeight(20 * getCountLines(labelAvailable1Offers.getText()));
-                    labelAvailable1Offers.setLayoutX(10);
-                    labelAvailable1Offers.setLayoutY(separatorPrice.getLayoutY() + 13);
-
-                    getChildren().addAll(separatorPrice, labelAvailable1Offers);
-
-                    prefHeight = labelAvailable1Offers.getLayoutY() + labelAvailable1Offers.getPrefHeight() + 20;
-                } else {
-                    prefHeight = labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30;
-                }
-
-            } else {
-                Separator separatorPrice = new Separator(Orientation.HORIZONTAL);
-                separatorPrice.setPrefWidth(prefWidth);
-                separatorPrice.setLayoutX(10);
-                separatorPrice.setLayoutY(labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 30);
-
-                Label labelDate = new Label("Срок действия: " +
-                        dateStart.toLocaleString().substring(0, 10) + " - " + dateEnd.toLocaleString().substring(0, 10));
-                labelDate.setFont(new Font("Calibri", 14));
-                labelDate.setTextAlignment(TextAlignment.CENTER);
-                labelDate.setAlignment(Pos.CENTER);
-                labelDate.setPrefWidth(prefWidth);
+                    Label labelDate = new Label("Срок действия: " +
+                            dateStart.toLocaleString().substring(0, 10) + " - " + dateEnd.toLocaleString().substring(0, 10));
+                    labelDate.setFont(new Font("Calibri", 14));
+                    labelDate.setTextAlignment(TextAlignment.CENTER);
+                    labelDate.setAlignment(Pos.CENTER);
+                    labelDate.setPrefWidth(prefWidth);
 //                labelDate.setPrefHeight(20 * getCountLines(labelDate.getText()) - 1);
-                labelDate.setLayoutX(10);
-                labelDate.setLayoutY(separatorPrice.getLayoutY() + 13);
+                    labelDate.setLayoutX(10);
+                    labelDate.setLayoutY(separatorPrice.getLayoutY() + 13);
 
-                getChildren().addAll(separatorPrice, labelDate);
+                    getChildren().addAll(separatorPrice, labelDate);
 
-                prefHeight = labelDate.getLayoutY() + labelDate.getPrefHeight() + 30;
+                    prefHeight = labelDate.getLayoutY() + labelDate.getPrefHeight() + 30;
+                }
             }
+            getStyleClass().add("anchor-pane-content");
+            setPrefWidth(prefWidth + 20);
+            setPrefHeight(prefHeight);
+            setLayoutX(10);
+            setLayoutY(layoutY);
         }
-
-        getStyleClass().add("anchor-pane-content");
-        setPrefWidth(prefWidth + 20);
-        setPrefHeight(prefHeight);
-        setLayoutX(10);
-        setLayoutY(layoutY);
-
         layoutY += getPrefHeight() + 10;
     }
 
@@ -219,6 +245,134 @@ public class PaneParent extends AnchorPane {
 
     public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public int getRam() {
+        return ram;
+    }
+
+    public void setRam(int ram) {
+        this.ram = ram;
+    }
+
+    public int getRom() {
+        return rom;
+    }
+
+    public void setRom(int rom) {
+        this.rom = rom;
+    }
+
+    public int getSimcardQuant() {
+        return simcardQuant;
+    }
+
+    public void setSimcardQuant(int simcardQuant) {
+        this.simcardQuant = simcardQuant;
+    }
+
+    public int getBatary() {
+        return batary;
+    }
+
+    public void setBatary(int batary) {
+        this.batary = batary;
+    }
+
+    public double getDiagonal() {
+        return diagonal;
+    }
+
+    public void setDiagonal(double diagonal) {
+        this.diagonal = diagonal;
+    }
+
+    public double getCameraMain() {
+        return cameraMain;
+    }
+
+    public void setCameraMain(double cameraMain) {
+        this.cameraMain = cameraMain;
+    }
+
+    public double getCameraFront() {
+        return cameraFront;
+    }
+
+    public void setCameraFront(double cameraFront) {
+        this.cameraFront = cameraFront;
+    }
+
+    public double getCameraMainTwo() {
+        return cameraMainTwo;
+    }
+
+    public void setCameraMainTwo(double cameraMainTwo) {
+        this.cameraMainTwo = cameraMainTwo;
+    }
+
+    public boolean isMemoryCard() {
+        return memoryCard;
+    }
+
+    public void setMemoryCard(boolean memoryCard) {
+        this.memoryCard = memoryCard;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getUnits() {
+        return units;
+    }
+
+    public void setUnits(int units) {
+        this.units = units;
     }
 
 }

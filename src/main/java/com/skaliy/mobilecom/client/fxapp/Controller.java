@@ -27,17 +27,16 @@ public class Controller {
 
     private Client client;
 
-    public void initialize() throws InterruptedException {
+    public void initialize() {
         client = new Client("localhost", 7777);
         Thread thread = new Thread(client);
         thread.start();
 
-        while (true) {
+        while (!client.isOpen()) {
             try {
-                if (client.isOpen())
-                    break;
-            } catch (NullPointerException e) {
                 Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -53,24 +52,21 @@ public class Controller {
         });
     }
 
-    private void setPaneParent(AnchorPane paneParent, String query, int PANE, boolean index) {
+    private void setPaneParent(AnchorPane paneParent, String query, final int PANE, boolean index) {
         paneParent.getChildren().clear();
 
         if (!index) {
-
-            for (String[] record : client.query(query))
+            for (String[] record : client.query(query)) {
                 paneParent.getChildren().add(new PaneParent(PANE, record));
-
+            }
         } else {
-
             int size = Integer.parseInt(client.query(
                     query.substring(0, query.length() - 1)
                             .concat("s_count")).get(0)[0]);
-
-            for (int i = 1; i <= size; i++)
+            for (int i = 1; i <= size; i++) {
                 paneParent.getChildren().add(new PaneParent(PANE, client.query(query + i).get(0)));
+            }
         }
-
         paneParent.setPrefHeight(PaneParent.getAndReplaceHeight());
     }
 /*
