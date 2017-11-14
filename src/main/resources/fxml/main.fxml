@@ -24,7 +24,7 @@
                         <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Выход" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Авторизация">
+                <Menu mnemonicParsing="false" text="Авторизация" visible="false">
                     <items>
                         <MenuItem fx:id="menuLogin" mnemonicParsing="false" text="Вход" />
                         <MenuItem fx:id="menuProfile" mnemonicParsing="false" text="Профиль" />
@@ -52,7 +52,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Тарифы">
+                <Tab text="Тарифы и Услуги">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -72,24 +72,31 @@
                     </content>
                 </Tab>
                 <Tab text="Телефоны">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                    <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="465.0">
+                                    <content>
+                                        <AnchorPane fx:id="anchorPaneParentPhones" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="450.0" />
+                                    </content>
+                                </ScrollPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Оформить заказ">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="465.0">
+                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="680.0">
                           <content>
-                            <AnchorPane fx:id="anchorPaneParentPhones" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="450.0" />
+                            <AnchorPane fx:id="anchorPaneParentOrder" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="665.0" />
                           </content>
                         </ScrollPane>
-                     </children>
-                  </AnchorPane>
-               </content></Tab>
-                <Tab text="Корзина">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </children></AnchorPane>
                     </content>
                 </Tab>
             </tabs>
         </JFXTabPane>
-        <AnchorPane layoutX="472.0" layoutY="-140.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
     </children>
 </AnchorPane>
