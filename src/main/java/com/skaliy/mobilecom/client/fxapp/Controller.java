@@ -93,23 +93,23 @@ public class Controller {
 
     private void addOrder(ObservableList<PaneRecord> paneRecords) {
 
+        ObservableList<PaneOrder> listPaneOrders = FXCollections.observableArrayList();
+
         for (int i = 0; i < paneRecords.size(); i++) {
             int finalI = i;
 
-            ObservableList<PaneOrder> listPaneOrders = FXCollections.observableArrayList();
-
             paneRecords.get(i).getChildren().get(paneRecords.get(i).getIndexLabelOrder()).setOnMouseClicked(event -> {
 
-                PaneOrder paneOrder = new PaneOrder(paneRecords.get(finalI).getRecord() - 1, paneRecords);
-                anchorPaneParentOrder.getChildren().add(paneOrder);
-                anchorPaneParentOrder.setPrefHeight(PaneOrder.getPanesHeight());
-
+                PaneOrder paneOrder = new PaneOrder(paneRecords.get(finalI));
                 listPaneOrders.add(paneOrder);
+                anchorPaneParentOrder.getChildren().add(paneOrder);
+                anchorPaneParentOrder.setPrefHeight(paneOrder.getLayoutYNextPane());
 
                 paneOrder.getChildren().get(paneOrder.getIndexThisCancel()).setOnMouseClicked(event1 -> {
 
-                    anchorPaneParentOrder.setPrefHeight(PaneOrder.getPanesHeight() - paneOrder.getPrefHeight() - 10);
-                    PaneOrder.setPanesHeight(PaneOrder.getPanesHeight() - paneOrder.getPrefHeight() - 10);
+                    double layoutYNextPane = paneOrder.getLayoutYNextPane() - paneOrder.getPrefHeight() - 10;
+                    anchorPaneParentOrder.setPrefHeight(layoutYNextPane);
+                    paneOrder.setLayoutYNextPane(layoutYNextPane);
 
                     anchorPaneParentOrder.getChildren().remove(paneOrder);
                     listPaneOrders.remove(paneOrder);
@@ -118,11 +118,9 @@ public class Controller {
                         listPaneOrders.get(j).setThisRecord(j);
                     }
 
-                    // TODO: 15.11.2017 listPaneOrders.size() -> PaneOrder.getRecords() - 1
-                    PaneOrder.setRecords(listPaneOrders.size());
+                    paneOrder.setRecords(paneOrder.getRecords() - 1);
 
-                    // TODO: 15.11.2017 anchorPaneParentOrder.getChildren().size() -> listPaneOrders.size()
-                    for (int j = paneOrder.getThisRecord(); j < anchorPaneParentOrder.getChildren().size(); j++) {
+                    for (int j = paneOrder.getThisRecord(); j < paneOrder.getRecords(); j++) {
                         anchorPaneParentOrder.getChildren().get(j).setLayoutY(
                                 anchorPaneParentOrder.getChildren().get(j).getLayoutY() - paneOrder.getPrefHeight() - 10);
                     }

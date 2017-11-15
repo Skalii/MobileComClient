@@ -23,7 +23,7 @@ public class PaneRecord extends AnchorPane {
             PANE_PHONE = 4;
     private final int THIS_PANE;
 
-    private static int layoutY = 10;
+    private static int layoutYNextPane = 10;
 
     private String title, general, availableOffers,
             manufacturer, model, os, processor, resolution, color;
@@ -219,9 +219,9 @@ public class PaneRecord extends AnchorPane {
         setPrefWidth(prefWidth + 20);
         setPrefHeight(prefHeight);
         setLayoutX(10);
-        setLayoutY(layoutY);
+        setLayoutY(layoutYNextPane);
 
-        layoutY += getPrefHeight() + 10;
+        layoutYNextPane += getPrefHeight() + 10;
     }
 
     private Label newLabel(String text, int textSize, int alignment, double layoutY) {
@@ -264,8 +264,8 @@ public class PaneRecord extends AnchorPane {
     }
 
     public static int getAndReplaceHeight() {
-        int layout = layoutY;
-        layoutY = 10;
+        int layout = layoutYNextPane;
+        layoutYNextPane = 10;
         return layout;
     }
 
@@ -460,7 +460,9 @@ public class PaneRecord extends AnchorPane {
     public void setIndexLabelOrder(int indexLabelOrder) {
         this.indexLabelOrder = indexLabelOrder;
     }
+
     public int getIndexLabelOrder() {
         return indexLabelOrder;
     }
+
 }

@@ -1,6 +1,5 @@
 package com.skaliy.mobilecom.client.panes;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -16,39 +15,33 @@ import static com.skaliy.mobilecom.client.panes.PaneRecord.*;
 
 public class PaneOrder extends AnchorPane {
 
-    private static double layoutY = 10;
+    private static double layoutYNextPane = 10;
     private static int records = 0;
 
     private PaneRecord paneRecord;
     private String unitOrder;
     private double price;
-    private int units = 0, indexThisCancel, thisRecord;
-    private boolean select = false;
+    private int units, indexThisCancel, thisRecord;
 
-    public PaneOrder(int record, ObservableList<PaneRecord> paneRecords) {
+    public PaneOrder(PaneRecord paneRecord) {
 
-        for (int i = 0; i < paneRecords.size(); i++) {
-            if (i == record) {
-                if (paneRecords.get(i).getTHIS_PANE() == PANE_PHONE) {
-                    paneRecord = paneRecords.get(i);
+        this.paneRecord = paneRecord;
 
-                    unitOrder =
-                            paneRecord.getManufacturer() + " " + paneRecord.getModel();
-                    price = paneRecord.getPrice();
-                    units++;
-                    thisRecord = records++;
-                    select = true;
+        if (paneRecord.getTHIS_PANE() == PANE_PHONE) {
 
-                } else if (paneRecords.get(i).getTHIS_PANE() == PANE_TARIFF) {
-                    paneRecord = paneRecords.get(i);
+            unitOrder = paneRecord.getManufacturer() + " " + paneRecord.getModel();
+            price = paneRecord.getPrice();
 
-                    unitOrder = paneRecord.getTitle();
-                    price = paneRecord.getPrice();
-                    units++;
-                    thisRecord = records++;
-                    select = true;
-                }
-            }
+            units = 1;
+            thisRecord = records++;
+
+        } else if (paneRecord.getTHIS_PANE() == PANE_TARIFF) {
+
+            unitOrder = paneRecord.getTitle();
+            price = paneRecord.getPrice();
+
+            units = 1;
+            thisRecord = records++;
         }
         createPane();
     }
@@ -56,16 +49,15 @@ public class PaneOrder extends AnchorPane {
     private void createPane() {
 
         Label labelTitleOrder = newLabel("Товар в корзине:\n" + unitOrder,
-                20, 1, 10, 10);
+                20, 1, 10);
 
         Separator separatorTitleOrder = newSeparator(
                 labelTitleOrder.getLayoutY() + labelTitleOrder.getPrefHeight() + 10);
 
         Label labelPrice = newLabel("Сумма: " + (price * units),
-                14, 1, 10, separatorTitleOrder.getLayoutY() + 13);
+                14, 1, separatorTitleOrder.getLayoutY() + 13);
         Label labelUnits = newLabel("Количество: " + units,
-                14, 1, 10,
-                labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 10);
+                14, 1, labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 10);
 
         ImageView imageCancel = new ImageView();
         imageCancel.getStyleClass().add("image-cancel");
@@ -82,18 +74,18 @@ public class PaneOrder extends AnchorPane {
         setPrefWidth(645);
         setPrefHeight(labelUnits.getLayoutY() + labelUnits.getPrefHeight() + 10);
         setLayoutX(10);
-        setLayoutY(layoutY);
+        setLayoutY(layoutYNextPane);
 
-        layoutY += getPrefHeight() + 10;
+        layoutYNextPane += getPrefHeight() + 10;
     }
 
-    private Label newLabel(String text, int textSize, int alignment, double layoutX, double layoutY) {
+    private Label newLabel(String text, int textSize, int alignment, double layoutY) {
         Label label = new Label();
 
         label.setText(text);
         label.setFont(new Font("Calibri", textSize));
         label.setPrefSize(625, Math.round(textSize * 1.5) * getCountLines(text));
-        label.setLayoutX(layoutX);
+        label.setLayoutX(10);
         label.setLayoutY(layoutY);
 
         label.setAlignment(
@@ -126,14 +118,28 @@ public class PaneOrder extends AnchorPane {
         return countLines;
     }
 
-    public static double getPanesHeight() {
-        //int layout = layoutY;
-//        layoutY = 10;
-        return layoutY;
+    public double getLayoutYNextPane() {
+        return layoutYNextPane;
     }
 
-    public static void setPanesHeight(double height) {
-        layoutY = height;
+    public void setLayoutYNextPane(double layoutYNextPane) {
+        PaneOrder.layoutYNextPane = layoutYNextPane;
+    }
+
+    public int getUnits() {
+        return units;
+    }
+
+    public void setUnits(int units) {
+        this.units = units;
+    }
+
+    public PaneRecord getPaneRecord() {
+        return paneRecord;
+    }
+
+    public void setPaneRecord(PaneRecord paneRecord) {
+        this.paneRecord = paneRecord;
     }
 
     public String getUnitOrder() {
@@ -160,20 +166,12 @@ public class PaneOrder extends AnchorPane {
         this.thisRecord = thisRecord;
     }
 
-    public static int getRecords() {
+    public int getRecords() {
         return records;
     }
 
-    public static void setRecords(int records) {
+    public void setRecords(int records) {
         PaneOrder.records = records;
-    }
-
-    public boolean isSelect() {
-        return select;
-    }
-
-    public void setSelect(boolean select) {
-        this.select = select;
     }
 
     public int getIndexThisCancel() {
@@ -183,4 +181,5 @@ public class PaneOrder extends AnchorPane {
     public void setIndexThisCancel(int indexThisCancel) {
         this.indexThisCancel = indexThisCancel;
     }
+
 }
