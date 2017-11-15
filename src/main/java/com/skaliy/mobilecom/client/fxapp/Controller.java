@@ -92,10 +92,43 @@ public class Controller {
     }
 
     private void addOrder(ObservableList<PaneRecord> paneRecords) {
+
         for (int i = 0; i < paneRecords.size(); i++) {
             int finalI = i;
-            paneRecords.get(i).getChildren().get(paneRecords.get(i).getChildren().size() - 1).setOnMouseClicked(event -> {
-                anchorPaneParentOrder.getChildren().add(new PaneOrder(paneRecords.get(finalI).getRecord(), paneRecords));
+
+            ObservableList<PaneOrder> listPaneOrders = FXCollections.observableArrayList();
+
+            paneRecords.get(i).getChildren().get(paneRecords.get(i).getIndexLabelOrder()).setOnMouseClicked(event -> {
+
+                PaneOrder paneOrder = new PaneOrder(paneRecords.get(finalI).getRecord() - 1, paneRecords);
+                anchorPaneParentOrder.getChildren().add(paneOrder);
+                anchorPaneParentOrder.setPrefHeight(PaneOrder.getPanesHeight());
+
+                listPaneOrders.add(paneOrder);
+
+                paneOrder.getChildren().get(paneOrder.getIndexThisCancel()).setOnMouseClicked(event1 -> {
+
+                    anchorPaneParentOrder.setPrefHeight(PaneOrder.getPanesHeight() - paneOrder.getPrefHeight() - 10);
+                    PaneOrder.setPanesHeight(PaneOrder.getPanesHeight() - paneOrder.getPrefHeight() - 10);
+
+                    anchorPaneParentOrder.getChildren().remove(paneOrder);
+                    listPaneOrders.remove(paneOrder);
+
+                    for (int j = 0; j < listPaneOrders.size(); j++) {
+                        listPaneOrders.get(j).setThisRecord(j);
+                    }
+
+                    // TODO: 15.11.2017 listPaneOrders.size() -> PaneOrder.getRecords() - 1
+                    PaneOrder.setRecords(listPaneOrders.size());
+
+                    // TODO: 15.11.2017 anchorPaneParentOrder.getChildren().size() -> listPaneOrders.size()
+                    for (int j = paneOrder.getThisRecord(); j < anchorPaneParentOrder.getChildren().size(); j++) {
+                        anchorPaneParentOrder.getChildren().get(j).setLayoutY(
+                                anchorPaneParentOrder.getChildren().get(j).getLayoutY() - paneOrder.getPrefHeight() - 10);
+                    }
+
+                });
+
             });
         }
     }

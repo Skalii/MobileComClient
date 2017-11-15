@@ -30,8 +30,7 @@ public class PaneRecord extends AnchorPane {
     private double prefWidth, price, diagonal, cameraMain, cameraMainTwo, cameraFront;
     private boolean memoryCard = false;
     private Date dateStart, dateEnd;
-    private int record, ram, rom, simcardQuant, batary, units;
-    private Label labelOrder;
+    private int record, ram, rom, simcardQuant, batary, units, indexLabelOrder;
 
     public PaneRecord(int PANE, String[] values) {
         THIS_PANE = PANE;
@@ -198,10 +197,9 @@ public class PaneRecord extends AnchorPane {
                     "Стоимость: " + price + " грн",
                     14, 1, separatorParameters.getLayoutY() + 13);
             Label labelAvailability = newLabel(
-                    units > 1 ? "Есть на складе" : "Нет на складе",
+                    units > 1 ? "Есть в наличии" : "Нет в наличии",
                     14, 2, separatorParameters.getLayoutY() + 13);
-            labelOrder = new Label();
-            labelOrder = newLabel(
+            Label labelOrder = newLabel(
                     "Добавить в корзину",
                     14, 3, separatorParameters.getLayoutY() + 13);
             labelOrder.setCursor(Cursor.HAND);
@@ -211,6 +209,8 @@ public class PaneRecord extends AnchorPane {
                     labelPhone, separatorPhone,
                     labelParameters, separatorParameters,
                     labelPrice, labelAvailability, labelOrder);
+
+            this.indexLabelOrder = getChildren().size() - 1;
 
             prefHeight = labelOrder.getLayoutY() + labelOrder.getPrefHeight() + 10;
         }
@@ -455,5 +455,12 @@ public class PaneRecord extends AnchorPane {
 
     public void setRecord(int record) {
         this.record = record;
+    }
+
+    public void setIndexLabelOrder(int indexLabelOrder) {
+        this.indexLabelOrder = indexLabelOrder;
+    }
+    public int getIndexLabelOrder() {
+        return indexLabelOrder;
     }
 }

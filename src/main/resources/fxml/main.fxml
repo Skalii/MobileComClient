@@ -88,7 +88,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="680.0">
+                        <ScrollPane layoutX="10.0" layoutY="180.0" prefHeight="350.0" prefWidth="680.0">
                           <content>
                             <AnchorPane fx:id="anchorPaneParentOrder" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="665.0" />
                           </content>

@@ -16,12 +16,14 @@ import static com.skaliy.mobilecom.client.panes.PaneRecord.*;
 
 public class PaneOrder extends AnchorPane {
 
-    private static int layoutY = 10;
+    private static double layoutY = 10;
+    private static int records = 0;
 
     private PaneRecord paneRecord;
     private String unitOrder;
     private double price;
-    private int units = 0;
+    private int units = 0, indexThisCancel, thisRecord;
+    private boolean select = false;
 
     public PaneOrder(int record, ObservableList<PaneRecord> paneRecords) {
 
@@ -34,6 +36,8 @@ public class PaneOrder extends AnchorPane {
                             paneRecord.getManufacturer() + " " + paneRecord.getModel();
                     price = paneRecord.getPrice();
                     units++;
+                    thisRecord = records++;
+                    select = true;
 
                 } else if (paneRecords.get(i).getTHIS_PANE() == PANE_TARIFF) {
                     paneRecord = paneRecords.get(i);
@@ -41,6 +45,8 @@ public class PaneOrder extends AnchorPane {
                     unitOrder = paneRecord.getTitle();
                     price = paneRecord.getPrice();
                     units++;
+                    thisRecord = records++;
+                    select = true;
                 }
             }
         }
@@ -49,7 +55,7 @@ public class PaneOrder extends AnchorPane {
 
     private void createPane() {
 
-        Label labelTitleOrder = newLabel("Товар в корзине: " + unitOrder,
+        Label labelTitleOrder = newLabel("Товар в корзине:\n" + unitOrder,
                 20, 1, 10, 10);
 
         Separator separatorTitleOrder = newSeparator(
@@ -58,21 +64,22 @@ public class PaneOrder extends AnchorPane {
         Label labelPrice = newLabel("Сумма: " + (price * units),
                 14, 1, 10, separatorTitleOrder.getLayoutY() + 13);
         Label labelUnits = newLabel("Количество: " + units,
-                14, 3,
-                labelPrice.getLayoutX() + labelPrice.getPrefWidth(),
-                separatorTitleOrder.getLayoutY() + 13);
+                14, 1, 10,
+                labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 10);
 
         ImageView imageCancel = new ImageView();
         imageCancel.getStyleClass().add("image-cancel");
-        imageCancel.setFitWidth(20);
-        imageCancel.setFitHeight(20);
-        imageCancel.setLayoutX(625);
+        imageCancel.setFitWidth(30);
+        imageCancel.setFitHeight(30);
+        imageCancel.setLayoutX(585);
         imageCancel.setLayoutY(separatorTitleOrder.getLayoutY() + 13);
 
         getChildren().addAll(labelTitleOrder, separatorTitleOrder, labelPrice, labelUnits, imageCancel);
 
+        indexThisCancel = getChildren().size() - 1;
+
         getStyleClass().add("anchor-pane-content");
-        setPrefWidth(625);
+        setPrefWidth(645);
         setPrefHeight(labelUnits.getLayoutY() + labelUnits.getPrefHeight() + 10);
         setLayoutX(10);
         setLayoutY(layoutY);
@@ -119,10 +126,14 @@ public class PaneOrder extends AnchorPane {
         return countLines;
     }
 
-    public static int getAndReplaceHeight() {
-        int layout = layoutY;
-        layoutY = 10;
-        return layout;
+    public static double getPanesHeight() {
+        //int layout = layoutY;
+//        layoutY = 10;
+        return layoutY;
+    }
+
+    public static void setPanesHeight(double height) {
+        layoutY = height;
     }
 
     public String getUnitOrder() {
@@ -141,4 +152,35 @@ public class PaneOrder extends AnchorPane {
         this.price = price;
     }
 
+    public int getThisRecord() {
+        return thisRecord;
+    }
+
+    public void setThisRecord(int thisRecord) {
+        this.thisRecord = thisRecord;
+    }
+
+    public static int getRecords() {
+        return records;
+    }
+
+    public static void setRecords(int records) {
+        PaneOrder.records = records;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
+
+    public int getIndexThisCancel() {
+        return indexThisCancel;
+    }
+
+    public void setIndexThisCancel(int indexThisCancel) {
+        this.indexThisCancel = indexThisCancel;
+    }
 }
