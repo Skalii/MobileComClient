@@ -2,7 +2,7 @@
     -fx-alignment: center;
 }*/
 
-.anchor-pane-content {
+AnchorPane, PaneRecord, PaneOrder {
     -fx-border-color: #5f5f5f;
 }
 

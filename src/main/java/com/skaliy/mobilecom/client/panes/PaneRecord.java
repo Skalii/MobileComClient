@@ -92,11 +92,14 @@ public class PaneRecord extends AnchorPane {
             color = values[16];
             try {
                 price = Double.parseDouble(values[17]
-                        .substring(0, values[17].length() - 2)
-                        .replaceAll(",", "."));
+                        .replace(",", ".")
+                        .replace(" ", "")
+                        .replace(" ", "")
+                        .replace("?", ""));
             } catch (NumberFormatException e) {
                 price = 0.00;
             }
+
             units = Integer.parseInt(values[18]);
 
             prefWidth = 410;
@@ -215,7 +218,7 @@ public class PaneRecord extends AnchorPane {
             prefHeight = labelOrder.getLayoutY() + labelOrder.getPrefHeight() + 10;
         }
 
-        getStyleClass().add("anchor-pane-content");
+        //getStyleClass().add("anchor-pane-content");
         setPrefWidth(prefWidth + 20);
         setPrefHeight(prefHeight);
         setLayoutX(10);

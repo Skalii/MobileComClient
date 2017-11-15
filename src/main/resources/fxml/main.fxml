@@ -2,13 +2,17 @@
 
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.client.fxapp.Controller">
     <children>
@@ -84,16 +88,55 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Оформить заказ">
+                <Tab text="Оформление заказа">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ScrollPane layoutX="10.0" layoutY="180.0" prefHeight="350.0" prefWidth="680.0">
-                          <content>
-                            <AnchorPane fx:id="anchorPaneParentOrder" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="665.0" />
-                          </content>
-                        </ScrollPane>
-                     </children></AnchorPane>
+                            <children>
+                                <ScrollPane layoutX="10.0" layoutY="152.0" prefHeight="378.0" prefWidth="680.0">
+                                    <content>
+                                        <AnchorPane fx:id="anchorPaneParentOrder" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="665.0" />
+                                    </content>
+                                </ScrollPane>
+                                <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="132.0" prefWidth="680.0">
+                                    <children>
+                                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="112.0" prefWidth="400.0">
+                                            <children>
+                                                <TextField fx:id="textClientFName" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="185.0" promptText="* Имя" />
+                                                <TextField fx:id="textClientLName" layoutX="10.0" layoutY="45.0" prefHeight="25.0" prefWidth="185.0" promptText="* Фамилия" />
+                                                <TextField fx:id="textClientPName" layoutX="10.0" layoutY="80.0" prefHeight="25.0" prefWidth="185.0" promptText="* Отчество" />
+                                                <TextField fx:id="textClientPNumber" layoutX="205.0" layoutY="10.0" prefHeight="25.0" prefWidth="185.0" promptText="* Номер телефона" />
+                                                <TextField fx:id="textClientEmail" layoutX="205.0" layoutY="45.0" prefHeight="25.0" prefWidth="185.0" promptText="* Email" />
+                                    <ComboBox fx:id="comboOrderEmployee" layoutX="205.0" layoutY="80.0" prefHeight="25.0" prefWidth="185.0" promptText="Консультант" />
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane layoutX="420.0" layoutY="10.0" prefHeight="112.0" prefWidth="250.0">
+                                            <children>
+                                                <Label alignment="CENTER" layoutX="10.0" layoutY="5.0" prefHeight="23.0" prefWidth="230.0" text="Сумма заказа">
+                                                    <font>
+                                                        <Font name="Calibri" size="20.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="labelOrderPrice" alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="23.0" prefWidth="230.0">
+                                                    <font>
+                                                        <Font name="Calibri" size="25.0" />
+                                                    </font>
+                                                </Label>
+                                                <Button fx:id="buttonOrderAccept" disable="true" layoutX="10.0" layoutY="75.0" mnemonicParsing="false" text="Подтвердить заказ">
+                                                    <font>
+                                                        <Font name="Calibri" size="14.0" />
+                                                    </font>
+                                                </Button>
+                                                <Button fx:id="buttonOrderClear" disable="true" layoutX="165.0" layoutY="75.0" mnemonicParsing="false" text="Очистить">
+                                                    <font>
+                                                        <Font name="Calibri" size="14.0" />
+                                                    </font>
+                                                </Button>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>

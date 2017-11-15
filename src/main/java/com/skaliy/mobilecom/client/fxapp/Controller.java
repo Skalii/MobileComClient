@@ -6,10 +6,13 @@ import com.skaliy.mobilecom.client.panes.PaneRecord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 
 import static com.skaliy.mobilecom.client.panes.PaneRecord.*;
 
@@ -17,6 +20,19 @@ public class Controller {
 
     @FXML
     public Button buttonGetTariffs, buttonGetOffers;
+
+    @FXML
+    public TextField textClientFName, textClientLName, textClientPName,
+            textClientPNumber, textClientEmail;
+
+    @FXML
+    public Label labelOrderPrice;
+
+    @FXML
+    public Button buttonOrderAccept, buttonOrderClear;
+
+    @FXML
+    public ComboBox<String> comboOrderEmployee;
 
     @FXML
     private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs,
@@ -31,6 +47,8 @@ public class Controller {
 
     private ObservableList<PaneRecord> listPaneRecordsMain, listPaneRecordsTariffs,
             listPaneRecordsPhones, listPaneRecordsOrder;
+
+    private ObservableList<PaneOrder> listPaneOrders = FXCollections.observableArrayList();
 
     private Client client;
 
@@ -54,6 +72,8 @@ public class Controller {
         setAnchorPaneParent(anchorPaneParentPhones, listPaneRecordsPhones,
                 "get_phones", PANE_PHONE, false);
 
+        setComboItems(comboOrderEmployee, "Консультант", "get_employees_name");
+
         buttonGetTariffs.setOnAction(event -> {
             setAnchorPaneParent(anchorPaneParentTariffs, listPaneRecordsTariffs,
                     "get_tariff_", PANE_TARIFF, true);
@@ -62,6 +82,71 @@ public class Controller {
             setAnchorPaneParent(anchorPaneParentTariffs, listPaneRecordsTariffs,
                     "get_offers", PANE_OFFER, false);
         });
+
+        buttonOrderClear.setOnAction(event -> {
+
+            if (!anchorPaneParentOrder.getChildren().isEmpty()) {
+                listPaneOrders.get(0).setLayoutYNextPane(10);
+                listPaneOrders.get(0).setRecords(0);
+                listPaneOrders.clear();
+                anchorPaneParentOrder.getChildren().clear();
+                anchorPaneParentOrder.setPrefHeight(0);
+
+                buttonOrderAccept.setDisable(true);
+                buttonOrderClear.setDisable(true);
+            }
+        });
+
+        buttonOrderAccept.setOnAction(event -> {
+
+            if (!anchorPaneParentOrder.getChildren().isEmpty()) {
+                double amount = 0.00;
+                String employee = comboOrderEmployee.getSelectionModel().getSelectedItem();
+                int idEmployee = 0;
+
+                if (!Objects.equals(employee, "Консультант")) {
+                    idEmployee = Integer.parseInt(client.query("get_id_employee_" + employee).get(0)[0]);
+                }
+
+                for (PaneOrder listPaneOrder : listPaneOrders) {
+                    amount += listPaneOrder.getPrice() * listPaneOrder.getUnits();
+                }
+
+                boolean stateQuerySale = client.query(false,
+                        "add_sale," + new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+                                + "," + amount
+                                + (!Objects.equals(employee, "Консультант") ? ",id" + idEmployee : "")
+                                + ",FALSE," + textClientLName + " " + textClientFName + " " + textClientPName
+                                + "," + textClientPNumber + "," + textClientEmail);
+
+                if (stateQuerySale) {
+                    int idLastSale = Integer.parseInt(client.query("get_last_sale").get(0)[0]);
+
+                    boolean stateQuerySaleDetail = client.query(false, "add_sale_detail," + idLastSale);
+
+                    if (stateQuerySaleDetail) {
+                        int idLastSaleDetail = Integer.parseInt(client.query("get_last_sale_detail").get(0)[0]);
+// TODO: 15.11.2017
+                        boolean stateQueryUnionPhones = client.query(false,
+                                "");
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+    private void setComboItems(ComboBox<String> comboItems, String selectValue, String query) {
+        ArrayList<String[]> records = client.query(query);
+
+        comboItems.getItems().add(selectValue);
+
+        for (String[] record : records) {
+            comboItems.getItems().add(record[0]);
+        }
 
     }
 
@@ -88,22 +173,33 @@ public class Controller {
         }
         paneParent.setPrefHeight(PaneRecord.getAndReplaceHeight());
 
-        addOrder(listPaneRecords);
+        setOrders(listPaneRecords);
     }
 
-    private void addOrder(ObservableList<PaneRecord> paneRecords) {
-
-        ObservableList<PaneOrder> listPaneOrders = FXCollections.observableArrayList();
+    private void setOrders(ObservableList<PaneRecord> paneRecords) {
 
         for (int i = 0; i < paneRecords.size(); i++) {
             int finalI = i;
 
             paneRecords.get(i).getChildren().get(paneRecords.get(i).getIndexLabelOrder()).setOnMouseClicked(event -> {
 
+                for (int j = 0; j < listPaneOrders.size(); j++) {
+                    if (paneRecords.get(finalI).getRecord() == listPaneOrders.get(j).getPaneRecord().getRecord()) {
+                        listPaneOrders.get(j).setPriceAndUnits(listPaneOrders.get(j).getUnits() + 1);
+                        return;
+                    }
+                }
+
                 PaneOrder paneOrder = new PaneOrder(paneRecords.get(finalI));
+
                 listPaneOrders.add(paneOrder);
                 anchorPaneParentOrder.getChildren().add(paneOrder);
                 anchorPaneParentOrder.setPrefHeight(paneOrder.getLayoutYNextPane());
+
+                if (listPaneOrders.size() == 1) {
+                    buttonOrderAccept.setDisable(false);
+                    buttonOrderClear.setDisable(false);
+                }
 
                 paneOrder.getChildren().get(paneOrder.getIndexThisCancel()).setOnMouseClicked(event1 -> {
 
@@ -123,6 +219,12 @@ public class Controller {
                     for (int j = paneOrder.getThisRecord(); j < paneOrder.getRecords(); j++) {
                         anchorPaneParentOrder.getChildren().get(j).setLayoutY(
                                 anchorPaneParentOrder.getChildren().get(j).getLayoutY() - paneOrder.getPrefHeight() - 10);
+                    }
+
+                    if (anchorPaneParentOrder.getChildren().isEmpty()) {
+                        anchorPaneParentOrder.setPrefHeight(0);
+                        buttonOrderAccept.setDisable(true);
+                        buttonOrderClear.setDisable(true);
                     }
 
                 });

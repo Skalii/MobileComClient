@@ -21,7 +21,8 @@ public class PaneOrder extends AnchorPane {
     private PaneRecord paneRecord;
     private String unitOrder;
     private double price;
-    private int units, indexThisCancel, thisRecord;
+    private int units, indexThisCancel, indexThisUnits, indexThisPrice, thisRecord;
+    private Label labelPrice, labelUnits;
 
     public PaneOrder(PaneRecord paneRecord) {
 
@@ -54,29 +55,36 @@ public class PaneOrder extends AnchorPane {
         Separator separatorTitleOrder = newSeparator(
                 labelTitleOrder.getLayoutY() + labelTitleOrder.getPrefHeight() + 10);
 
-        Label labelPrice = newLabel("Сумма: " + (price * units),
+        labelPrice = newLabel("Сумма: " + (price * units),
                 14, 1, separatorTitleOrder.getLayoutY() + 13);
-        Label labelUnits = newLabel("Количество: " + units,
+        labelUnits = newLabel("Количество: " + units,
                 14, 1, labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 10);
 
         ImageView imageCancel = new ImageView();
         imageCancel.getStyleClass().add("image-cancel");
-        imageCancel.setFitWidth(30);
-        imageCancel.setFitHeight(30);
-        imageCancel.setLayoutX(585);
-        imageCancel.setLayoutY(separatorTitleOrder.getLayoutY() + 13);
+        imageCancel.setFitWidth(40);
+        imageCancel.setFitHeight(40);
+        imageCancel.setLayoutX(595);
+        imageCancel.setLayoutY(separatorTitleOrder.getLayoutY() + 23);
 
         getChildren().addAll(labelTitleOrder, separatorTitleOrder, labelPrice, labelUnits, imageCancel);
 
+        indexThisPrice = getChildren().size() - 3;
+        indexThisUnits = getChildren().size() - 2;
         indexThisCancel = getChildren().size() - 1;
 
-        getStyleClass().add("anchor-pane-content");
         setPrefWidth(645);
         setPrefHeight(labelUnits.getLayoutY() + labelUnits.getPrefHeight() + 10);
         setLayoutX(10);
         setLayoutY(layoutYNextPane);
 
         layoutYNextPane += getPrefHeight() + 10;
+    }
+
+    public void setPriceAndUnits(int units) {
+        setUnits(units);
+        labelPrice.setText("Сумма: " + (price * units));
+        labelUnits.setText("Количество: " + units);
     }
 
     private Label newLabel(String text, int textSize, int alignment, double layoutY) {
@@ -180,6 +188,22 @@ public class PaneOrder extends AnchorPane {
 
     public void setIndexThisCancel(int indexThisCancel) {
         this.indexThisCancel = indexThisCancel;
+    }
+
+    public int getIndexThisUnits() {
+        return indexThisUnits;
+    }
+
+    public void setIndexThisUnits(int indexThisUnits) {
+        this.indexThisUnits = indexThisUnits;
+    }
+
+    public int getIndexThisPrice() {
+        return indexThisPrice;
+    }
+
+    public void setIndexThisPrice(int indexThisPrice) {
+        this.indexThisPrice = indexThisPrice;
     }
 
 }
