@@ -218,7 +218,6 @@ public class PaneRecord extends AnchorPane {
             prefHeight = labelOrder.getLayoutY() + labelOrder.getPrefHeight() + 10;
         }
 
-        //getStyleClass().add("anchor-pane-content");
         setPrefWidth(prefWidth + 20);
         setPrefHeight(prefHeight);
         setLayoutX(10);

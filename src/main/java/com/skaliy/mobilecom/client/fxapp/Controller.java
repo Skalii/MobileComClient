@@ -84,28 +84,18 @@ public class Controller {
         });
 
         buttonOrderClear.setOnAction(event -> {
-
-            if (!anchorPaneParentOrder.getChildren().isEmpty()) {
-                listPaneOrders.get(0).setLayoutYNextPane(10);
-                listPaneOrders.get(0).setRecords(0);
-                listPaneOrders.clear();
-                anchorPaneParentOrder.getChildren().clear();
-                anchorPaneParentOrder.setPrefHeight(0);
-
-                buttonOrderAccept.setDisable(true);
-                buttonOrderClear.setDisable(true);
-            }
+            clearOrders();
         });
 
         buttonOrderAccept.setOnAction(event -> {
 
-            if (!anchorPaneParentOrder.getChildren().isEmpty()) {
+            if (!listPaneOrders.isEmpty()) {
                 double amount = 0.00;
                 String employee = comboOrderEmployee.getSelectionModel().getSelectedItem();
                 int idEmployee = 0;
 
-                if (!Objects.equals(employee, "Консультант")) {
-                    idEmployee = Integer.parseInt(client.query("get_id_employee_" + employee).get(0)[0]);
+                if (!Objects.equals(employee, "Консультант") || !Objects.equals(employee, null)) {
+                    idEmployee = Integer.parseInt(client.query("get_id_employee-" + employee).get(0)[0]);
                 }
 
                 for (PaneOrder listPaneOrder : listPaneOrders) {
@@ -115,21 +105,27 @@ public class Controller {
                 boolean stateQuerySale = client.query(false,
                         "add_sale," + new SimpleDateFormat("yyyy-MM-dd").format(new Date())
                                 + "," + amount
-                                + (!Objects.equals(employee, "Консультант") ? ",id" + idEmployee : "")
-                                + ",FALSE," + textClientLName + " " + textClientFName + " " + textClientPName
-                                + "," + textClientPNumber + "," + textClientEmail);
+                                + (!Objects.equals(employee, "Консультант")
+                                || !Objects.equals(employee, null) ? ",id" + idEmployee : "") + ",FALSE,"
+                                + textClientLName.getText() + " " + textClientFName.getText() + " " + textClientPName.getText()
+                                + "," + textClientPNumber.getText() + "," + textClientEmail.getText());
 
                 if (stateQuerySale) {
                     int idLastSale = Integer.parseInt(client.query("get_last_sale").get(0)[0]);
 
-                    boolean stateQuerySaleDetail = client.query(false, "add_sale_detail," + idLastSale);
+                    boolean[] stateQueryUnionPhones = new boolean[listPaneOrders.size()];
 
-                    if (stateQuerySaleDetail) {
-                        int idLastSaleDetail = Integer.parseInt(client.query("get_last_sale_detail").get(0)[0]);
-// TODO: 15.11.2017
-                        boolean stateQueryUnionPhones = client.query(false,
-                                "");
+                    for (int i = 0; i < listPaneOrders.size(); i++) {
+                        stateQueryUnionPhones[i] = client.query(false,
+                                "add_union_phone," + idLastSale
+                                        + "," + listPaneOrders.get(i).getPaneRecord().getRecord()
+                                        + "," + listPaneOrders.get(i).getUnits());
+                        if (!stateQueryUnionPhones[i]) {
+                            break;
+                        }
                     }
+
+                    clearOrders();
 
                 }
 
@@ -233,6 +229,18 @@ public class Controller {
         }
     }
 
+    private void clearOrders() {
+        if (!anchorPaneParentOrder.getChildren().isEmpty()) {
+            listPaneOrders.get(0).setLayoutYNextPane(10);
+            listPaneOrders.get(0).setRecords(0);
+            listPaneOrders.clear();
+            anchorPaneParentOrder.getChildren().clear();
+            anchorPaneParentOrder.setPrefHeight(0);
+
+            buttonOrderAccept.setDisable(true);
+            buttonOrderClear.setDisable(true);
+        }
+    }
 /*
     private void setAnchorPaneParent(AnchorPane paneParent, String query, int PANE, int... index) {
         paneParent.getChildren().clear();
