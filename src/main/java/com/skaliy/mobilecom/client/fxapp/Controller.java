@@ -29,7 +29,10 @@ public class Controller {
     public Button buttonOrderAccept, buttonOrderClear;
 
     @FXML
-    public ComboBox<String> comboOrderEmployee;
+    public ComboBox<String> comboOrderEmployee,
+            comboSearchManufacturer, comboSearchColor, comboSearchOS, comboSearchRAM, comboSearchROM,
+            comboSearchMemoryCard, comboSearchSIM, comboSearchProcessor, comboSearchBatary,
+            comboSearchDiagonal, comboSearchResolution, comboSearchCameraMain, comboSearchCameraFront;
 
     @FXML
     private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs, anchorPaneParentOffers,
@@ -75,11 +78,20 @@ public class Controller {
                 "get_phone_p-", PANE_PHONE);
         search(textSearchTariffs, anchorPaneParentTariffs, listPaneRecordsTariffs,
                 "get_tariff_p-", PANE_TARIFF);
+        search(textSearchOffers, anchorPaneParentOffers, listPaneRecordsOffers,
+                "get_offer_p-", PANE_OFFER);
 
-        /*search(textSearchOffers, anchorPaneParentOffers, listPaneRecordsOffers,
-                "get_offers", PANE_OFFER, false);*/
+        setComboItems(comboOrderEmployee, "Консультант", "get_employees_names");
 
-        setComboItems(comboOrderEmployee, "Консультант", "get_employees_name");
+        setComboItems(comboSearchManufacturer, "Производитель", "get_manufacturers_names");
+        setComboItems(comboSearchColor, "Цвет", "get_phones_colors");
+        setComboItems(comboSearchOS, "ОС", "get_pd_os");
+        setComboItems(comboSearchRAM, "Оперативная память", "get_pd_ram");
+
+        ObservableList<ComboBox<String>> comboSearch = FXCollections.observableArrayList(
+                comboSearchManufacturer, comboSearchColor, comboSearchOS, comboSearchRAM);
+
+        search(anchorPaneParentPhones, listPaneRecordsPhones, comboSearch);
 
         buttonOrderClear.setOnAction(event -> {
             clearOrders();
@@ -207,6 +219,44 @@ public class Controller {
             }
 
         });
+
+    }
+
+    private void search(AnchorPane paneParent,
+                        ObservableList<PaneRecord> listPaneRecords,
+                        ObservableList<ComboBox<String>> listCombo) {
+
+//        final String[] query = {"get_phone_c-"};
+
+        for (int i = 0; i < listCombo.size(); i++) {
+            int finalI = i;
+            listCombo.get(i).setOnAction(event -> {
+
+                String search = "get_phone_c-";
+
+                for (int j = 0; j < listCombo.size(); j++) {
+                    if (listCombo.get(j).getValue() != null
+                            && !listCombo.get(j).getSelectionModel().isSelected(0)) {
+
+                        if (!Objects.equals(search, "get_phone_c-")) {
+                            search = search.concat(";");
+                        }
+
+                        search = search.concat(
+                                listCombo.get(j).getItems().get(0)
+                                        + " = '" + listCombo.get(j).getSelectionModel().getSelectedItem() + "'");
+                    }
+
+                    /*if (!Objects.equals(search, "get_phone_c-")) {
+                       ArrayList<String[]> records = client.query(search);
+                        for (String[] record : records) {
+                            System.out.println(Arrays.toString(record));
+                        }
+                    }*/
+                }
+
+            });
+        }
 
     }
 

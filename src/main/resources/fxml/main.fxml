@@ -14,33 +14,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.client.fxapp.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skaliy.mobilecom.client.fxapp.Controller">
     <children>
         <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="700.0">
             <menus>
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
-                        <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Создать резервную копию"
-                                  visible="false"/>
-                        <MenuItem fx:id="menuRestoreBackup" mnemonicParsing="false" text="Восстановить резервную копию"
-                                  visible="false"/>
-                        <SeparatorMenuItem fx:id="separatorMenuBackup" mnemonicParsing="false" visible="false"/>
-                        <MenuItem fx:id="menuHideTray" mnemonicParsing="false" text="Свернуть в трей"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Выход"/>
+                        <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Создать резервную копию" visible="false" />
+                        <MenuItem fx:id="menuRestoreBackup" mnemonicParsing="false" text="Восстановить резервную копию" visible="false" />
+                        <SeparatorMenuItem fx:id="separatorMenuBackup" mnemonicParsing="false" visible="false" />
+                        <MenuItem fx:id="menuHideTray" mnemonicParsing="false" text="Свернуть в трей" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Выход" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Авторизация" visible="false">
                     <items>
-                        <MenuItem fx:id="menuLogin" mnemonicParsing="false" text="Вход"/>
-                        <MenuItem fx:id="menuProfile" mnemonicParsing="false" text="Профиль"/>
+                        <MenuItem fx:id="menuLogin" mnemonicParsing="false" text="Вход" />
+                        <MenuItem fx:id="menuProfile" mnemonicParsing="false" text="Профиль" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Помощь">
                     <items>
-                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе"/>
+                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе" />
                     </items>
                 </Menu>
             </menus>
@@ -53,8 +49,7 @@
                             <children>
                                 <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="680.0">
                                     <content>
-                                        <AnchorPane fx:id="anchorPaneParentMain" minHeight="0.0" minWidth="0.0"
-                                                    prefHeight="0.0" prefWidth="665.0"/>
+                                        <AnchorPane fx:id="anchorPaneParentMain" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="665.0" />
                                     </content>
                                 </ScrollPane>
                             </children>
@@ -69,27 +64,21 @@
                                     <tabs>
                                         <Tab text="Тарифы">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                            prefWidth="200.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                     <children>
-                                                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="485.0"
-                                                                    prefWidth="465.0">
+                                                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="485.0" prefWidth="465.0">
                                                             <content>
-                                                                <AnchorPane fx:id="anchorPaneParentTariffs"
-                                                                            minHeight="0.0" minWidth="0.0"
-                                                                            prefHeight="0.0" prefWidth="450.0"/>
+                                                                <AnchorPane fx:id="anchorPaneParentTariffs" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="450.0" />
                                                             </content>
                                                         </ScrollPane>
-                                                        <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="125.0"
-                                                                    prefWidth="205.0">
+                                                        <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="125.0" prefWidth="205.0">
                                                             <children>
                                                                 <Label layoutX="82.0" layoutY="22.0" text="Поиск">
                                                                     <font>
-                                                                        <Font name="Calibri" size="16.0"/>
+                                                                        <Font name="Calibri" size="16.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <TextField fx:id="textSearchTariffs" layoutX="29.0"
-                                                                           layoutY="62.0"/>
+                                                                <TextField fx:id="textSearchTariffs" layoutX="29.0" layoutY="62.0" />
                                                             </children>
                                                         </AnchorPane>
                                                     </children>
@@ -98,27 +87,21 @@
                                         </Tab>
                                         <Tab text="Услуги">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                            prefWidth="200.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                     <children>
-                                                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="485.0"
-                                                                    prefWidth="465.0">
+                                                        <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="485.0" prefWidth="465.0">
                                                             <content>
-                                                                <AnchorPane fx:id="anchorPaneParentOffers"
-                                                                            minHeight="0.0" minWidth="0.0"
-                                                                            prefHeight="0.0" prefWidth="450.0"/>
+                                                                <AnchorPane fx:id="anchorPaneParentOffers" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="450.0" />
                                                             </content>
                                                         </ScrollPane>
-                                                        <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="125.0"
-                                                                    prefWidth="205.0">
+                                                        <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="40.0" prefWidth="205.0">
                                                             <children>
-                                                                <Label layoutX="82.0" layoutY="22.0" text="Поиск">
+                                                                <Label layoutX="10.0" layoutY="10.0" text="Поиск: ">
                                                                     <font>
-                                                                        <Font name="Calibri" size="16.0"/>
+                                                                        <Font name="Calibri" size="16.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <TextField fx:id="textSearchOffers" layoutX="29.0"
-                                                                           layoutY="62.0"/>
+                                                                <TextField fx:id="textSearchOffers" layoutX="60.0" layoutY="7.0" prefHeight="25.0" prefWidth="135.0" />
                                                             </children>
                                                         </AnchorPane>
                                                     </children>
@@ -137,18 +120,34 @@
                             <children>
                                 <ScrollPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="465.0">
                                     <content>
-                                        <AnchorPane fx:id="anchorPaneParentPhones" minHeight="0.0" minWidth="0.0"
-                                                    prefHeight="0.0" prefWidth="450.0"/>
+                                        <AnchorPane fx:id="anchorPaneParentPhones" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="450.0" />
                                     </content>
                                 </ScrollPane>
-                                <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="125.0" prefWidth="205.0">
+                                <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="40.0" prefWidth="205.0">
                                     <children>
-                                        <Label layoutX="82.0" layoutY="22.0" text="Поиск">
+                                        <Label layoutX="10.0" layoutY="10.0" text="Поиск: ">
                                             <font>
-                                                <Font name="Calibri" size="16.0"/>
+                                                <Font name="Calibri" size="16.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="textSearchPhones" layoutX="29.0" layoutY="62.0"/>
+                                        <TextField fx:id="textSearchPhones" layoutX="60.0" layoutY="7.0" prefHeight="25.0" prefWidth="135.0" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane layoutX="485.0" layoutY="60.0" prefHeight="470.0" prefWidth="205.0">
+                                    <children>
+                                        <ComboBox fx:id="comboSearchManufacturer" layoutX="10.0" layoutY="13.0" prefHeight="25.0" prefWidth="185.0" promptText="Производитель" />
+                                        <ComboBox fx:id="comboSearchColor" layoutX="10.0" layoutY="48.0" prefHeight="25.0" prefWidth="185.0" promptText="Цвет" />
+                                        <ComboBox fx:id="comboSearchOS" layoutX="10.0" layoutY="83.0" prefHeight="25.0" prefWidth="185.0" promptText="ОС" />
+                                        <ComboBox fx:id="comboSearchRAM" layoutX="10.0" layoutY="118.0" prefHeight="25.0" prefWidth="185.0" promptText="Оперативная память" />
+                                        <ComboBox fx:id="comboSearchROM" layoutX="10.0" layoutY="153.0" prefHeight="25.0" prefWidth="185.0" promptText="Встроенная память" />
+                                        <ComboBox fx:id="comboSearchMemoryCard" layoutX="10.0" layoutY="188.0" prefHeight="25.0" prefWidth="185.0" promptText="Карта памяти" />
+                                        <ComboBox fx:id="comboSearchSIM" layoutX="10.0" layoutY="223.0" prefHeight="25.0" prefWidth="185.0" promptText="Количество SIM-карт" />
+                                        <ComboBox fx:id="comboSearchProcessor" layoutX="10.0" layoutY="258.0" prefHeight="25.0" prefWidth="185.0" promptText="Процессор" />
+                                        <ComboBox fx:id="comboSearchBatary" layoutX="10.0" layoutY="293.0" prefHeight="25.0" prefWidth="185.0" promptText="Батарея" />
+                                        <ComboBox fx:id="comboSearchDiagonal" layoutX="10.0" layoutY="328.0" prefHeight="25.0" prefWidth="185.0" promptText="Диагональ" />
+                                        <ComboBox fx:id="comboSearchResolution" layoutX="10.0" layoutY="363.0" prefHeight="25.0" prefWidth="185.0" promptText="Разрешение" />
+                                        <ComboBox fx:id="comboSearchCameraMain" layoutX="10.0" layoutY="398.0" prefHeight="25.0" prefWidth="185.0" promptText="Основная камера" />
+                                        <ComboBox fx:id="comboSearchCameraFront" layoutX="10.0" layoutY="433.0" prefHeight="25.0" prefWidth="185.0" promptText="Фронтальная камера" />
                                     </children>
                                 </AnchorPane>
                             </children>
@@ -161,53 +160,41 @@
                             <children>
                                 <ScrollPane layoutX="10.0" layoutY="152.0" prefHeight="378.0" prefWidth="680.0">
                                     <content>
-                                        <AnchorPane fx:id="anchorPaneParentOrder" minHeight="0.0" minWidth="0.0"
-                                                    prefHeight="0.0" prefWidth="665.0"/>
+                                        <AnchorPane fx:id="anchorPaneParentOrder" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="665.0" />
                                     </content>
                                 </ScrollPane>
                                 <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="132.0" prefWidth="680.0">
                                     <children>
                                         <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="112.0" prefWidth="400.0">
                                             <children>
-                                                <TextField fx:id="textClientFName" layoutX="10.0" layoutY="10.0"
-                                                           prefHeight="25.0" prefWidth="185.0" promptText="* Имя"/>
-                                                <TextField fx:id="textClientLName" layoutX="10.0" layoutY="45.0"
-                                                           prefHeight="25.0" prefWidth="185.0" promptText="* Фамилия"/>
-                                                <TextField fx:id="textClientPName" layoutX="10.0" layoutY="80.0"
-                                                           prefHeight="25.0" prefWidth="185.0" promptText="* Отчество"/>
-                                                <TextField fx:id="textClientPNumber" layoutX="205.0" layoutY="10.0"
-                                                           prefHeight="25.0" prefWidth="185.0"
-                                                           promptText="* Номер телефона"/>
-                                                <TextField fx:id="textClientEmail" layoutX="205.0" layoutY="45.0"
-                                                           prefHeight="25.0" prefWidth="185.0" promptText="* Email"/>
-                                                <ComboBox fx:id="comboOrderEmployee" layoutX="205.0" layoutY="80.0"
-                                                          prefHeight="25.0" prefWidth="185.0" promptText="Консультант"/>
+                                                <TextField fx:id="textClientFName" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="185.0" promptText="* Имя" />
+                                                <TextField fx:id="textClientLName" layoutX="10.0" layoutY="45.0" prefHeight="25.0" prefWidth="185.0" promptText="* Фамилия" />
+                                                <TextField fx:id="textClientPName" layoutX="10.0" layoutY="80.0" prefHeight="25.0" prefWidth="185.0" promptText="* Отчество" />
+                                                <TextField fx:id="textClientPNumber" layoutX="205.0" layoutY="10.0" prefHeight="25.0" prefWidth="185.0" promptText="* Номер телефона" />
+                                                <TextField fx:id="textClientEmail" layoutX="205.0" layoutY="45.0" prefHeight="25.0" prefWidth="185.0" promptText="* Email" />
+                                                <ComboBox fx:id="comboOrderEmployee" layoutX="205.0" layoutY="80.0" prefHeight="25.0" prefWidth="185.0" promptText="Консультант" />
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane layoutX="420.0" layoutY="10.0" prefHeight="112.0" prefWidth="250.0">
                                             <children>
-                                                <Label alignment="CENTER" layoutX="10.0" layoutY="5.0" prefHeight="23.0"
-                                                       prefWidth="230.0" text="Сумма заказа">
+                                                <Label alignment="CENTER" layoutX="10.0" layoutY="5.0" prefHeight="23.0" prefWidth="230.0" text="Сумма заказа">
                                                     <font>
-                                                        <Font name="Calibri" size="20.0"/>
+                                                        <Font name="Calibri" size="20.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="labelOrderPrice" alignment="CENTER" layoutX="10.0"
-                                                       layoutY="35.0" prefHeight="23.0" prefWidth="230.0">
+                                                <Label fx:id="labelOrderPrice" alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="23.0" prefWidth="230.0">
                                                     <font>
-                                                        <Font name="Calibri" size="25.0"/>
+                                                        <Font name="Calibri" size="25.0" />
                                                     </font>
                                                 </Label>
-                                                <Button fx:id="buttonOrderAccept" disable="true" layoutX="10.0"
-                                                        layoutY="75.0" mnemonicParsing="false" text="Подтвердить заказ">
+                                                <Button fx:id="buttonOrderAccept" disable="true" layoutX="10.0" layoutY="75.0" mnemonicParsing="false" text="Подтвердить заказ">
                                                     <font>
-                                                        <Font name="Calibri" size="14.0"/>
+                                                        <Font name="Calibri" size="14.0" />
                                                     </font>
                                                 </Button>
-                                                <Button fx:id="buttonOrderClear" disable="true" layoutX="165.0"
-                                                        layoutY="75.0" mnemonicParsing="false" text="Очистить">
+                                                <Button fx:id="buttonOrderClear" disable="true" layoutX="165.0" layoutY="75.0" mnemonicParsing="false" text="Очистить">
                                                     <font>
-                                                        <Font name="Calibri" size="14.0"/>
+                                                        <Font name="Calibri" size="14.0" />
                                                     </font>
                                                 </Button>
                                             </children>
