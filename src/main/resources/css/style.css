@@ -9,6 +9,7 @@ AnchorPane, PaneRecord, PaneOrder {
 .image-cancel {
     -fx-image: url("../images/icons/icon_order_cancel_unfill.png");
 }
+
 .image-cancel:hover {
     -fx-image: url("../images/icons/icon_order_cancel_fill.png");
 }

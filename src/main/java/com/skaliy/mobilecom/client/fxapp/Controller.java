@@ -19,11 +19,8 @@ import static com.skaliy.mobilecom.client.panes.PaneRecord.*;
 public class Controller {
 
     @FXML
-    public Button buttonGetTariffs, buttonGetOffers;
-
-    @FXML
-    public TextField textClientFName, textClientLName, textClientPName,
-            textClientPNumber, textClientEmail;
+    public TextField textClientFName, textClientLName, textClientPName, textClientPNumber, textClientEmail,
+            textSearchPhones, textSearchTariffs, textSearchOffers;
 
     @FXML
     public Label labelOrderPrice;
@@ -35,7 +32,7 @@ public class Controller {
     public ComboBox<String> comboOrderEmployee;
 
     @FXML
-    private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs,
+    private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs, anchorPaneParentOffers,
             anchorPaneParentPhones, anchorPaneParentOrder;
 
     @FXML
@@ -45,7 +42,7 @@ public class Controller {
     @FXML
     private SeparatorMenuItem separatorMenuBackup;
 
-    private ObservableList<PaneRecord> listPaneRecordsMain, listPaneRecordsTariffs,
+    private ObservableList<PaneRecord> listPaneRecordsMain, listPaneRecordsTariffs, listPaneRecordsOffers,
             listPaneRecordsPhones, listPaneRecordsOrder;
 
     private ObservableList<PaneOrder> listPaneOrders = FXCollections.observableArrayList();
@@ -65,28 +62,27 @@ public class Controller {
             }
         }
 
-        setAnchorPaneParent(anchorPaneParentMain, listPaneRecordsMain,
-                "get_news", PANE_MAIN, false);
-        setAnchorPaneParent(anchorPaneParentTariffs, listPaneRecordsTariffs,
-                "get_tariff_", PANE_TARIFF, true);
-        setAnchorPaneParent(anchorPaneParentPhones, listPaneRecordsPhones,
-                "get_phones", PANE_PHONE, false);
+        listPaneRecordsMain = setAnchorPaneParent(
+                anchorPaneParentMain, "get_news", PANE_MAIN, false);
+        listPaneRecordsTariffs = setAnchorPaneParent(
+                anchorPaneParentTariffs, "get_tariff_i-", PANE_TARIFF, true);
+        listPaneRecordsOffers = setAnchorPaneParent(
+                anchorPaneParentOffers, "get_offers", PANE_OFFER, false);
+        listPaneRecordsPhones = setAnchorPaneParent(
+                anchorPaneParentPhones, "get_phones", PANE_PHONE, false);
+
+        search(textSearchPhones, anchorPaneParentPhones, listPaneRecordsPhones,
+                "get_phone_p-", PANE_PHONE);
+        search(textSearchTariffs, anchorPaneParentTariffs, listPaneRecordsTariffs,
+                "get_tariff_p-", PANE_TARIFF);
+        /*search(textSearchOffers, anchorPaneParentOffers, listPaneRecordsOffers,
+                "get_offers", PANE_OFFER, false);*/
 
         setComboItems(comboOrderEmployee, "Консультант", "get_employees_name");
-
-        buttonGetTariffs.setOnAction(event -> {
-            setAnchorPaneParent(anchorPaneParentTariffs, listPaneRecordsTariffs,
-                    "get_tariff_", PANE_TARIFF, true);
-        });
-        buttonGetOffers.setOnAction(event -> {
-            setAnchorPaneParent(anchorPaneParentTariffs, listPaneRecordsTariffs,
-                    "get_offers", PANE_OFFER, false);
-        });
 
         buttonOrderClear.setOnAction(event -> {
             clearOrders();
         });
-
         buttonOrderAccept.setOnAction(event -> {
 
             if (!listPaneOrders.isEmpty()) {
@@ -95,7 +91,7 @@ public class Controller {
                 int idEmployee = 0;
 
                 if (!Objects.equals(employee, "Консультант") || !Objects.equals(employee, null)) {
-                    idEmployee = Integer.parseInt(client.query("get_id_employee-" + employee).get(0)[0]);
+                    idEmployee = Integer.parseInt(client.query("get_id_employee_p-" + employee).get(0)[0]);
                 }
 
                 for (PaneOrder listPaneOrder : listPaneOrders) {
@@ -146,30 +142,71 @@ public class Controller {
 
     }
 
-    private void setAnchorPaneParent(AnchorPane paneParent, ObservableList<PaneRecord> listPaneRecords,
-                                     String query, final int PANE, boolean index) {
+    private ObservableList<PaneRecord> setAnchorPaneParent(
+            AnchorPane paneParent, String query, final int PANE, boolean index) {
+
+        ObservableList<PaneRecord> listPaneRecords = FXCollections.observableArrayList();
         paneParent.getChildren().clear();
-        listPaneRecords = FXCollections.observableArrayList();
+        double prefHeight = 0.00;
 
         if (!index) {
-            for (String[] record : client.query(query)) {
-                PaneRecord paneRecord = new PaneRecord(PANE, record);
-                paneParent.getChildren().add(paneRecord);
-                listPaneRecords.add(paneRecord);
+            ArrayList<String[]> records = client.query(query);
+
+            if (!Objects.equals(records.get(0)[0], "null")) {
+                for (String[] record : records) {
+                    PaneRecord paneRecord = new PaneRecord(PANE, record);
+                    paneParent.getChildren().add(paneRecord);
+                    listPaneRecords.add(paneRecord);
+                }
+                prefHeight = PaneRecord.getAndReplaceHeight();
             }
         } else {
             int size = Integer.parseInt(client.query(
-                    query.substring(0, query.length() - 1)
+                    query.substring(0, query.length() - 3)
                             .concat("s_count")).get(0)[0]);
-            for (int i = 1; i <= size; i++) {
-                PaneRecord paneRecord = new PaneRecord(PANE, client.query(query + i).get(0));
-                paneParent.getChildren().add(paneRecord);
-                listPaneRecords.add(paneRecord);
+            if (size != 0) {
+                for (int i = 1; i <= size; i++) {
+                    PaneRecord paneRecord = new PaneRecord(PANE, client.query(query + i).get(0));
+                    paneParent.getChildren().add(paneRecord);
+                    listPaneRecords.add(paneRecord);
+                }
+                prefHeight = PaneRecord.getAndReplaceHeight();
             }
+
         }
-        paneParent.setPrefHeight(PaneRecord.getAndReplaceHeight());
+        paneParent.setPrefHeight(prefHeight);
 
         setOrders(listPaneRecords);
+        return listPaneRecords;
+    }
+
+    private void search(TextField textSearch, AnchorPane paneParent, ObservableList<PaneRecord> listPaneRecords,
+                        String query, final int PANE) {
+
+        textSearch.setOnKeyReleased(event -> {
+
+            paneParent.getChildren().clear();
+            listPaneRecords.clear();
+
+            String search = textSearch.getText();
+
+            if (Objects.equals(search, "")) {
+                if (Objects.equals(query, "get_tariff_p-")) {
+                    setAnchorPaneParent(paneParent, query
+                            .replace("_p-", "_i-"), PANE, true);
+                } else {
+                    setAnchorPaneParent(paneParent, query
+                            .substring(0, query.indexOf("_p-"))
+                            .concat("s"), PANE, false);
+                }
+            } else {
+                String querySearch = query.concat(search);
+
+                setAnchorPaneParent(paneParent, querySearch, PANE, false);
+            }
+
+        });
+
     }
 
     private void setOrders(ObservableList<PaneRecord> paneRecords) {
@@ -239,6 +276,13 @@ public class Controller {
 
             buttonOrderAccept.setDisable(true);
             buttonOrderClear.setDisable(true);
+
+            textClientLName.clear();
+            textClientFName.clear();
+            textClientPName.clear();
+            textClientPNumber.clear();
+            textClientEmail.clear();
+            comboOrderEmployee.getSelectionModel().clearSelection();
         }
     }
 /*

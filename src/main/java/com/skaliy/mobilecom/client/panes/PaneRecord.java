@@ -23,7 +23,7 @@ public class PaneRecord extends AnchorPane {
             PANE_PHONE = 4;
     private final int THIS_PANE;
 
-    private static int layoutYNextPane = 10;
+    private static double layoutYNextPane = 10;
 
     private String title, general, availableOffers,
             manufacturer, model, os, processor, resolution, color;
@@ -265,8 +265,8 @@ public class PaneRecord extends AnchorPane {
         return countLines;
     }
 
-    public static int getAndReplaceHeight() {
-        int layout = layoutYNextPane;
+    public static double getAndReplaceHeight() {
+        double layout = layoutYNextPane;
         layoutYNextPane = 10;
         return layout;
     }

@@ -77,7 +77,7 @@ public class Client implements Runnable {
 
         } else {
             try {
-                Thread.currentThread().sleep(50);
+                Thread.currentThread().sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
