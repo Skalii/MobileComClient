@@ -75,6 +75,7 @@ public class Controller {
                 "get_phone_p-", PANE_PHONE);
         search(textSearchTariffs, anchorPaneParentTariffs, listPaneRecordsTariffs,
                 "get_tariff_p-", PANE_TARIFF);
+
         /*search(textSearchOffers, anchorPaneParentOffers, listPaneRecordsOffers,
                 "get_offers", PANE_OFFER, false);*/
 
