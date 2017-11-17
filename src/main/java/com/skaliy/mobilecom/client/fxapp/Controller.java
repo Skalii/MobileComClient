@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -116,13 +117,29 @@ public class Controller {
         });
         buttonOrderAccept.setOnAction(event -> {
 
+            if (textClientFName.getText().isEmpty() || textClientLName.getText().isEmpty()
+                    || textClientPName.getText().isEmpty() || textClientPNumber.getText().isEmpty()
+                    || textClientEmail.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                        "Заполните обязательные поля ввода *\n" +
+                                "(ФИО, номер телефона, email)");
+
+                return;
+            }
+
             if (!listPaneOrders.isEmpty()) {
                 double amount = 0.00;
                 String employee = comboOrderEmployee.getSelectionModel().getSelectedItem();
-                int idEmployee = 0;
+                int idEmployee = comboOrderEmployee.getSelectionModel().getSelectedIndex();
 
-                if (!Objects.equals(employee, "Консультант") || !Objects.equals(employee, null)) {
-                    idEmployee = Integer.parseInt(client.query("get_id_employee_p-" + employee).get(0)[0]);
+                if (idEmployee != 0) {
+                    try {
+                        idEmployee = Integer.parseInt(client.query("get_id_employee_p-" + employee).get(0)[0]);
+                    } catch (NumberFormatException e) {
+                        idEmployee = 0;
+                    }
+
                 }
 
                 for (PaneOrder listPaneOrder : listPaneOrders) {
@@ -132,24 +149,39 @@ public class Controller {
                 boolean stateQuerySale = client.query(false,
                         "add_sale," + new SimpleDateFormat("yyyy-MM-dd").format(new Date())
                                 + "," + amount
-                                + (!Objects.equals(employee, "Консультант")
-                                || !Objects.equals(employee, null) ? ",id" + idEmployee : "") + ",FALSE,"
+                                + (idEmployee != 0 ? ",id" + idEmployee : "") + ",FALSE,"
                                 + textClientLName.getText() + " " + textClientFName.getText() + " " + textClientPName.getText()
                                 + "," + textClientPNumber.getText() + "," + textClientEmail.getText());
 
                 if (stateQuerySale) {
                     int idLastSale = Integer.parseInt(client.query("get_last_sale").get(0)[0]);
 
-                    boolean[] stateQueryUnionPhones = new boolean[listPaneOrders.size()];
-
+                    int p = 0, t = 0;
                     for (int i = 0; i < listPaneOrders.size(); i++) {
-                        stateQueryUnionPhones[i] = client.query(false,
-                                "add_union_phone," + idLastSale
-                                        + "," + listPaneOrders.get(i).getPaneRecord().getRecord()
-                                        + "," + listPaneOrders.get(i).getUnits());
-                        if (!stateQueryUnionPhones[i]) {
-                            break;
+                        if (listPaneOrders.get(i).getPaneRecord().getTHIS_PANE() == PANE_PHONE) {
+                            ++p;
+                        } else if (listPaneOrders.get(i).getPaneRecord().getTHIS_PANE() == PANE_TARIFF) {
+                            ++t;
                         }
+                    }
+
+                    boolean[] stateQueryUnionPhones = new boolean[p], stateQueryUnionTariffs = new boolean[t];
+
+                    for (int i = 0, j = 0, k = 0; i < listPaneOrders.size(); i++) {
+
+                        if (listPaneOrders.get(i).getPaneRecord().getTHIS_PANE() == PANE_PHONE) {
+                            stateQueryUnionPhones[j++] = client.query(false,
+                                    "add_union_phone," + idLastSale
+                                            + "," + listPaneOrders.get(i).getPaneRecord().getRecord()
+                                            + "," + listPaneOrders.get(i).getUnits());
+
+                        } else if (listPaneOrders.get(i).getPaneRecord().getTHIS_PANE() == PANE_TARIFF) {
+                            stateQueryUnionTariffs[k++] = client.query(false,
+                                    "add_union_tariff," + idLastSale
+                                            + "," + listPaneOrders.get(i).getPaneRecord().getRecord()
+                                            + "," + listPaneOrders.get(i).getUnits());
+                        }
+
                     }
 
                     clearOrders();
@@ -291,7 +323,8 @@ public class Controller {
             paneRecords.get(i).getChildren().get(paneRecords.get(i).getIndexLabelOrder()).setOnMouseClicked(event -> {
 
                 for (int j = 0; j < listPaneOrders.size(); j++) {
-                    if (paneRecords.get(finalI).getRecord() == listPaneOrders.get(j).getPaneRecord().getRecord()) {
+                    if (paneRecords.get(finalI).getTHIS_PANE() == listPaneOrders.get(j).getPaneRecord().getTHIS_PANE()
+                            && paneRecords.get(finalI).getRecord() == listPaneOrders.get(j).getPaneRecord().getRecord()) {
                         listPaneOrders.get(j).setPriceAndUnits(listPaneOrders.get(j).getUnits() + 1);
                         return;
                     }

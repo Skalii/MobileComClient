@@ -145,11 +145,31 @@ public class PaneRecord extends AnchorPane {
                                 "Доступные услуги:\n\n" + availableOffers,
                                 14, 2, separatorPrice.getLayoutY() + 10);
 
-                        getChildren().addAll(separatorPrice, labelAvailable1Offers);
+                        Separator separatorAvailable1Offers = newSeparator(
+                                labelAvailable1Offers.getLayoutY() + labelAvailable1Offers.getPrefHeight() + 10);
 
-                        prefHeight = labelAvailable1Offers.getLayoutY() + labelAvailable1Offers.getPrefHeight() + 20;
+                        Label labelOrder = newLabel(
+                                "Добавить в корзину",
+                                14, 2, separatorAvailable1Offers.getLayoutY() + 13);
+                        labelOrder.setCursor(Cursor.HAND);
+
+                        getChildren().addAll(separatorPrice, labelAvailable1Offers, separatorAvailable1Offers, labelOrder);
+                        indexLabelOrder = getChildren().size() - 1;
+
+                        prefHeight = labelOrder.getLayoutY() + labelOrder.getPrefHeight() + 20;
                     } else {
-                        prefHeight = labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 10;
+                        Separator separatorPrice = newSeparator(
+                                labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 10);
+
+                        Label labelOrder = newLabel(
+                                "Добавить в корзину",
+                                14, 2, separatorPrice.getLayoutY() + 13);
+                        labelOrder.setCursor(Cursor.HAND);
+
+                        getChildren().addAll(separatorPrice, labelOrder);
+                        indexLabelOrder = getChildren().size() - 1;
+
+                        prefHeight = labelOrder.getLayoutY() + labelOrder.getPrefHeight() + 10;
                     }
                 } else {
                     Separator separatorPrice = newSeparator(
@@ -213,7 +233,7 @@ public class PaneRecord extends AnchorPane {
                     labelParameters, separatorParameters,
                     labelPrice, labelAvailability, labelOrder);
 
-            this.indexLabelOrder = getChildren().size() - 1;
+            indexLabelOrder = getChildren().size() - 1;
 
             prefHeight = labelOrder.getLayoutY() + labelOrder.getPrefHeight() + 10;
         }
