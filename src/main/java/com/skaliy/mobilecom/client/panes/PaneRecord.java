@@ -52,7 +52,7 @@ public class PaneRecord extends AnchorPane {
                 price = 0.00;
             }
 
-            prefWidth = 410;
+            prefWidth = 625;
 
             if (THIS_PANE != PANE_OFFER) {
                 general = values[3];

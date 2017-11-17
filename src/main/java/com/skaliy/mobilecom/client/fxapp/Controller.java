@@ -32,7 +32,8 @@ public class Controller {
     public ComboBox<String> comboOrderEmployee,
             comboSearchManufacturer, comboSearchColor, comboSearchOS, comboSearchRAM, comboSearchROM,
             comboSearchMemoryCard, comboSearchSIM, comboSearchProcessor, comboSearchBatary,
-            comboSearchDiagonal, comboSearchResolution, comboSearchCameraMain, comboSearchCameraFront;
+            comboSearchDiagonal, comboSearchResolution, comboSearchCameraMain, comboSearchCameraFront,
+            comboSearchTariffs, comboSearchOffers;
 
     @FXML
     private AnchorPane anchorPaneParentMain, anchorPaneParentTariffs, anchorPaneParentOffers,
@@ -46,7 +47,7 @@ public class Controller {
     private SeparatorMenuItem separatorMenuBackup;
 
     private ObservableList<PaneRecord> listPaneRecordsMain, listPaneRecordsTariffs, listPaneRecordsOffers,
-            listPaneRecordsPhones, listPaneRecordsOrder;
+            listPaneRecordsPhones;
 
     private ObservableList<PaneOrder> listPaneOrders = FXCollections.observableArrayList();
 
@@ -81,18 +82,35 @@ public class Controller {
         search(textSearchOffers, anchorPaneParentOffers, listPaneRecordsOffers,
                 "get_offer_p-", PANE_OFFER);
 
-        setComboItems(comboOrderEmployee, "Консультант", "get_employees_names");
+        setComboItems(comboSearchTariffs, "Название тарифа", "get_tariffs_title");
 
-        setComboItems(comboSearchManufacturer, "Производитель", "get_manufacturers_names");
+        setComboItems(comboSearchOffers, "Название услуги", "get_offers_title");
+
+        setComboItems(comboSearchManufacturer, "Производитель", "get_m_names");
         setComboItems(comboSearchColor, "Цвет", "get_phones_colors");
         setComboItems(comboSearchOS, "ОС", "get_pd_os");
         setComboItems(comboSearchRAM, "Оперативная память", "get_pd_ram");
+        setComboItems(comboSearchROM, "Встроенная память", "get_pd_rom");
+        setComboItems(comboSearchMemoryCard, "Карта памяти", "get_pd_memory_card");
+        setComboItems(comboSearchSIM, "Количество SIM-карт", "get_pd_sim");
+        setComboItems(comboSearchProcessor, "Процессор", "get_pd_processor");
+        setComboItems(comboSearchBatary, "Батарея", "get_pd_batary");
+        setComboItems(comboSearchDiagonal, "Диагональ", "get_pd_diagonal");
+        setComboItems(comboSearchResolution, "Разрешение", "get_pd_resolution");
+        setComboItems(comboSearchCameraMain, "Основная камера", "get_pd_camera_main");
+        setComboItems(comboSearchCameraFront, "Фронтальная камера", "get_pd_camera_front");
 
-        ObservableList<ComboBox<String>> comboSearch = FXCollections.observableArrayList(
-                comboSearchManufacturer, comboSearchColor, comboSearchOS, comboSearchRAM);
+        search(textSearchTariffs, anchorPaneParentTariffs, listPaneRecordsTariffs,
+                "get_tariff_c-", PANE_TARIFF, FXCollections.observableArrayList(comboSearchTariffs));
+        search(textSearchOffers, anchorPaneParentOffers, listPaneRecordsOffers,
+                "get_offer_c-", PANE_OFFER, FXCollections.observableArrayList(comboSearchOffers));
+        search(textSearchPhones, anchorPaneParentPhones, listPaneRecordsPhones,
+                "get_phone_c-", PANE_PHONE, FXCollections.observableArrayList(
+                        comboSearchManufacturer, comboSearchColor, comboSearchOS, comboSearchRAM, comboSearchROM,
+                        comboSearchMemoryCard, comboSearchSIM, comboSearchProcessor, comboSearchBatary, comboSearchDiagonal,
+                        comboSearchResolution, comboSearchCameraMain, comboSearchCameraFront));
 
-        search(anchorPaneParentPhones, listPaneRecordsPhones, comboSearch);
-
+        setComboItems(comboOrderEmployee, "Консультант", "get_e_names");
         buttonOrderClear.setOnAction(event -> {
             clearOrders();
         });
@@ -155,8 +173,8 @@ public class Controller {
 
     }
 
-    private ObservableList<PaneRecord> setAnchorPaneParent(
-            AnchorPane paneParent, String query, final int PANE, boolean index) {
+    private ObservableList<PaneRecord> setAnchorPaneParent(AnchorPane paneParent,
+                                                           String query, final int PANE, boolean index) {
 
         ObservableList<PaneRecord> listPaneRecords = FXCollections.observableArrayList();
         paneParent.getChildren().clear();
@@ -174,9 +192,8 @@ public class Controller {
                 prefHeight = PaneRecord.getAndReplaceHeight();
             }
         } else {
-            int size = Integer.parseInt(client.query(
-                    query.substring(0, query.length() - 3)
-                            .concat("s_count")).get(0)[0]);
+            int size = Integer.parseInt(client.query(query
+                    .replace("_i-", "s_count")).get(0)[0]);
             if (size != 0) {
                 for (int i = 1; i <= size; i++) {
                     PaneRecord paneRecord = new PaneRecord(PANE, client.query(query + i).get(0));
@@ -209,8 +226,7 @@ public class Controller {
                             .replace("_p-", "_i-"), PANE, true);
                 } else {
                     setAnchorPaneParent(paneParent, query
-                            .substring(0, query.indexOf("_p-"))
-                            .concat("s"), PANE, false);
+                            .replace("_p-", "s"), PANE, false);
                 }
             } else {
                 String querySearch = query.concat(search);
@@ -222,37 +238,44 @@ public class Controller {
 
     }
 
-    private void search(AnchorPane paneParent,
-                        ObservableList<PaneRecord> listPaneRecords,
-                        ObservableList<ComboBox<String>> listCombo) {
-
-//        final String[] query = {"get_phone_c-"};
+    private void search(TextField textSearch, AnchorPane paneParent, ObservableList<PaneRecord> listPaneRecords,
+                        String query, final int PANE, ObservableList<ComboBox<String>> listCombo) {
 
         for (int i = 0; i < listCombo.size(); i++) {
-            int finalI = i;
+
             listCombo.get(i).setOnAction(event -> {
 
-                String search = "get_phone_c-";
+                paneParent.getChildren().clear();
+                listPaneRecords.clear();
 
-                for (int j = 0; j < listCombo.size(); j++) {
-                    if (listCombo.get(j).getValue() != null
-                            && !listCombo.get(j).getSelectionModel().isSelected(0)) {
+                String search = query;
 
-                        if (!Objects.equals(search, "get_phone_c-")) {
+                for (ComboBox<String> aListCombo : listCombo) {
+
+                    if (aListCombo.getValue() != null
+                            && !aListCombo.getSelectionModel().isSelected(0)) {
+
+                        if (!Objects.equals(search, query)) {
                             search = search.concat(";");
                         }
 
                         search = search.concat(
-                                listCombo.get(j).getItems().get(0)
-                                        + " = '" + listCombo.get(j).getSelectionModel().getSelectedItem() + "'");
+                                aListCombo.getItems().get(0)
+                                        + " = '" + aListCombo.getSelectionModel().getSelectedItem() + "'");
                     }
+                }
 
-                    /*if (!Objects.equals(search, "get_phone_c-")) {
-                       ArrayList<String[]> records = client.query(search);
-                        for (String[] record : records) {
-                            System.out.println(Arrays.toString(record));
-                        }
-                    }*/
+                if (!Objects.equals(search, query)) {
+                    textSearch.clear();
+                    textSearch.setDisable(true);
+                    setAnchorPaneParent(paneParent, search, PANE, false);
+                } else {
+                    textSearch.setDisable(false);
+                    if (!Objects.equals(search, "get_tariff_c-")) {
+                        setAnchorPaneParent(paneParent, query.replace("_c-", "s"), PANE, false);
+                    } else {
+                        setAnchorPaneParent(paneParent, search.replace("_c-", "_i-"), PANE, true);
+                    }
                 }
 
             });
@@ -336,15 +359,5 @@ public class Controller {
             comboOrderEmployee.getSelectionModel().clearSelection();
         }
     }
-/*
-    private void setAnchorPaneParent(AnchorPane paneParent, String query, int PANE, int... index) {
-        paneParent.getChildren().clear();
-
-        for (int i = 0; i < index.length; i++) {
-            paneParent.getChildren().add(new PaneRecord(PANE, client.query(query + index[i]).get(0)));
-        }
-
-        paneParent.setPrefHeight(PaneRecord.getAndReplaceHeight());
-    }*/
 
 }
