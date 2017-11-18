@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.text.SimpleDateFormat;
@@ -41,11 +42,7 @@ public class Controller {
             anchorPaneParentPhones, anchorPaneParentOrder;
 
     @FXML
-    private MenuItem menuCreateBackup, menuRestoreBackup, menuHideTray, menuExit,
-            menuLogin, menuProfile, menuAbout;
-
-    @FXML
-    private SeparatorMenuItem separatorMenuBackup;
+    private MenuItem menuHideTray, menuExit, menuLogin, menuAbout;
 
     private ObservableList<PaneRecord> listPaneRecordsMain, listPaneRecordsTariffs, listPaneRecordsOffers,
             listPaneRecordsPhones;
@@ -66,6 +63,23 @@ public class Controller {
                 e.printStackTrace();
             }
         }
+
+        menuExit.setOnAction(event -> {
+            System.exit(0);
+        });
+        menuHideTray.setOnAction(event -> {
+            Main.getStage().hide();
+        });
+        menuLogin.setOnAction(event -> {
+            com.skaliy.mobilecom.client.fxapp.admin.Main mainAdmin
+                    = new com.skaliy.mobilecom.client.fxapp.admin.Main();
+            try {
+                mainAdmin.start(new Stage());
+                mainAdmin.setClient(client);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         listPaneRecordsMain = setAnchorPaneParent(
                 anchorPaneParentMain, "get_news", PANE_MAIN, false);

@@ -72,26 +72,26 @@ public class PaneRecord extends AnchorPane {
             }
         } else if (THIS_PANE == PANE_PHONE) {
             manufacturer = values[1];
-            model = values[3];
-            os = values[4];
-            ram = Integer.parseInt(values[5]);
-            rom = Integer.parseInt(values[6]);
-            memoryCard = Boolean.parseBoolean(values[7]);
-            simcardQuant = Integer.parseInt(values[8]);
-            processor = values[9];
-            batary = Integer.parseInt(values[10]);
-            diagonal = Double.parseDouble(values[11]);
-            resolution = values[12];
-            cameraMain = Double.parseDouble(values[13]);
+            model = values[2];
+            os = values[3];
+            ram = Integer.parseInt(values[4]);
+            rom = Integer.parseInt(values[5]);
+            memoryCard = Boolean.parseBoolean(values[6]);
+            simcardQuant = Integer.parseInt(values[7]);
+            processor = values[8];
+            batary = Integer.parseInt(values[9]);
+            diagonal = Double.parseDouble(values[10]);
+            resolution = values[11];
+            cameraMain = Double.parseDouble(values[12]);
             try {
-                cameraMainTwo = Double.parseDouble(values[14]);
+                cameraMainTwo = Double.parseDouble(values[13]);
             } catch (NumberFormatException e) {
                 cameraMainTwo = 0.00;
             }
-            cameraFront = Double.parseDouble(values[15]);
-            color = values[16];
+            cameraFront = Double.parseDouble(values[14]);
+            color = values[15];
             try {
-                price = Double.parseDouble(values[17]
+                price = Double.parseDouble(values[16]
                         .replace(",", ".")
                         .replace(" ", "")
                         .replace(" ", "")
@@ -100,7 +100,7 @@ public class PaneRecord extends AnchorPane {
                 price = 0.00;
             }
 
-            units = Integer.parseInt(values[18]);
+            units = Integer.parseInt(values[17]);
 
             prefWidth = 410;
         }
@@ -201,7 +201,7 @@ public class PaneRecord extends AnchorPane {
                             + "\nОС: " + os
                             + "\nRAM: " + ram + " ГБ"
                             + "\nROM: " + rom + " ГБ"
-                            + "\nКарта памяти: " + (memoryCard ? "поддерживается" : "не поддерживается")
+                            + "\nКарта памяти: " + memoryCard
                             + "\nКоличество SIM-карт: " + simcardQuant
                             + "\nПроцессор: " + processor
                             + "\nБатарея: " + batary + " mAh"
