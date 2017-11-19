@@ -1,4 +1,4 @@
-package com.skaliy.mobilecom.client.client;
+package com.skaliy.mobilecom.client.connection;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

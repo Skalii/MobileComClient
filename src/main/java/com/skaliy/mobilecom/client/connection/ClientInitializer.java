@@ -1,4 +1,4 @@
-package com.skaliy.mobilecom.client.client;
+package com.skaliy.mobilecom.client.connection;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

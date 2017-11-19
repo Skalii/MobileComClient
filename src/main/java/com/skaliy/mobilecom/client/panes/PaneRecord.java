@@ -136,7 +136,7 @@ public class PaneRecord extends AnchorPane {
                 getChildren().addAll(separatorGeneral, labelPrice);
 
                 if (THIS_PANE == PANE_TARIFF) {
-                    if (availableOffers.length() > 2) {
+                    if (availableOffers.length() > 3) {
 
                         Separator separatorPrice = newSeparator(
                                 labelPrice.getLayoutY() + labelPrice.getPrefHeight() + 10);

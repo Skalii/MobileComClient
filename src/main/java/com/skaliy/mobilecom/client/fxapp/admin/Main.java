@@ -1,6 +1,6 @@
 package com.skaliy.mobilecom.client.fxapp.admin;
 
-import com.skaliy.mobilecom.client.client.Client;
+import com.skaliy.mobilecom.client.connection.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,4 +1,4 @@
-package com.skaliy.mobilecom.client.client;
+package com.skaliy.mobilecom.client.connection;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundMessageHandlerAdapter;
@@ -39,9 +39,9 @@ public class ClientHandler extends ChannelInboundMessageHandlerAdapter<String> {
 
             if (record[i].contains("_bo_")) {
                 record[i] = record[i]
-                        .replaceAll("_bo_", "⚬ ")
+                        .replaceAll("_bo_", "\uD83D\uDF84 ")
                         .replaceAll("_bc_", "")
-                        .replaceAll(",", "\n⚬ ");
+                        .replaceAll(",", "\n\uD83D\uDF84 ");
             }
         }
 

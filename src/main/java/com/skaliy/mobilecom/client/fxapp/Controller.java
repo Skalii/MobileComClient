@@ -1,6 +1,6 @@
 package com.skaliy.mobilecom.client.fxapp;
 
-import com.skaliy.mobilecom.client.client.Client;
+import com.skaliy.mobilecom.client.connection.Client;
 import com.skaliy.mobilecom.client.panes.PaneOrder;
 import com.skaliy.mobilecom.client.panes.PaneRecord;
 import javafx.collections.FXCollections;
@@ -82,13 +82,13 @@ public class Controller {
         });
 
         listPaneRecordsMain = setAnchorPaneParent(
-                anchorPaneParentMain, "get_news", PANE_MAIN, false);
+                anchorPaneParentMain, "get_news", PANE_MAIN);
         listPaneRecordsTariffs = setAnchorPaneParent(
-                anchorPaneParentTariffs, "get_tariff_i-", PANE_TARIFF, true);
+                anchorPaneParentTariffs, "get_tariffs", PANE_TARIFF);
         listPaneRecordsOffers = setAnchorPaneParent(
-                anchorPaneParentOffers, "get_offers", PANE_OFFER, false);
+                anchorPaneParentOffers, "get_offers", PANE_OFFER);
         listPaneRecordsPhones = setAnchorPaneParent(
-                anchorPaneParentPhones, "get_phones", PANE_PHONE, false);
+                anchorPaneParentPhones, "get_phones", PANE_PHONE);
 
         search(textSearchPhones, anchorPaneParentPhones, listPaneRecordsPhones,
                 "get_phone_p-", PANE_PHONE);
@@ -101,7 +101,7 @@ public class Controller {
 
         setComboItems(comboSearchOffers, "Название услуги", "get_offers_title");
 
-        setComboItems(comboSearchManufacturer, "Производитель", "get_m_names");
+        setComboItems(comboSearchManufacturer, "Производитель", "get_manufacturers_names");
         setComboItems(comboSearchColor, "Цвет", "get_phones_colors");
         setComboItems(comboSearchOS, "ОС", "get_pd_os");
         setComboItems(comboSearchRAM, "Оперативная память", "get_pd_ram");
@@ -125,7 +125,7 @@ public class Controller {
                         comboSearchMemoryCard, comboSearchSIM, comboSearchProcessor, comboSearchBatary, comboSearchDiagonal,
                         comboSearchResolution, comboSearchCameraMain, comboSearchCameraFront));
 
-        setComboItems(comboOrderEmployee, "Консультант", "get_e_names");
+        setComboItems(comboOrderEmployee, "Консультант", "get_employees_names");
         buttonOrderClear.setOnAction(event -> {
             clearOrders();
         });
@@ -220,36 +220,23 @@ public class Controller {
     }
 
     private ObservableList<PaneRecord> setAnchorPaneParent(AnchorPane paneParent,
-                                                           String query, final int PANE, boolean index) {
+                                                           String query, final int PANE) {
 
         ObservableList<PaneRecord> listPaneRecords = FXCollections.observableArrayList();
         paneParent.getChildren().clear();
         double prefHeight = 0.00;
 
-        if (!index) {
-            ArrayList<String[]> records = client.query(query);
+        ArrayList<String[]> records = client.query(query);
 
-            if (!Objects.equals(records.get(0)[0], "null")) {
-                for (String[] record : records) {
-                    PaneRecord paneRecord = new PaneRecord(PANE, record);
-                    paneParent.getChildren().add(paneRecord);
-                    listPaneRecords.add(paneRecord);
-                }
-                prefHeight = PaneRecord.getAndReplaceHeight();
+        if (!Objects.equals(records.get(0)[0], "null")) {
+            for (String[] record : records) {
+                PaneRecord paneRecord = new PaneRecord(PANE, record);
+                paneParent.getChildren().add(paneRecord);
+                listPaneRecords.add(paneRecord);
             }
-        } else {
-            int size = Integer.parseInt(client.query(query
-                    .replace("_i-", "s_count")).get(0)[0]);
-            if (size != 0) {
-                for (int i = 1; i <= size; i++) {
-                    PaneRecord paneRecord = new PaneRecord(PANE, client.query(query + i).get(0));
-                    paneParent.getChildren().add(paneRecord);
-                    listPaneRecords.add(paneRecord);
-                }
-                prefHeight = PaneRecord.getAndReplaceHeight();
-            }
-
+            prefHeight = PaneRecord.getAndReplaceHeight();
         }
+
         paneParent.setPrefHeight(prefHeight);
 
         setOrders(listPaneRecords);
@@ -267,17 +254,12 @@ public class Controller {
             String search = textSearch.getText();
 
             if (Objects.equals(search, "")) {
-                if (Objects.equals(query, "get_tariff_p-")) {
-                    setAnchorPaneParent(paneParent, query
-                            .replace("_p-", "_i-"), PANE, true);
-                } else {
-                    setAnchorPaneParent(paneParent, query
-                            .replace("_p-", "s"), PANE, false);
-                }
+                setAnchorPaneParent(paneParent, query
+                        .replace("_p-", "s"), PANE);
             } else {
                 String querySearch = query.concat(search);
 
-                setAnchorPaneParent(paneParent, querySearch, PANE, false);
+                setAnchorPaneParent(paneParent, querySearch, PANE);
             }
 
         });
@@ -314,14 +296,10 @@ public class Controller {
                 if (!Objects.equals(search, query)) {
                     textSearch.clear();
                     textSearch.setDisable(true);
-                    setAnchorPaneParent(paneParent, search, PANE, false);
+                    setAnchorPaneParent(paneParent, search, PANE);
                 } else {
                     textSearch.setDisable(false);
-                    if (!Objects.equals(search, "get_tariff_c-")) {
-                        setAnchorPaneParent(paneParent, query.replace("_c-", "s"), PANE, false);
-                    } else {
-                        setAnchorPaneParent(paneParent, search.replace("_c-", "_i-"), PANE, true);
-                    }
+                    setAnchorPaneParent(paneParent, query.replace("_c-", "s"), PANE);
                 }
 
             });
@@ -336,10 +314,10 @@ public class Controller {
 
             paneRecords.get(i).getChildren().get(paneRecords.get(i).getIndexLabelOrder()).setOnMouseClicked(event -> {
 
-                for (int j = 0; j < listPaneOrders.size(); j++) {
-                    if (paneRecords.get(finalI).getTHIS_PANE() == listPaneOrders.get(j).getPaneRecord().getTHIS_PANE()
-                            && paneRecords.get(finalI).getRecord() == listPaneOrders.get(j).getPaneRecord().getRecord()) {
-                        listPaneOrders.get(j).setPriceAndUnits(listPaneOrders.get(j).getUnits() + 1);
+                for (PaneOrder listPaneOrder : listPaneOrders) {
+                    if (paneRecords.get(finalI).getTHIS_PANE() == listPaneOrder.getPaneRecord().getTHIS_PANE()
+                            && paneRecords.get(finalI).getRecord() == listPaneOrder.getPaneRecord().getRecord()) {
+                        listPaneOrder.setPriceAndUnits(listPaneOrder.getUnits() + 1);
                         return;
                     }
                 }

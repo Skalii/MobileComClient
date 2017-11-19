@@ -1,6 +1,6 @@
 package com.skaliy.mobilecom.client.fxapp.admin;
 
-import com.skaliy.mobilecom.client.client.Client;
+import com.skaliy.mobilecom.client.connection.Client;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Controller {
@@ -29,7 +28,7 @@ public class Controller {
     private TextArea textArea;
 
     @FXML
-    private TableView<String[]> table1, table2, table3;
+    private TableView<String[]> table1;
 
     private static Client client;
 
@@ -40,108 +39,142 @@ public class Controller {
 
         comboSetTable.setOnAction(event -> {
 
-            clearAndShow(table1);
+            table1.setLayoutY(185);
+            table1.setPrefHeight(370);
+            table1.setDisable(false);
 
-            clearAndHide(table2, table3);
             clearAndHide(textArea);
             clearAndHide(comboAdd1, comboAdd2);
             clearAndHide(textAdd1, textAdd2, textAdd3, textAdd4, textAdd5,
                     textAdd6, textAdd7, textAdd8, textAdd9, textAdd10,
                     textAdd11, textAdd12, textAdd13, textAdd14, textAdd15);
 
-            comboSetTable.getSelectionModel().clearSelection(0);
-
             switch (comboSetTable.getSelectionModel().getSelectedIndex()) {
 
                 case 0:
-                    clearAndHide(table1);
+                    table1.setDisable(true);
+                    table1.getColumns().clear();
+                    table1.getItems().clear();
                     break;
 
                 case 1:
 
-                    setTable(table1, "get_news",
+                    setTable("get_news",
                             new String[]{"", "Название", "Текст"},
                             null, null);
 
-                    showAndSetValue(table1, new TextField[]{textAdd3}, new int[]{1},
-                            null, null, textArea, 2, null, null);
+                    showAndSetValue(new TextField[]{textAdd3}, new int[]{1},
+                            null, null, textArea, 2);
+
+                    editCellTable("news");
+                    deleteRecord("news");
 
                     break;
 
                 case 2:
 
-                    table1.setPrefWidth(400);
-                    table2.setPrefHeight(180);
-                    clearAndShow(table2);
-                    clearAndShow(table3);
+                    table1.setLayoutY(45);
+                    table1.setPrefHeight(510);
+
+                    setTable("get_sales",
+                            new String[]{"", "Дата", "Сумма", "Продавец", "Состояние",
+                                    "ФИО клиента", "Телефон клиента", "Email клиента",
+                                    "Телефоны в заказе", "Кол-во телефонов", "Тарифы в заказе", "Кол-во тарифов"},
+                            new ObservableList[]{setItemsCombo("get_employees_names"),
+                                    FXCollections.observableArrayList("Продано", "Заказ")},
+                            new int[]{3, 4});
+
+                    table1.getColumns().get(2).setEditable(false);
+                    table1.getColumns().get(8).setEditable(false);
+                    table1.getColumns().get(9).setEditable(false);
+                    table1.getColumns().get(10).setEditable(false);
+                    table1.getColumns().get(11).setEditable(false);
+
+                    editCellTable("sales");
+                    deleteRecord("sales");
 
                     break;
 
                 case 3:
 
-                    setTable(table1, "get_employees",
+                    setTable("get_employees",
                             new String[]{"", "ФИО", "Номер телефона", "Email", "Адрес",
                                     "Дата принятия", "Должность", "Зарплата"},
                             null, null);
 
-                    showAndSetValue(table1,
-                            new TextField[]{textAdd3, textAdd7, textAdd8, textAdd9, textAdd12, textAdd13, textAdd14},
+                    showAndSetValue(new TextField[]{textAdd3, textAdd7, textAdd8,
+                                    textAdd9, textAdd12, textAdd13, textAdd14},
                             new int[]{1, 2, 3, 4, 5, 6, 7},
-                            null, null, null, null, null, null);
+                            null, null, null, null);
+
+                    editCellTable("employees");
+                    deleteRecord("employees");
 
                     break;
 
                 case 4:
 
-                    table1.setPrefWidth(400);
-                    table2.setPrefHeight(370);
-                    clearAndShow(table2);
+                    setTable("get_tariffs",
+                            new String[]{"", "Название", "Цена", "Описание", "Услуги в тарифе"},
+                            null, null);
+
+                    showAndSetValue(new TextField[]{textAdd1, textAdd2}, new int[]{1, 2},
+                            null, null, textArea, 3);
+
+                    editCellTable("tariffs");
+                    deleteRecord("tariffs");
 
                     break;
 
                 case 5:
 
-                    setTable(table1, "get_offers",
+                    setTable("get_offers",
                             new String[]{"", "Название", "Цена", "Дада начала", "Дата окончания", "Описание"},
                             null, null);
 
-                    showAndSetValue(table1,
-                            new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4}, new int[]{1, 2, 3, 4},
-                            null, null, textArea, 5, null, null);
+                    showAndSetValue(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4}, new int[]{1, 2, 3, 4},
+                            null, null, textArea, 5);
+
+                    editCellTable("offers");
+                    deleteRecord("offers");
 
                     break;
 
                 case 6:
 
-                    setTable(table1, "get_phones",
+                    setTable("get_phones",
                             new String[]{"", "Производитель", "Модель", "ОС", "RAM", "ROM",
                                     "Карта памяти", "Кол-во SIM", "Процессор", "Батарея", "Диагональ",
                                     "Разрешение", "Основная камера", "Вторая камера", "Фронт. камера",
                                     "Цвет", "Цена", "Кол-во единиц"},
-                            new ObservableList[]{setItemsCombo("get_m_names"),
+                            new ObservableList[]{setItemsCombo("get_manufacturers_names"),
                                     FXCollections.observableArrayList("Поддерживает", "Не поддерживает")},
                             new int[]{1, 6});
 
-                    setItemsCombo(comboAdd1, "get_m_names");
+                    setItemsCombo(comboAdd1, "get_manufacturers_names");
                     setItemsCombo(comboAdd2, "Поддерживается", "Не поддерживается");
 
-                    showAndSetValue(table1,
-                            new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4, textAdd5, textAdd6, textAdd7,
+                    showAndSetValue(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4, textAdd5, textAdd6, textAdd7,
                                     textAdd8, textAdd9, textAdd10, textAdd11, textAdd12, textAdd13, textAdd14, textAdd15},
                             new int[]{2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17},
                             new ComboBox[]{comboAdd1, comboAdd2}, new int[]{1, 6},
-                            null, null, null, null);
+                            null, null);
+
+                    editCellTable("phones");
+                    deleteRecord("phones");
 
                     break;
 
                 case 7:
 
-                    setTable(table1, "get_manufacturers", new String[]{"", "Название", "Страна"},
+                    setTable("get_manufacturers", new String[]{"", "Название", "Страна"},
                             null, null);
 
-                    showAndSetValue(table1,
-                            new TextField[]{textAdd8, textAdd13}, new int[]{1, 2},
-                            null, null, null, null, null, null);
+                    showAndSetValue(new TextField[]{textAdd8, textAdd13}, new int[]{1, 2},
+                            null, null, null, null);
+
+                    editCellTable("manufacturers");
+                    deleteRecord("manufacturers");
 
                     break;
 
@@ -151,8 +184,11 @@ public class Controller {
 
     }
 
-    private void setTable(TableView<String[]> table, String sql, String[] colName,
+    private void setTable(String sql, String[] colName,
                           ObservableList<String>[] comboItems, int[] indexColumnCombo) {
+
+        table1.getColumns().clear();
+        table1.getItems().clear();
 
         for (int i = 0, j = 0; i < client.query(sql).get(0).length; i++) {
             TableColumn<String[], String> tableColumn = new TableColumn<>(colName[i]);
@@ -177,21 +213,51 @@ public class Controller {
             } else {
                 tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             }
-            table.getColumns().add(tableColumn);
+            table1.getColumns().add(tableColumn);
         }
 
         ObservableList<String[]> records = FXCollections.observableArrayList(client.query(sql));
 
-        /*for (String[] record : records) {
+        for (String[] record : records) {
             for (int j = 0; j < record.length; j++) {
                 record[j] = record[j].replace("null", "Нет");
             }
-        }*/
+        }
 
-        table.setItems(records);
-        table.getColumns().get(0).setVisible(false);
-        table.setEditable(true);
+        table1.setItems(records);
+        table1.getColumns().get(0).setVisible(false);
+        table1.setEditable(true);
 
+    }
+
+    private void editCellTable(String tableName) {
+
+        for (int i = 1; i < table1.getColumns().size(); i++) {
+            int finalI = i;
+            table1.getColumns().get(i).setOnEditCommit(actionEdit -> {
+                table1.getFocusModel().getFocusedItem()[finalI] = String.valueOf(actionEdit.getNewValue());
+
+                boolean update = client.query(false, "update_" + tableName
+                        + "," + finalI + "," + table1.getFocusModel().getFocusedItem()[finalI]
+                        + "," + table1.getFocusModel().getFocusedItem()[0]);
+
+            });
+
+        }
+    }
+
+    private void deleteRecord(String table) {
+        buttonDelete.setOnAction(eventDelete -> {
+            if (!table1.getSelectionModel().isEmpty()) {
+                boolean stateDelete = client
+                        .query(false,
+                                "del_" + table + "," + table1.getSelectionModel().getSelectedItem()[0]);
+                if (stateDelete) {
+                    table1.getItems().remove(table1.getSelectionModel().getSelectedIndex());
+                    table1.getSelectionModel().clearSelection();
+                }
+            }
+        });
     }
 
     private void setItemsCombo(ComboBox<String> combo, String sql) {
@@ -222,16 +288,13 @@ public class Controller {
         return result;
     }
 
-    private void showAndSetValue(TableView<String[]> table,
-                                 TextField[] texts, int[] indexTexts,
+    private void showAndSetValue(TextField[] texts, int[] indexTexts,
                                  ComboBox[] combos, int[] indexCombos,
-                                 TextArea textArea, Integer indexTextArea,
-                                 DatePicker date, Integer indexDate) {
+                                 TextArea textArea, Integer indexTextArea) {
 
         boolean isTextField = texts != null && indexTexts != null,
                 isCombo = combos != null && indexCombos != null,
-                isTextArea = textArea != null && indexTextArea != null,
-                isDate = date != null && indexDate != null;
+                isTextArea = textArea != null && indexTextArea != null;
 
         if (isTextField) {
             for (TextField text : texts) {
@@ -249,20 +312,16 @@ public class Controller {
             textArea.setVisible(true);
         }
 
-        if (isDate) {
-            date.setVisible(true);
-        }
+        table1.setOnMouseClicked(action -> {
 
-        table.setOnMouseClicked(action -> {
-
-            if (!table.getSelectionModel().isEmpty()) {
+            if (!table1.getSelectionModel().isEmpty()) {
 
                 if (isTextField) {
 
                     for (int t = 0; t < texts.length; t++) {
-                        for (int j = 0; j < table.getColumns().size(); j++) {
+                        for (int j = 0; j < table1.getColumns().size(); j++) {
                             if (j == indexTexts[t]) {
-                                texts[t].setText(table.getSelectionModel().getSelectedItem()[j]);
+                                texts[t].setText(table1.getSelectionModel().getSelectedItem()[j]);
                             }
                         }
                     }
@@ -272,9 +331,9 @@ public class Controller {
                 if (isCombo) {
 
                     for (int c = 0; c < combos.length; c++) {
-                        for (int j = 0; j < table.getColumns().size(); j++) {
+                        for (int j = 0; j < table1.getColumns().size(); j++) {
                             if (j == indexCombos[c]) {
-                                combos[c].setValue(table.getSelectionModel().getSelectedItem()[j]);
+                                combos[c].setValue(table1.getSelectionModel().getSelectedItem()[j]);
                             }
                         }
                     }
@@ -283,19 +342,9 @@ public class Controller {
 
                 if (isTextArea) {
 
-                    for (int i = 0; i < table.getColumns().size(); i++) {
+                    for (int i = 0; i < table1.getColumns().size(); i++) {
                         if (i == indexTextArea) {
-                            textArea.setText(table.getSelectionModel().getSelectedItem()[i]);
-                        }
-                    }
-
-                }
-
-                if (isDate) {
-
-                    for (int i = 0; i < table.getColumns().size(); i++) {
-                        if (i == indexDate) {
-                            date.setValue(LocalDate.parse(table.getSelectionModel().getSelectedItem()[i]));
+                            textArea.setText(table1.getSelectionModel().getSelectedItem()[i]);
                         }
                     }
 
@@ -304,24 +353,6 @@ public class Controller {
             }
         });
     }
-
-    private void clearAndShow(TableView<String[]> table) {
-        table.getItems().clear();
-        table.getColumns().clear();
-        table.setDisable(false);
-        table.setVisible(true);
-        table.setPrefWidth(680);
-    }
-
-    private void clearAndHide(TableView<String[]>... table) {
-        for (TableView tableView : table) {
-            tableView.setVisible(false);
-            tableView.setDisable(true);
-            tableView.getItems().clear();
-            tableView.getColumns().clear();
-        }
-    }
-
 
     private void clearAndHide(TextArea textArea) {
         textArea.clear();
