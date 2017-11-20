@@ -41,7 +41,7 @@ public class Main extends Application {
                 try {
                     systemTray = SystemTray.getSystemTray();
 
-                    trayIcon = new TrayIcon(ImageIO.read(new File("src/main/resources/images/icons/icon_order_cancel_fill.png")));
+                    trayIcon = new TrayIcon(ImageIO.read(new File("src/main/resources/images/icons/icon_tray.png")));
                     trayIcon.addActionListener(e -> {
                         Platform.runLater(new Runnable() {
                             @Override

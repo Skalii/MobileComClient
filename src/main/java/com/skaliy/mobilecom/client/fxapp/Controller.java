@@ -6,6 +6,7 @@ import com.skaliy.mobilecom.client.panes.PaneRecord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -79,6 +80,27 @@ public class Controller {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        });
+        menuAbout.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("О программе");
+            alert.setHeaderText("Курсовая работа");
+            alert.getButtonTypes().setAll(ButtonType.OK);
+
+            Label label = new Label("Студента гр.341(б)\nСкалий Дмитрия");
+            label.setWrapText(true);
+            label.setAlignment(Pos.CENTER);
+            label.setPrefHeight(50);
+            label.setPrefWidth(220);
+            label.setLayoutY(15);
+            label.setLayoutX(15);
+
+            AnchorPane pane = new AnchorPane(label);
+            pane.setPrefHeight(100);
+            pane.setPrefWidth(250);
+
+            alert.getDialogPane().setContent(pane);
+            alert.showAndWait();
         });
 
         listPaneRecordsMain = setAnchorPaneParent(

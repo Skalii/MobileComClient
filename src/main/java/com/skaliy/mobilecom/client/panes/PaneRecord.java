@@ -45,9 +45,7 @@ public class PaneRecord extends AnchorPane {
         } else if ((THIS_PANE == PANE_TARIFF) || (THIS_PANE == PANE_OFFER)) {
             title = values[1];
             try {
-                price = Double.parseDouble(values[2]
-                        .substring(0, values[2].length() - 2)
-                        .replaceAll(",", "."));
+                price = Float.parseFloat(values[2]);
             } catch (NumberFormatException e) {
                 price = 0.00;
             }
@@ -80,22 +78,18 @@ public class PaneRecord extends AnchorPane {
             simcardQuant = Integer.parseInt(values[7]);
             processor = values[8];
             batary = Integer.parseInt(values[9]);
-            diagonal = Double.parseDouble(values[10]);
+            diagonal = Float.parseFloat(values[10]);
             resolution = values[11];
-            cameraMain = Double.parseDouble(values[12]);
+            cameraMain = Float.parseFloat(values[12]);
             try {
-                cameraMainTwo = Double.parseDouble(values[13]);
+                cameraMainTwo = Float.parseFloat(values[13]);
             } catch (NumberFormatException e) {
                 cameraMainTwo = 0.00;
             }
-            cameraFront = Double.parseDouble(values[14]);
+            cameraFront = Float.parseFloat(values[14]);
             color = values[15];
             try {
-                price = Double.parseDouble(values[16]
-                        .replace(",", ".")
-                        .replace(" ", "")
-                        .replace(" ", "")
-                        .replace("?", ""));
+                price = Float.parseFloat(values[16]);
             } catch (NumberFormatException e) {
                 price = 0.00;
             }

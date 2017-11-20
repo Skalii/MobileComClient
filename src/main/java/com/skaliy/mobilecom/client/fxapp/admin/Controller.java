@@ -65,8 +65,9 @@ public class Controller {
                             new String[]{"", "Название", "Текст"},
                             null, null);
 
-                    showAndSetValue(new TextField[]{textAdd3}, new int[]{1},
-                            null, null, textArea, 2);
+                    showAndSetValue(new TextField[]{textAdd3}, new int[]{1}, new String[]{"Название"},
+                            null, null, null,
+                            textArea, 2, "Текст");
                     setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd3});
 
                     editCellTable("news");
@@ -89,6 +90,7 @@ public class Controller {
                             new int[]{3, 4});
 
                     showAndSetValue(null, null, null,
+                            null, null, null,
                             null, null, null);
                     setDisableButton(buttonAdd, buttonDelete, null);
 
@@ -113,7 +115,10 @@ public class Controller {
                     showAndSetValue(new TextField[]{textAdd3, textAdd7, textAdd8,
                                     textAdd9, textAdd12, textAdd13, textAdd14},
                             new int[]{1, 2, 3, 4, 5, 6, 7},
-                            null, null, null, null);
+                            new String[]{"ФИО", "Номер телефона", "Email",
+                                    "Адрес", "Дата принятия", "Должность", "Зарплата"},
+                            null, null, null,
+                            null, null, null);
                     setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd3, textAdd7,
                             textAdd8, textAdd9, textAdd12, textAdd13, textAdd14});
 
@@ -132,7 +137,9 @@ public class Controller {
                             null, null);
 
                     showAndSetValue(new TextField[]{textAdd1, textAdd2}, new int[]{1, 2},
-                            null, null, textArea, 3);
+                            new String[]{"Название", "Цена"},
+                            null, null, null,
+                            textArea, 3, "Описание");
                     setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd1, textAdd2});
 
                     editCellTable("tariffs");
@@ -148,7 +155,9 @@ public class Controller {
                             null, null);
 
                     showAndSetValue(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4}, new int[]{1, 2, 3, 4},
-                            null, null, textArea, 5);
+                            new String[]{"Название", "Цена", "Дата начала", "Дата окончания"},
+                            null, null, null,
+                            textArea, 5, "Описание");
                     setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4});
 
                     editCellTable("offers");
@@ -171,13 +180,17 @@ public class Controller {
                     comboPhoneDetails.getItems().add("- выбор -");
                     setItemsCombo(comboPhoneDetails, "get_pd_model");
                     setItemsCombo(comboAdd1, "get_manufacturers_names");
-                    setItemsCombo(comboAdd2, "Поддерживается", "Не поддерживается");
+                    setItemsCombo(comboAdd2, "Поддерживает", "Не поддерживает");
 
                     showAndSetValue(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4, textAdd5, textAdd6, textAdd7,
                                     textAdd8, textAdd9, textAdd10, textAdd11, textAdd12, textAdd13, textAdd14, textAdd15},
                             new int[]{2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17},
+                            new String[]{"Модель", "ОС", "RAM", "ROM", "Кол-во SIM", "Процессор",
+                                    "Батарея", "Диагональ", "Разрешение", "Основная камера",
+                                    "Вторая камера", "Фронт. камера", "Цвет", "Цена", "Кол-во единиц"},
                             new ComboBox[]{comboAdd1, comboAdd2, comboPhoneDetails}, new int[]{1, 6, 2},
-                            null, null);
+                            new String[]{"Производитель", "Карта памяти", "Модель"},
+                            null, null, null);
                     setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd1, textAdd2,
                             textAdd3, textAdd4, textAdd5, textAdd6, textAdd7, textAdd8, textAdd9,
                             textAdd10, textAdd11, textAdd12, textAdd13, textAdd14, textAdd15});
@@ -211,8 +224,9 @@ public class Controller {
                         }
                     });
 
-                    addRecordPhone(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4, textAdd5, textAdd6, textAdd7,
-                                    textAdd8, textAdd9, textAdd10, textAdd11, textAdd12, textAdd13, textAdd14, textAdd15},
+                    addRecordPhone(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4, textAdd5,
+                                    textAdd6, textAdd7, textAdd8, textAdd9, textAdd10,
+                                    textAdd11, textAdd12, textAdd13, textAdd14, textAdd15},
                             new ComboBox[]{comboAdd1, comboAdd2, comboPhoneDetails});
 
                     break;
@@ -223,7 +237,9 @@ public class Controller {
                             null, null);
 
                     showAndSetValue(new TextField[]{textAdd8, textAdd13}, new int[]{1, 2},
-                            null, null, null, null);
+                            new String[]{"Название", "Страна"},
+                            null, null, null,
+                            null, null, null);
                     setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd8, textAdd13});
 
                     editCellTable("manufacturers");
@@ -238,13 +254,15 @@ public class Controller {
 
     }
 
-    private void setTable(String sql, String[] colName,
+    private void setTable(String command, String[] colName,
                           ObservableList<String>[] comboItems, int[] indexColumnCombo) {
 
         table1.getColumns().clear();
         table1.getItems().clear();
 
-        for (int i = 0, j = 0; i < client.query(sql).get(0).length; i++) {
+        ArrayList<String[]> records = client.query(command);
+
+        for (int i = 0, j = 0; i < records.get(0).length; i++) {
             TableColumn<String[], String> tableColumn = new TableColumn<>(colName[i]);
             final int col = i;
             tableColumn.setCellValueFactory(
@@ -270,15 +288,15 @@ public class Controller {
             table1.getColumns().add(tableColumn);
         }
 
-        ObservableList<String[]> records = FXCollections.observableArrayList(client.query(sql));
+        ObservableList<String[]> items = FXCollections.observableArrayList(records);
 
-        for (String[] record : records) {
-            for (int j = 0; j < record.length; j++) {
-                record[j] = record[j].replace("null", "Нет");
+        for (String[] item : items) {
+            for (int j = 0; j < item.length; j++) {
+                item[j] = item[j].replace("null", "Нет");
             }
         }
 
-        table1.setItems(records);
+        table1.setItems(items);
         table1.getColumns().get(0).setVisible(false);
         table1.setEditable(true);
 
@@ -355,77 +373,43 @@ public class Controller {
 
                 boolean stateAddPD = client.query(false,
                         "add_phone_details," + valuesPD);
+                System.out.println("add_phone_details," + valuesPD);
+                System.out.println(stateAddPD);
 
                 if (stateAddPD) {
 
                     String valuesP = comboBoxes[0].getSelectionModel().getSelectedItem()
                             .concat("," + client.query("get_last_pd").get(0)[0]);
 
-                    for (int i = textFields.length - 4; i < textFields.length; i++) {
-                        valuesP = valuesP.concat(textFields[i].getText() + ",");
+                    for (int i = textFields.length - 3; i < textFields.length; i++) {
+                        valuesP = valuesP.concat("," + textFields[i].getText());
                     }
 
-                    valuesP = valuesP.substring(0, valuesP.length() - 1);
+                    System.out.println("add_phones_pd," + valuesP);
 
                     boolean stateAddP = client.query(false,
                             "add_phones_pd," + valuesP);
 
-                    if (stateAddP) {
-                        System.out.println(true);
-                    }
+                    System.out.println(stateAddP);
                 }
             } else {
 
                 String values = comboBoxes[0].getSelectionModel().getSelectedItem()
                         .concat("," + comboPhoneDetails.getSelectionModel().getSelectedItem());
 
-                for (int i = textFields.length - 4; i < textFields.length; i++) {
-                    values = values.concat(textFields[i].getText() + ",");
+                for (int i = textFields.length - 3; i < textFields.length; i++) {
+                    values = values.concat("," + textFields[i].getText());
                 }
-
-                values = values.substring(0, values.length() - 1);
 
                 boolean stateAdd = client.query(false,
                         "add_phones," + values);
 
-                if (stateAdd) {
-                    System.out.println(true);
-                }
-
-            }
-
-            /*for (TextField textField : textFields) {
-                values = values.concat(textField.getText() + ",");
-            }
-
-            for (ComboBox<String> comboBoxe : comboBoxes) {
-                values = values.concat(comboBoxe.getSelectionModel().getSelectedItem() + ",");
-            }
-
-            if (!values.isEmpty()) {
-                values = values.substring(0, values.length() - 1);
-
-                boolean stateAdd = client.query(false,
-                        "add_" + table + "," + values);
-
-                System.out.println(values);
                 System.out.println(stateAdd);
 
-                if (stateAdd) {
-                    // TODO: 20.11.2017 ADD TO TABLEVIEW
-                    if (textFields != null) {
-                        for (TextField textField : textFields) {
-                            textField.clear();
-                        }
-                    }
-                    if (comboBoxes != null) {
-                        for (ComboBox<String> comboBoxe : comboBoxes) {
-                            comboBoxe.getSelectionModel().select(0);
-                        }
-                    }
-                }
             }
-*/
+
+            // TODO: 20.11.2017 ADD TO TABLEVIEW
+
         });
     }
 
@@ -472,30 +456,35 @@ public class Controller {
         return result;
     }
 
-    private void showAndSetValue(TextField[] textFields, int[] indexTexts,
-                                 ComboBox[] comboBoxes, int[] indexCombos,
-                                 TextArea textArea, Integer indexTextArea) {
+    private void showAndSetValue(TextField[] textFields, int[] indexFields, String[] promptFields,
+                                 ComboBox[] comboBoxes, int[] indexCombos, String[] promptCombos,
+                                 TextArea textArea, Integer indexArea, String promptArea) {
 
-        boolean isTextField = textFields != null && indexTexts != null,
+        boolean isTextField = textFields != null && indexFields != null,
                 isCombo = comboBoxes != null && indexCombos != null,
-                isTextArea = textArea != null && indexTextArea != null;
+                isTextArea = textArea != null && indexArea != null;
 
         if (isTextField) {
+            int i = 0;
             for (TextField textField : textFields) {
                 textField.setDisable(false);
                 textField.setVisible(true);
+                textField.setPromptText(promptFields[i++]);
             }
         }
 
         if (isCombo) {
+            int i = 0;
             for (ComboBox comboBox : comboBoxes) {
                 comboBox.setDisable(false);
                 comboBox.setVisible(true);
+                comboBox.setPromptText(promptCombos[i++]);
             }
         }
 
         if (isTextArea) {
             textArea.setVisible(true);
+            textArea.setPromptText(promptArea);
         }
 
         table1.setOnMouseClicked(action -> {
@@ -508,7 +497,7 @@ public class Controller {
 
                     for (int t = 0; t < textFields.length; t++) {
                         for (int j = 0; j < table1.getColumns().size(); j++) {
-                            if (j == indexTexts[t]) {
+                            if (j == indexFields[t]) {
                                 textFields[t].setText(table1.getSelectionModel().getSelectedItem()[j]);
                             }
                         }
@@ -533,7 +522,7 @@ public class Controller {
                 if (isTextArea) {
 
                     for (int i = 0; i < table1.getColumns().size(); i++) {
-                        if (i == indexTextArea) {
+                        if (i == indexArea) {
                             textArea.setText(table1.getSelectionModel().getSelectedItem()[i]);
                         }
                     }
