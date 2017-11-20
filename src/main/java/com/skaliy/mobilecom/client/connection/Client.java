@@ -47,14 +47,14 @@ public class Client implements Runnable {
         }
     }
 
-    public ArrayList<String[]> query(String sql) {
-        channel.write(sql + "\r\n");
+    public ArrayList<String[]> query(String command) {
+        channel.write(command + "\r\n");
 
         return getResult();
     }
 
-    public boolean query(boolean result, String sql) {
-        channel.write(String.valueOf(result) + ":" + sql + "\r\n");
+    public boolean query(boolean result, String command) {
+        channel.write(String.valueOf(result) + ":" + command + "\r\n");
 
         return Boolean.valueOf(getResult().get(0)[0]);
     }

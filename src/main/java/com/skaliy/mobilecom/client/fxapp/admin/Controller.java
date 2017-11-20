@@ -22,7 +22,7 @@ public class Controller {
     private Button buttonAdd, buttonDelete;
 
     @FXML
-    private ComboBox<String> comboSetTable, comboAdd1, comboAdd2;
+    private ComboBox<String> comboSetTable, comboAdd1, comboAdd2, comboPhoneDetails;
 
     @FXML
     private TextArea textArea;
@@ -44,7 +44,7 @@ public class Controller {
             table1.setDisable(false);
 
             clearAndHide(textArea);
-            clearAndHide(comboAdd1, comboAdd2);
+            clearAndHide(comboAdd1, comboAdd2, comboPhoneDetails);
             clearAndHide(textAdd1, textAdd2, textAdd3, textAdd4, textAdd5,
                     textAdd6, textAdd7, textAdd8, textAdd9, textAdd10,
                     textAdd11, textAdd12, textAdd13, textAdd14, textAdd15);
@@ -55,6 +55,8 @@ public class Controller {
                     table1.setDisable(true);
                     table1.getColumns().clear();
                     table1.getItems().clear();
+                    buttonAdd.setDisable(true);
+                    buttonDelete.setDisable(true);
                     break;
 
                 case 1:
@@ -65,9 +67,11 @@ public class Controller {
 
                     showAndSetValue(new TextField[]{textAdd3}, new int[]{1},
                             null, null, textArea, 2);
+                    setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd3});
 
                     editCellTable("news");
                     deleteRecord("news");
+                    addRecord("news", new TextField[]{textAdd3}, textArea);
 
                     break;
 
@@ -83,6 +87,10 @@ public class Controller {
                             new ObservableList[]{setItemsCombo("get_employees_names"),
                                     FXCollections.observableArrayList("Продано", "Заказ")},
                             new int[]{3, 4});
+
+                    showAndSetValue(null, null, null,
+                            null, null, null);
+                    setDisableButton(buttonAdd, buttonDelete, null);
 
                     table1.getColumns().get(2).setEditable(false);
                     table1.getColumns().get(8).setEditable(false);
@@ -106,9 +114,14 @@ public class Controller {
                                     textAdd9, textAdd12, textAdd13, textAdd14},
                             new int[]{1, 2, 3, 4, 5, 6, 7},
                             null, null, null, null);
+                    setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd3, textAdd7,
+                            textAdd8, textAdd9, textAdd12, textAdd13, textAdd14});
 
                     editCellTable("employees");
                     deleteRecord("employees");
+                    addRecord("employees",
+                            new TextField[]{textAdd3, textAdd7, textAdd8, textAdd9, textAdd12, textAdd13, textAdd14},
+                            (TextArea) null);
 
                     break;
 
@@ -120,9 +133,11 @@ public class Controller {
 
                     showAndSetValue(new TextField[]{textAdd1, textAdd2}, new int[]{1, 2},
                             null, null, textArea, 3);
+                    setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd1, textAdd2});
 
                     editCellTable("tariffs");
                     deleteRecord("tariffs");
+                    addRecord("tariffs", new TextField[]{textAdd1, textAdd2}, textArea);
 
                     break;
 
@@ -134,9 +149,11 @@ public class Controller {
 
                     showAndSetValue(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4}, new int[]{1, 2, 3, 4},
                             null, null, textArea, 5);
+                    setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4});
 
                     editCellTable("offers");
                     deleteRecord("offers");
+                    addRecord("offers", new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4}, textArea);
 
                     break;
 
@@ -151,17 +168,52 @@ public class Controller {
                                     FXCollections.observableArrayList("Поддерживает", "Не поддерживает")},
                             new int[]{1, 6});
 
+                    comboPhoneDetails.getItems().add("- выбор -");
+                    setItemsCombo(comboPhoneDetails, "get_pd_model");
                     setItemsCombo(comboAdd1, "get_manufacturers_names");
                     setItemsCombo(comboAdd2, "Поддерживается", "Не поддерживается");
 
                     showAndSetValue(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4, textAdd5, textAdd6, textAdd7,
                                     textAdd8, textAdd9, textAdd10, textAdd11, textAdd12, textAdd13, textAdd14, textAdd15},
                             new int[]{2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17},
-                            new ComboBox[]{comboAdd1, comboAdd2}, new int[]{1, 6},
+                            new ComboBox[]{comboAdd1, comboAdd2, comboPhoneDetails}, new int[]{1, 6, 2},
                             null, null);
+                    setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd1, textAdd2,
+                            textAdd3, textAdd4, textAdd5, textAdd6, textAdd7, textAdd8, textAdd9,
+                            textAdd10, textAdd11, textAdd12, textAdd13, textAdd14, textAdd15});
 
                     editCellTable("phones");
                     deleteRecord("phones");
+
+                    comboPhoneDetails.setOnAction(event1 -> {
+
+                        TextField[] textFields = new TextField[]{textAdd1, textAdd2,
+                                textAdd3, textAdd4, textAdd5, textAdd6, textAdd7,
+                                textAdd8, textAdd9, textAdd10, textAdd11, textAdd12};
+
+                        switch (comboPhoneDetails.getSelectionModel().getSelectedIndex()) {
+
+                            case 0:
+
+                                for (TextField textField : textFields) {
+                                    textField.setDisable(false);
+                                }
+                                comboAdd2.setDisable(false);
+                                break;
+
+                            default:
+
+                                for (TextField textField : textFields) {
+                                    textField.setDisable(true);
+                                }
+                                comboAdd2.setDisable(true);
+                                break;
+                        }
+                    });
+
+                    addRecordPhone(new TextField[]{textAdd1, textAdd2, textAdd3, textAdd4, textAdd5, textAdd6, textAdd7,
+                                    textAdd8, textAdd9, textAdd10, textAdd11, textAdd12, textAdd13, textAdd14, textAdd15},
+                            new ComboBox[]{comboAdd1, comboAdd2, comboPhoneDetails});
 
                     break;
 
@@ -172,9 +224,11 @@ public class Controller {
 
                     showAndSetValue(new TextField[]{textAdd8, textAdd13}, new int[]{1, 2},
                             null, null, null, null);
+                    setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd8, textAdd13});
 
                     editCellTable("manufacturers");
                     deleteRecord("manufacturers");
+                    addRecord("manufacturers", new TextField[]{textAdd8, textAdd13}, (TextArea) null);
 
                     break;
 
@@ -246,6 +300,135 @@ public class Controller {
         }
     }
 
+    private void addRecord(String table, TextField[] textFields, TextArea textArea) {
+        buttonAdd.setOnAction(event -> {
+
+            String values = "";
+
+            if (textFields != null) {
+                for (TextField textField : textFields) {
+                    values = values.concat(textField.getText() + ",");
+                }
+            }
+
+            if (textArea != null) {
+                values = values.concat(textArea.getText());
+            }
+
+            if (!values.isEmpty()) {
+                values = values.substring(0, values.length() - 1);
+
+                boolean stateAdd = client.query(false,
+                        "add_" + table + "," + values);
+
+                System.out.println(values);
+                System.out.println(stateAdd);
+
+                if (stateAdd) {
+                    // TODO: 20.11.2017 ADD TO TABLEVIEW
+                    if (textFields != null) {
+                        for (TextField textField : textFields) {
+                            textField.clear();
+                        }
+                    }
+                    if (textArea != null) {
+                        textArea.clear();
+                    }
+                }
+            }
+
+        });
+    }
+
+    private void addRecordPhone(TextField[] textFields, ComboBox<String>[] comboBoxes) {
+        buttonAdd.setOnAction(event -> {
+
+            if (comboBoxes[2].getSelectionModel().isSelected(0)) {
+
+                String valuesPD = "";
+
+                for (int i = 0; i < textFields.length - 3; i++) {
+                    valuesPD = valuesPD.concat(textFields[i].getText() + ",");
+                }
+
+                valuesPD = valuesPD.concat(comboBoxes[1].getSelectionModel().getSelectedItem());
+
+                boolean stateAddPD = client.query(false,
+                        "add_phone_details," + valuesPD);
+
+                if (stateAddPD) {
+
+                    String valuesP = comboBoxes[0].getSelectionModel().getSelectedItem()
+                            .concat("," + client.query("get_last_pd").get(0)[0]);
+
+                    for (int i = textFields.length - 4; i < textFields.length; i++) {
+                        valuesP = valuesP.concat(textFields[i].getText() + ",");
+                    }
+
+                    valuesP = valuesP.substring(0, valuesP.length() - 1);
+
+                    boolean stateAddP = client.query(false,
+                            "add_phones_pd," + valuesP);
+
+                    if (stateAddP) {
+                        System.out.println(true);
+                    }
+                }
+            } else {
+
+                String values = comboBoxes[0].getSelectionModel().getSelectedItem()
+                        .concat("," + comboPhoneDetails.getSelectionModel().getSelectedItem());
+
+                for (int i = textFields.length - 4; i < textFields.length; i++) {
+                    values = values.concat(textFields[i].getText() + ",");
+                }
+
+                values = values.substring(0, values.length() - 1);
+
+                boolean stateAdd = client.query(false,
+                        "add_phones," + values);
+
+                if (stateAdd) {
+                    System.out.println(true);
+                }
+
+            }
+
+            /*for (TextField textField : textFields) {
+                values = values.concat(textField.getText() + ",");
+            }
+
+            for (ComboBox<String> comboBoxe : comboBoxes) {
+                values = values.concat(comboBoxe.getSelectionModel().getSelectedItem() + ",");
+            }
+
+            if (!values.isEmpty()) {
+                values = values.substring(0, values.length() - 1);
+
+                boolean stateAdd = client.query(false,
+                        "add_" + table + "," + values);
+
+                System.out.println(values);
+                System.out.println(stateAdd);
+
+                if (stateAdd) {
+                    // TODO: 20.11.2017 ADD TO TABLEVIEW
+                    if (textFields != null) {
+                        for (TextField textField : textFields) {
+                            textField.clear();
+                        }
+                    }
+                    if (comboBoxes != null) {
+                        for (ComboBox<String> comboBoxe : comboBoxes) {
+                            comboBoxe.getSelectionModel().select(0);
+                        }
+                    }
+                }
+            }
+*/
+        });
+    }
+
     private void deleteRecord(String table) {
         buttonDelete.setOnAction(eventDelete -> {
             if (!table1.getSelectionModel().isEmpty()) {
@@ -255,6 +438,7 @@ public class Controller {
                 if (stateDelete) {
                     table1.getItems().remove(table1.getSelectionModel().getSelectedIndex());
                     table1.getSelectionModel().clearSelection();
+                    buttonDelete.setDisable(true);
                 }
             }
         });
@@ -288,23 +472,25 @@ public class Controller {
         return result;
     }
 
-    private void showAndSetValue(TextField[] texts, int[] indexTexts,
-                                 ComboBox[] combos, int[] indexCombos,
+    private void showAndSetValue(TextField[] textFields, int[] indexTexts,
+                                 ComboBox[] comboBoxes, int[] indexCombos,
                                  TextArea textArea, Integer indexTextArea) {
 
-        boolean isTextField = texts != null && indexTexts != null,
-                isCombo = combos != null && indexCombos != null,
+        boolean isTextField = textFields != null && indexTexts != null,
+                isCombo = comboBoxes != null && indexCombos != null,
                 isTextArea = textArea != null && indexTextArea != null;
 
         if (isTextField) {
-            for (TextField text : texts) {
-                text.setVisible(true);
+            for (TextField textField : textFields) {
+                textField.setDisable(false);
+                textField.setVisible(true);
             }
         }
 
         if (isCombo) {
-            for (ComboBox aCombos : combos) {
-                aCombos.setVisible(true);
+            for (ComboBox comboBox : comboBoxes) {
+                comboBox.setDisable(false);
+                comboBox.setVisible(true);
             }
         }
 
@@ -315,25 +501,29 @@ public class Controller {
         table1.setOnMouseClicked(action -> {
 
             if (!table1.getSelectionModel().isEmpty()) {
+                buttonAdd.setDisable(false);
+                buttonDelete.setDisable(false);
 
                 if (isTextField) {
 
-                    for (int t = 0; t < texts.length; t++) {
+                    for (int t = 0; t < textFields.length; t++) {
                         for (int j = 0; j < table1.getColumns().size(); j++) {
                             if (j == indexTexts[t]) {
-                                texts[t].setText(table1.getSelectionModel().getSelectedItem()[j]);
+                                textFields[t].setText(table1.getSelectionModel().getSelectedItem()[j]);
                             }
                         }
                     }
 
+                } else {
+                    buttonAdd.setDisable(true);
                 }
 
                 if (isCombo) {
 
-                    for (int c = 0; c < combos.length; c++) {
+                    for (int c = 0; c < comboBoxes.length; c++) {
                         for (int j = 0; j < table1.getColumns().size(); j++) {
                             if (j == indexCombos[c]) {
-                                combos[c].setValue(table1.getSelectionModel().getSelectedItem()[j]);
+                                comboBoxes[c].setValue(table1.getSelectionModel().getSelectedItem()[j]);
                             }
                         }
                     }
@@ -351,6 +541,7 @@ public class Controller {
                 }
 
             }
+
         });
     }
 
@@ -360,17 +551,42 @@ public class Controller {
     }
 
     private void clearAndHide(ComboBox<String>... comboBoxes) {
-        for (ComboBox<String> comboBoxe : comboBoxes) {
-            comboBoxe.getItems().clear();
-            comboBoxe.setVisible(false);
+        for (ComboBox<String> comboBox : comboBoxes) {
+            comboBox.getItems().clear();
+            comboBox.setDisable(false);
+            comboBox.setVisible(false);
         }
     }
 
     private void clearAndHide(TextField... textFields) {
         for (TextField textField : textFields) {
             textField.clear();
+            textField.setDisable(false);
             textField.setVisible(false);
         }
+    }
+
+    private void setDisableButton(Button buttonAdd, Button buttonDelete, TextField[] textFields) {
+
+        buttonAdd.setDisable(true);
+        buttonDelete.setDisable(true);
+
+        if (textFields != null) {
+            for (TextField textField1 : textFields) {
+                textField1.setOnKeyReleased(event -> {
+
+                    for (TextField textField2 : textFields) {
+                        if (textField2.getText().isEmpty()) {
+                            buttonAdd.setDisable(true);
+                            break;
+                        }
+                        buttonAdd.setDisable(false);
+                    }
+
+                });
+            }
+        }
+
     }
 
     public Client getClient() {
