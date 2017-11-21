@@ -27,7 +27,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.skaliy.mobilecom.client.fxapp.Main</mainClass>
+                            <mainClass>com.skaliy.mobilecom.client.fxapp.user.MainUser</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -54,7 +54,7 @@
                     <goal>jar:inplace</goal>
                     <archive>
                         <manifest>
-                            <mainClass>com.skaliy.mobilecom.client.fxapp.Main</mainClass>
+                            <mainClass>com.skaliy.mobilecom.client.fxapp.user.MainUser</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -65,7 +65,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>8.8.3</version>
                 <configuration>
-                    <mainClass>com.skaliy.mobilecom.client.fxapp.Controller</mainClass>
+                    <mainClass>com.skaliy.mobilecom.client.fxapp.user.ControllerUser</mainClass>
                 </configuration>
             </plugin>
 
@@ -91,12 +91,6 @@
             <groupId>com.zenjava</groupId>
             <artifactId>javafx-maven-plugin</artifactId>
             <version>8.8.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jfoenix</groupId>
-            <artifactId>jfoenix</artifactId>
-            <version>1.10.0</version>
         </dependency>
 
     </dependencies>

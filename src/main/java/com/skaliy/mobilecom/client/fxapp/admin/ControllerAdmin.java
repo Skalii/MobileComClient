@@ -5,13 +5,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
-public class Controller {
+public class ControllerAdmin {
 
     @FXML
     private TextField textAdd1, textAdd2, textAdd3, textAdd4, textAdd5,
@@ -30,9 +32,42 @@ public class Controller {
     @FXML
     private TableView<String[]> table1;
 
+    @FXML
+    private MenuItem menuHideTray, menuClose, menuAbout;
+
     private static Client client;
 
     public void initialize() {
+
+        menuClose.setOnAction(event -> {
+            MainAdmin.getSystemTray().remove(MainAdmin.getTrayIcon());
+            MainAdmin.getStage().close();
+        });
+        menuHideTray.setOnAction(event -> {
+            MainAdmin.getStage().hide();
+        });
+        menuAbout.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("О программе");
+            alert.setHeaderText("Курсовая работа");
+            alert.getButtonTypes().setAll(ButtonType.OK);
+
+            Label label = new Label("Студента гр.341(б)\nСкалий Дмитрия");
+            label.setWrapText(true);
+            label.setAlignment(Pos.CENTER);
+            label.setPrefHeight(50);
+            label.setPrefWidth(220);
+            label.setLayoutY(15);
+            label.setLayoutX(15);
+
+            AnchorPane pane = new AnchorPane(label);
+            pane.setPrefHeight(100);
+            pane.setPrefWidth(250);
+
+            alert.getDialogPane().setContent(pane);
+            alert.showAndWait();
+        });
+
 
         comboSetTable.getItems().addAll("- выбор таблицы -", "Новости",
                 "Продажи", "Сотрудники", "Тарифы", "Услуги", "Телефоны", "Производители");
@@ -40,7 +75,7 @@ public class Controller {
         comboSetTable.setOnAction(event -> {
 
             table1.setLayoutY(185);
-            table1.setPrefHeight(370);
+            table1.setPrefHeight(345);
             table1.setDisable(false);
 
             clearAndHide(textArea);
@@ -79,7 +114,7 @@ public class Controller {
                 case 2:
 
                     table1.setLayoutY(45);
-                    table1.setPrefHeight(510);
+                    table1.setPrefHeight(485);
 
                     setTable("get_sales",
                             new String[]{"", "Дата", "Сумма", "Продавец", "Состояние",
@@ -578,12 +613,8 @@ public class Controller {
 
     }
 
-    Client getClient() {
-        return client;
-    }
-
     static void setClient(Client client) {
-        Controller.client = client;
+        ControllerAdmin.client = client;
     }
 
 }

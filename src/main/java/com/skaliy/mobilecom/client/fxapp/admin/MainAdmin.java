@@ -1,5 +1,6 @@
-package com.skaliy.mobilecom.client.fxapp;
+package com.skaliy.mobilecom.client.fxapp.admin;
 
+import com.skaliy.mobilecom.client.connection.Client;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -13,23 +14,25 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Main extends Application {
+public class MainAdmin extends Application {
 
-    private SystemTray systemTray;
-    private TrayIcon trayIcon;
+    private static SystemTray systemTray;
+    private static TrayIcon trayIcon;
     private MenuItem menuOpen, menuExit;
     private PopupMenu popupMenu;
     private static Stage stage;
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
-        primaryStage.setTitle("Салон мобильной связи");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/admin.fxml"));
+        primaryStage.setTitle("Администрирование");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
         primaryStage.setOnCloseRequest(event -> {
-            System.exit(0);
+            systemTray.remove(trayIcon);
+            primaryStage.close();
         });
 
         stage = primaryStage;
@@ -41,7 +44,7 @@ public class Main extends Application {
                 try {
                     systemTray = SystemTray.getSystemTray();
 
-                    trayIcon = new TrayIcon(ImageIO.read(new File("src/main/resources/images/icons/icon_tray.png")));
+                    trayIcon = new TrayIcon(ImageIO.read(new File("src/main/resources/images/icons/icon_tray_admin.png")));
                     trayIcon.addActionListener(e -> {
                         Platform.runLater(new Runnable() {
                             @Override
@@ -65,8 +68,8 @@ public class Main extends Application {
                         });
                     });
 
-                    menuExit = new MenuItem("Выход");
-                    menuExit.addActionListener(e -> System.exit(0));
+                    menuExit = new MenuItem("Закрыть");
+                    menuExit.addActionListener(e -> primaryStage.close());
 
                     popupMenu = new PopupMenu();
                     popupMenu.add(menuOpen);
@@ -79,15 +82,22 @@ public class Main extends Application {
                 }
             }
         });
-
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public void setClient(Client client) {
+        ControllerAdmin.setClient(client);
     }
 
     static Stage getStage() {
         return stage;
+    }
+
+    static SystemTray getSystemTray() {
+        return systemTray;
+    }
+
+    static TrayIcon getTrayIcon() {
+        return trayIcon;
     }
 
 }

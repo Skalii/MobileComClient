@@ -1,6 +1,7 @@
-package com.skaliy.mobilecom.client.fxapp;
+package com.skaliy.mobilecom.client.fxapp.user;
 
 import com.skaliy.mobilecom.client.connection.Client;
+import com.skaliy.mobilecom.client.fxapp.login.MainLogin;
 import com.skaliy.mobilecom.client.panes.PaneOrder;
 import com.skaliy.mobilecom.client.panes.PaneRecord;
 import javafx.collections.FXCollections;
@@ -9,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -20,7 +20,7 @@ import java.util.Objects;
 
 import static com.skaliy.mobilecom.client.panes.PaneRecord.*;
 
-public class Controller {
+public class ControllerUser {
 
     @FXML
     public TextField textClientFName, textClientLName, textClientPName, textClientPNumber, textClientEmail,
@@ -67,69 +67,23 @@ public class Controller {
         }
 
         menuExit.setOnAction(event -> {
+            MainUser.getSystemTray().remove(MainUser.getTrayIcon());
             System.exit(0);
         });
         menuHideTray.setOnAction(event -> {
-            Main.getStage().hide();
+            MainUser.getStage().hide();
         });
         menuLogin.setOnAction(event -> {
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Вход");
-            alert.setHeaderText("Введи email и пароль");
-            alert.getButtonTypes().add(ButtonType.CANCEL);
+            MainLogin login = new MainLogin();
 
-            TextField textEmail = new TextField();
-            textEmail.setPromptText("Email");
-            textEmail.setAlignment(Pos.CENTER);
-            textEmail.setFont(new Font("Calibri", 14));
-            textEmail.setLayoutX(50);
-            textEmail.setLayoutY(15);
-            textEmail.setPrefWidth(150);
+            try {
+                login.start(new Stage());
+                login.setClient(client);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            PasswordField passwordField = new PasswordField();
-            passwordField.setPromptText("Пароль");
-            passwordField.setAlignment(Pos.CENTER);
-            passwordField.setFont(new Font("Calibri", 14));
-            passwordField.setLayoutX(50);
-            passwordField.setLayoutY(45);
-            passwordField.setPrefWidth(150);
-
-            Button buttonLogin = new Button("Вход");
-            buttonLogin.setAlignment(Pos.CENTER);
-            buttonLogin.setLayoutX(100);
-            buttonLogin.setLayoutY(75);
-            buttonLogin.setPrefWidth(50);
-            buttonLogin.setOnAction(eventLogin -> {
-                boolean isEmail = false, isPassword = false;
-
-                isEmail =
-                        Objects.equals(textEmail.getText(),
-                                client.query("get_email_employee_p-" + textEmail.getText()).get(0)[0]);
-
-                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), isEmail);
-
-
-                if (isEmail && isPassword) {
-                    com.skaliy.mobilecom.client.fxapp.admin.Main mainAdmin
-                            = new com.skaliy.mobilecom.client.fxapp.admin.Main();
-                    try {
-                        mainAdmin.start(new Stage());
-                        mainAdmin.setClient(client);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    alert.close();
-                }
-
-            });
-
-            AnchorPane pane = new AnchorPane(textEmail, passwordField, buttonLogin);
-            pane.setPrefHeight(100);
-            pane.setPrefWidth(250);
-
-            alert.getDialogPane().setContent(pane);
-            alert.showAndWait();
         });
         menuAbout.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
