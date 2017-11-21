@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Controller {
 
     @FXML
-    public TextField textAdd1, textAdd2, textAdd3, textAdd4, textAdd5,
+    private TextField textAdd1, textAdd2, textAdd3, textAdd4, textAdd5,
             textAdd6, textAdd7, textAdd8, textAdd9, textAdd10,
             textAdd11, textAdd12, textAdd13, textAdd14, textAdd15;
 
@@ -578,11 +578,11 @@ public class Controller {
 
     }
 
-    public Client getClient() {
+    Client getClient() {
         return client;
     }
 
-    public static void setClient(Client client) {
+    static void setClient(Client client) {
         Controller.client = client;
     }
 
