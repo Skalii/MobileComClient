@@ -172,7 +172,7 @@ public class ControllerAdmin {
                             null, null);
 
                     showAndSetValue(new TextField[]{textAdd1, textAdd2}, new int[]{1, 2},
-                            new String[]{"Название", "Цена"},
+                            new String[]{"Название", "Цена", "Описание"},
                             null, null, null,
                             textArea, 3, "Описание");
                     setDisableButton(buttonAdd, buttonDelete, new TextField[]{textAdd1, textAdd2});
@@ -373,12 +373,8 @@ public class ControllerAdmin {
 
                 boolean stateAdd = client.query(false,
                         "add_" + table + "," + values);
-
-                System.out.println(values);
-                System.out.println(stateAdd);
-
                 if (stateAdd) {
-                    // TODO: 20.11.2017 ADD TO TABLEVIEW
+
                     if (textFields != null) {
                         for (TextField textField : textFields) {
                             textField.clear();
@@ -387,6 +383,8 @@ public class ControllerAdmin {
                     if (textArea != null) {
                         textArea.clear();
                     }
+
+                    table1.getItems().add(client.query("get_last_" + table).get(0));
                 }
             }
 
@@ -408,8 +406,6 @@ public class ControllerAdmin {
 
                 boolean stateAddPD = client.query(false,
                         "add_phone_details," + valuesPD);
-                System.out.println("add_phone_details," + valuesPD);
-                System.out.println(stateAddPD);
 
                 if (stateAddPD) {
 
@@ -420,12 +416,13 @@ public class ControllerAdmin {
                         valuesP = valuesP.concat("," + textFields[i].getText());
                     }
 
-                    System.out.println("add_phones_pd," + valuesP);
-
                     boolean stateAddP = client.query(false,
                             "add_phones_pd," + valuesP);
 
-                    System.out.println(stateAddP);
+                    if (stateAddP) {
+                        table1.getItems().add(client.query("get_last_phones").get(0));
+                    }
+
                 }
             } else {
 
@@ -439,11 +436,11 @@ public class ControllerAdmin {
                 boolean stateAdd = client.query(false,
                         "add_phones," + values);
 
-                System.out.println(stateAdd);
+                if (stateAdd) {
+                    table1.getItems().add(client.query("get_last_phones").get(0));
+                }
 
             }
-
-            // TODO: 20.11.2017 ADD TO TABLEVIEW
 
         });
     }
