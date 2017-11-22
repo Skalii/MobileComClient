@@ -44,7 +44,7 @@
                                         mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Добавить"/>
                                 <Button fx:id="buttonDelete" disable="true" layoutX="380.0" layoutY="10.0"
                                         mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Удалить"/>
-                                <TableView fx:id="table1" disable="true" layoutX="10.0" layoutY="185.0"
+                                <TableView fx:id="tableView" disable="true" layoutX="10.0" layoutY="185.0"
                                            prefHeight="345.0" prefWidth="680.0"/>
                                 <TextArea fx:id="textArea" layoutX="13.0" layoutY="80.0" prefHeight="95.0"
                                           prefWidth="674.0" visible="false"/>

@@ -30,7 +30,7 @@ public class ControllerAdmin {
     private TextArea textArea;
 
     @FXML
-    private TableView<String[]> table1;
+    private TableView<String[]> tableView;
 
     @FXML
     private MenuItem menuHideTray, menuClose, menuAbout;
@@ -74,9 +74,9 @@ public class ControllerAdmin {
 
         comboSetTable.setOnAction(event -> {
 
-            table1.setLayoutY(185);
-            table1.setPrefHeight(345);
-            table1.setDisable(false);
+            tableView.setLayoutY(185);
+            tableView.setPrefHeight(345);
+            tableView.setDisable(false);
 
             clearAndHide(textArea);
             clearAndHide(comboAdd1, comboAdd2, comboPhoneDetails);
@@ -87,9 +87,9 @@ public class ControllerAdmin {
             switch (comboSetTable.getSelectionModel().getSelectedIndex()) {
 
                 case 0:
-                    table1.setDisable(true);
-                    table1.getColumns().clear();
-                    table1.getItems().clear();
+                    tableView.setDisable(true);
+                    tableView.getColumns().clear();
+                    tableView.getItems().clear();
                     buttonAdd.setDisable(true);
                     buttonDelete.setDisable(true);
                     break;
@@ -113,8 +113,8 @@ public class ControllerAdmin {
 
                 case 2:
 
-                    table1.setLayoutY(45);
-                    table1.setPrefHeight(485);
+                    tableView.setLayoutY(45);
+                    tableView.setPrefHeight(485);
 
                     setTable("get_sales",
                             new String[]{"", "Дата", "Сумма", "Продавец", "Состояние",
@@ -129,11 +129,11 @@ public class ControllerAdmin {
                             null, null, null);
                     setDisableButton(buttonAdd, buttonDelete, null);
 
-                    table1.getColumns().get(2).setEditable(false);
-                    table1.getColumns().get(8).setEditable(false);
-                    table1.getColumns().get(9).setEditable(false);
-                    table1.getColumns().get(10).setEditable(false);
-                    table1.getColumns().get(11).setEditable(false);
+                    tableView.getColumns().get(2).setEditable(false);
+                    tableView.getColumns().get(8).setEditable(false);
+                    tableView.getColumns().get(9).setEditable(false);
+                    tableView.getColumns().get(10).setEditable(false);
+                    tableView.getColumns().get(11).setEditable(false);
 
                     editCellTable("sales");
                     deleteRecord("sales");
@@ -292,8 +292,8 @@ public class ControllerAdmin {
     private void setTable(String command, String[] colName,
                           ObservableList<String>[] comboItems, int[] indexColumnCombo) {
 
-        table1.getColumns().clear();
-        table1.getItems().clear();
+        tableView.getColumns().clear();
+        tableView.getItems().clear();
 
         ArrayList<String[]> records = client.query(command);
 
@@ -320,7 +320,7 @@ public class ControllerAdmin {
             } else {
                 tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             }
-            table1.getColumns().add(tableColumn);
+            tableView.getColumns().add(tableColumn);
         }
 
         ObservableList<String[]> items = FXCollections.observableArrayList(records);
@@ -331,22 +331,22 @@ public class ControllerAdmin {
             }
         }
 
-        table1.setItems(items);
-        table1.getColumns().get(0).setVisible(false);
-        table1.setEditable(true);
+        tableView.setItems(items);
+        tableView.getColumns().get(0).setVisible(false);
+        tableView.setEditable(true);
 
     }
 
     private void editCellTable(String tableName) {
 
-        for (int i = 1; i < table1.getColumns().size(); i++) {
+        for (int i = 1; i < tableView.getColumns().size(); i++) {
             int finalI = i;
-            table1.getColumns().get(i).setOnEditCommit(actionEdit -> {
-                table1.getFocusModel().getFocusedItem()[finalI] = String.valueOf(actionEdit.getNewValue());
+            tableView.getColumns().get(i).setOnEditCommit(actionEdit -> {
+                tableView.getFocusModel().getFocusedItem()[finalI] = String.valueOf(actionEdit.getNewValue());
 
                 boolean update = client.query(false, "update_" + tableName
-                        + "," + finalI + "," + table1.getFocusModel().getFocusedItem()[finalI]
-                        + "," + table1.getFocusModel().getFocusedItem()[0]);
+                        + "," + finalI + "," + tableView.getFocusModel().getFocusedItem()[finalI]
+                        + "," + tableView.getFocusModel().getFocusedItem()[0]);
 
             });
 
@@ -384,7 +384,7 @@ public class ControllerAdmin {
                         textArea.clear();
                     }
 
-                    table1.getItems().add(client.query("get_last_" + table).get(0));
+                    tableView.getItems().add(client.query("get_last_" + table).get(0));
                 }
             }
 
@@ -420,7 +420,7 @@ public class ControllerAdmin {
                             "add_phones_pd," + valuesP);
 
                     if (stateAddP) {
-                        table1.getItems().add(client.query("get_last_phones").get(0));
+                        tableView.getItems().add(client.query("get_last_phones").get(0));
                     }
 
                 }
@@ -437,7 +437,7 @@ public class ControllerAdmin {
                         "add_phones," + values);
 
                 if (stateAdd) {
-                    table1.getItems().add(client.query("get_last_phones").get(0));
+                    tableView.getItems().add(client.query("get_last_phones").get(0));
                 }
 
             }
@@ -447,13 +447,13 @@ public class ControllerAdmin {
 
     private void deleteRecord(String table) {
         buttonDelete.setOnAction(eventDelete -> {
-            if (!table1.getSelectionModel().isEmpty()) {
+            if (!tableView.getSelectionModel().isEmpty()) {
                 boolean stateDelete = client
                         .query(false,
-                                "del_" + table + "," + table1.getSelectionModel().getSelectedItem()[0]);
+                                "del_" + table + "," + tableView.getSelectionModel().getSelectedItem()[0]);
                 if (stateDelete) {
-                    table1.getItems().remove(table1.getSelectionModel().getSelectedIndex());
-                    table1.getSelectionModel().clearSelection();
+                    tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
+                    tableView.getSelectionModel().clearSelection();
                     buttonDelete.setDisable(true);
                 }
             }
@@ -519,18 +519,18 @@ public class ControllerAdmin {
             textArea.setPromptText(promptArea);
         }
 
-        table1.setOnMouseClicked(action -> {
+        tableView.setOnMouseClicked(action -> {
 
-            if (!table1.getSelectionModel().isEmpty()) {
+            if (!tableView.getSelectionModel().isEmpty()) {
                 buttonAdd.setDisable(false);
                 buttonDelete.setDisable(false);
 
                 if (isTextField) {
 
                     for (int t = 0; t < textFields.length; t++) {
-                        for (int j = 0; j < table1.getColumns().size(); j++) {
+                        for (int j = 0; j < tableView.getColumns().size(); j++) {
                             if (j == indexFields[t]) {
-                                textFields[t].setText(table1.getSelectionModel().getSelectedItem()[j]);
+                                textFields[t].setText(tableView.getSelectionModel().getSelectedItem()[j]);
                             }
                         }
                     }
@@ -542,9 +542,9 @@ public class ControllerAdmin {
                 if (isCombo) {
 
                     for (int c = 0; c < comboBoxes.length; c++) {
-                        for (int j = 0; j < table1.getColumns().size(); j++) {
+                        for (int j = 0; j < tableView.getColumns().size(); j++) {
                             if (j == indexCombos[c]) {
-                                comboBoxes[c].setValue(table1.getSelectionModel().getSelectedItem()[j]);
+                                comboBoxes[c].setValue(tableView.getSelectionModel().getSelectedItem()[j]);
                             }
                         }
                     }
@@ -553,9 +553,9 @@ public class ControllerAdmin {
 
                 if (isTextArea) {
 
-                    for (int i = 0; i < table1.getColumns().size(); i++) {
+                    for (int i = 0; i < tableView.getColumns().size(); i++) {
                         if (i == indexArea) {
-                            textArea.setText(table1.getSelectionModel().getSelectedItem()[i]);
+                            textArea.setText(tableView.getSelectionModel().getSelectedItem()[i]);
                         }
                     }
 

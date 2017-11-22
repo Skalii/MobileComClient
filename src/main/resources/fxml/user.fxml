@@ -221,7 +221,7 @@
                                         <AnchorPane layoutX="420.0" layoutY="10.0" prefHeight="112.0" prefWidth="250.0">
                                             <children>
                                                 <Label alignment="CENTER" layoutX="10.0" layoutY="5.0" prefHeight="23.0"
-                                                       prefWidth="230.0" text="Сумма заказа">
+                                                       prefWidth="230.0" text="Сумма заказа" visible="false">
                                                     <font>
                                                         <Font name="Calibri" size="20.0"/>
                                                     </font>
@@ -232,14 +232,14 @@
                                                         <Font name="Calibri" size="25.0"/>
                                                     </font>
                                                 </Label>
-                                                <Button fx:id="buttonOrderAccept" disable="true" layoutX="10.0"
-                                                        layoutY="75.0" mnemonicParsing="false" text="Подтвердить заказ">
+                                                <Button fx:id="buttonOrderAccept" disable="true" layoutX="59.0"
+                                                        layoutY="22.0" mnemonicParsing="false" text="Подтвердить заказ">
                                                     <font>
                                                         <Font name="Calibri" size="14.0"/>
                                                     </font>
                                                 </Button>
-                                                <Button fx:id="buttonOrderClear" disable="true" layoutX="165.0"
-                                                        layoutY="75.0" mnemonicParsing="false" text="Очистить">
+                                                <Button fx:id="buttonOrderClear" disable="true" layoutX="88.0"
+                                                        layoutY="65.0" mnemonicParsing="false" text="Очистить">
                                                     <font>
                                                         <Font name="Calibri" size="14.0"/>
                                                     </font>
