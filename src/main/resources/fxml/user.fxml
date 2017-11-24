@@ -77,16 +77,11 @@
                                                         <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="40.0"
                                                                     prefWidth="680.0">
                                                             <children>
-                                                                <Label layoutX="10.0" layoutY="10.0" text="Поиск: ">
-                                                                    <font>
-                                                                        <Font name="Calibri" size="16.0"/>
-                                                                    </font>
-                                                                </Label>
-                                                                <TextField fx:id="textSearchTariffs" layoutX="60.0"
-                                                                           layoutY="7.0" prefHeight="25.0"
-                                                                           prefWidth="300.0"/>
-                                                                <ComboBox fx:id="comboSearchTariffs" layoutX="368.0"
-                                                                          layoutY="7.0" prefHeight="25.0"
+                                                                <TextField fx:id="textSearchTariffs" layoutX="11.0"
+                                                                           layoutY="8.0" prefHeight="25.0"
+                                                                           prefWidth="350.0" promptText="Поиск"/>
+                                                                <ComboBox fx:id="comboSearchTariffs" layoutX="369.0"
+                                                                          layoutY="8.0" prefHeight="25.0"
                                                                           prefWidth="300.0"
                                                                           promptText="Название тарифа"/>
                                                             </children>
@@ -111,16 +106,11 @@
                                                         <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="40.0"
                                                                     prefWidth="680.0">
                                                             <children>
-                                                                <Label layoutX="10.0" layoutY="10.0" text="Поиск: ">
-                                                                    <font>
-                                                                        <Font name="Calibri" size="16.0"/>
-                                                                    </font>
-                                                                </Label>
-                                                                <TextField fx:id="textSearchOffers" layoutX="60.0"
-                                                                           layoutY="7.0" prefHeight="25.0"
-                                                                           prefWidth="300.0"/>
-                                                                <ComboBox fx:id="comboSearchOffers" layoutX="368.0"
-                                                                          layoutY="7.0" prefWidth="300.0"
+                                                                <TextField fx:id="textSearchOffers" layoutX="11.0"
+                                                                           layoutY="8.0" prefHeight="25.0"
+                                                                           prefWidth="350.0" promptText="Поиск"/>
+                                                                <ComboBox fx:id="comboSearchOffers" layoutX="369.0"
+                                                                          layoutY="8.0" prefWidth="300.0"
                                                                           promptText="Название услуги"/>
                                                             </children>
                                                         </AnchorPane>
@@ -146,13 +136,8 @@
                                 </ScrollPane>
                                 <AnchorPane layoutX="485.0" layoutY="10.0" prefHeight="40.0" prefWidth="205.0">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="10.0" text="Поиск: ">
-                                            <font>
-                                                <Font name="Calibri" size="16.0"/>
-                                            </font>
-                                        </Label>
-                                        <TextField fx:id="textSearchPhones" layoutX="60.0" layoutY="7.0"
-                                                   prefHeight="25.0" prefWidth="135.0"/>
+                                        <TextField fx:id="textSearchPhones" layoutX="10.0" layoutY="7.0"
+                                                   prefHeight="25.0" prefWidth="185.0" promptText="Поиск"/>
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane layoutX="485.0" layoutY="60.0" prefHeight="470.0" prefWidth="205.0">
